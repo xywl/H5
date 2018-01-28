@@ -3,45 +3,49 @@
     "list": [
         {
             "leftDispatchId":"111",
-            "goodsName":"散装，煤炭100吨",
+            "goodsName":"散装，煤炭",
             "disChargeTime":"2018-01-29 18:00:00",
             "startLoadId":"",
             "startLoadName":"南京XX",
             "endLoadId":"",
             "endLoadName":"上海XX",
-            "specialTip":"XXXXXXXXXXXXXXXXXX"
+            "specialTip":"XXXXXXXXXXXXXXXXXX",
+            "preTon":"100"
         },
         {
             "leftDispatchId":"111",
-            "goodsName":"散装，煤炭100吨",
+            "goodsName":"散装，煤炭",
             "disChargeTime":"2018-01-29 18:00:00",
             "startLoadId":"",
             "startLoadName":"南京XX",
             "endLoadId":"",
             "endLoadName":"上海XX",
-            "specialTip":"XXXXXXXXXXXXXXXXXX"
+            "specialTip":"XXXXXXXXXXXXXXXXXX",
+            "preTon":"100"
         },
         {
             "leftDispatchId":"111",
-            "goodsName":"散装，煤炭100吨",
+            "goodsName":"散装，煤炭",
             "disChargeTime":"2018-01-29 18:00:00",
             "startLoadId":"",
             "startLoadName":"南京XX",
             "endLoadId":"",
             "endLoadName":"上海XX",
-            "specialTip":"XXXXXXXXXXXXXXXXXX"
+            "specialTip":"XXXXXXXXXXXXXXXXXX",
+            "preTon":"100"
         },{
             "leftDispatchId":"111",
-            "goodsName":"散装，煤炭100吨",
+            "goodsName":"散装，煤炭",
             "disChargeTime":"2018-01-29 18:00:00",
             "startLoadId":"",
             "startLoadName":"南京XX",
             "endLoadId":"",
             "endLoadName":"上海XX",
-            "specialTip":"XXXXXXXXXXXXXXXXXX"
+            "specialTip":"XXXXXXXXXXXXXXXXXX",
+            "preTon":"100"
         },{
             "leftDispatchId":"111",
-            "goodsName":"散装，煤炭100吨",
+            "goodsName":"散装，煤炭",
             "disChargeTime":"2018-01-29 18:00:00",
             "startLoadId":"",
             "startLoadName":"南京XX",
@@ -51,51 +55,56 @@
         },
         {
             "leftDispatchId":"111",
-            "goodsName":"散装，煤炭100吨",
+            "goodsName":"散装，煤炭",
             "disChargeTime":"2018-01-29 18:00:00",
             "startLoadId":"",
             "startLoadName":"南京XX",
             "endLoadId":"",
             "endLoadName":"上海XX",
-            "specialTip":"XXXXXXXXXXXXXXXXXX"
+            "specialTip":"XXXXXXXXXXXXXXXXXX",
+            "preTon":"100"
         },
         {
             "leftDispatchId":"111",
-            "goodsName":"散装，煤炭100吨",
+            "goodsName":"散装，煤炭",
             "disChargeTime":"2018-01-29 18:00:00",
             "startLoadId":"",
             "startLoadName":"南京XX",
             "endLoadId":"",
             "endLoadName":"上海XX",
-            "specialTip":"XXXXXXXXXXXXXXXXXX"
+            "specialTip":"XXXXXXXXXXXXXXXXXX",
+            "preTon":"100"
         },{
             "leftDispatchId":"111",
-            "goodsName":"散装，煤炭100吨",
+            "goodsName":"散装，煤炭",
             "disChargeTime":"2018-01-29 18:00:00",
             "startLoadId":"",
             "startLoadName":"南京XX",
             "endLoadId":"",
             "endLoadName":"上海XX",
-            "specialTip":"XXXXXXXXXXXXXXXXXX"
+            "specialTip":"XXXXXXXXXXXXXXXXXX",
+            "preTon":"100"
         },
         {
             "leftDispatchId":"111",
-            "goodsName":"散装，煤炭100吨",
+            "goodsName":"散装，煤炭",
             "disChargeTime":"2018-01-29 18:00:00",
             "startLoadId":"",
             "startLoadName":"南京XX",
             "endLoadId":"",
             "endLoadName":"上海XX",
-            "specialTip":"XXXXXXXXXXXXXXXXXX"
+            "specialTip":"XXXXXXXXXXXXXXXXXX",
+            "preTon":"100"
         },{
             "leftDispatchId":"111",
-            "goodsName":"散装，煤炭100吨",
+            "goodsName":"散装，煤炭",
             "disChargeTime":"2018-01-29 18:00:00",
             "startLoadId":"",
             "startLoadName":"南京XX",
             "endLoadId":"",
             "endLoadName":"上海XX",
-            "specialTip":"XXXXXXXXXXXXXXXXXX"
+            "specialTip":"XXXXXXXXXXXXXXXXXX",
+            "preTon":"100"
         }
     ]
 }

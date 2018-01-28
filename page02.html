@@ -36,17 +36,17 @@
         {{each list as list i}}
             <li>
                 <div class="o-title border-thin">
-                    <div class="name">{{list.goodsName}}</div>
+                    <div class="name">{{list.goodsName}}{{list.preTon}}吨</div>
                 </div>
                 <div class="info-box">
-                    <div class="time"><i class="icon-time"></i><span>{{list.disChargeTime}}出发</span></div>
+                    <div class="time"><i class="icon-time"></i><span>装货时间：{{list.disChargeTime}}出发</span></div>
                     <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startLoadName}}</span></div>
                     <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endLoadName}}</span></div>
                     
                 </div>
                 <div class="btn-box border-thin">
-                    <p class="tip">特殊要求:{{list.specialTip}}</p>
-                    <div class="btn border-thin" orderNo="{{list.leftDispatchId}}">确认预约</div></div>
+                    <p class="tip">注：{{list.specialTip}}</p>
+                    <div class="btn border-thin" leftDispatchId="{{list.leftDispatchId}}">确认预约</div></div>
             </li>
         {{/each}}
     </script>
@@ -60,12 +60,12 @@
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         if(boatIndex.isAndroid){
             window.doBack = function(){
-                if(android)android.doFinish();
+                android.doFinish();
             }
         }
         //获取经纬度
         if(boatIndex.isAndroid) {  
-             if(android)android.getLocation();
+             android.getLocation();
         }
         else{
             getAddress();
@@ -97,7 +97,6 @@
                                 $('#boatLocation').val(addComp.city + addComp.district + addComp.street + addComp.streetNumber);
                             });
                         }
-
                     }else {
                         boatIndex.toast('定位失败：'+this.getStatus());
                     }

@@ -3,6 +3,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
     var boatIndex = {
         isAndroid: !!(userAgent.indexOf('android') > -1 || userAgent.indexOf('Linux') > -1),//是否是安卓
         isIos: !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),//是否是IOS
+
         /*
          * function ajax请求
          * @param  {[Object]} options [参数配置]
@@ -48,6 +49,10 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             }
             return userTag
         },
+        /*
+         * function 获取cookie
+         * @param name {string}
+         */
         getCookie: function(name){
             var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
             if(arr=document.cookie.match(reg))
@@ -55,6 +60,19 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             else
             return null;
         },
+        //保存cookie
+        setCookie: function(name, value, iDay){
+            var oDate=new Date();
+            oDate.setDate(oDate.getDate()+iDay);     
+            document.cookie=name+'='+encodeURIComponent(value)+';expires='+oDate;       
+        },
+        //获取Url参数
+        getQueryString: function(name) { 
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+            var r = window.location.search.substr(1).match(reg); 
+            if (r != null) return unescape(r[2]); 
+            return null; 
+        } 
         /*
          * function toas弹窗
          * @param msg {string}
@@ -69,12 +87,6 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             else{
                 $.toast(msg);
             }
-        },
-        //保存cookie
-        setCookie: function(name, value, iDay){
-            var oDate=new Date();
-            oDate.setDate(oDate.getDate()+iDay);     
-            document.cookie=name+'='+encodeURIComponent(value)+';expires='+oDate;       
         },
         scrolledAjax: function(ajaxOptions) { //滚动到底部获取数据
             var _this = this;

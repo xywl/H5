@@ -78,6 +78,7 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        var leftDispatchId = boatIndex.getQueryString('leftDispatchId') || '';
         $('.goback').bind('click',function(){
             window.location.href = 'page02.html';
         });
@@ -240,7 +241,8 @@
                     preLoad:$('appointNo').val(),
                     preArrivePortTime:$('arriveTime').val(),
                     shipEmptyPhoto:$('.choose').eq(0).attr('img-url'),
-                    shipReference:$('.choose').eq(1).attr('img-url')
+                    shipReference:$('.choose').eq(1).attr('img-url'),
+                    leftDispatchId: leftDispatchId
                 },
                 success:function(data){
                     if(data.success){

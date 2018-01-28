@@ -624,7 +624,7 @@ input {
 }
 .pic-list{
   display: flex;
-  padding:.75rem .5rem;
+  padding:.75rem 0;
 }
 .pic-list li{
   flex:1;
@@ -698,16 +698,16 @@ input {
   border-radius: .25rem;
 }
 .btn-line .btn-orange{
-  background: #FF7533;
+  background: #e4393c;
   color:#fff;
 }
 .btn-line .btn-white{
-  color:#ff8d47;
+  color:#e4393c;
   background: #fff;
 }
 
 .btn-line .btn-white:before{
-  border:1px solid #ff8d47;
+  border:1px solid #e4393c;
   border-radius:5px;
 }
 .arrow{

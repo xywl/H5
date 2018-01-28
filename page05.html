@@ -34,30 +34,22 @@
         {{each list as list i}}
             <li status="{{list.status}}">
                 <div class="o-title o-title2">
-                    <div class="name">{{list.title}}</div>
-                    <div class="state">
-                        {{if list.status == "1"}}
-                        <span>待审核</span>
-                        {{else if list.status == "2"}}
-                        <span>待执行</span>
-                        {{else if list.status == "3"}}
-                        <span>待签收</span>
-                        {{else if list.status == "4"}}
-                        <span>已完成</span>
-                        {{/if}}
-                        <i class="arrow"></i>
-                    </div>
+                    <div class="name">{{list.goodsName}}{{list.preTon}}吨</div>
+                    <div class="state"><span>{{list.statusName}}</span><i class="arrow"></i></div>
                 </div>
                 <div class="info-box">
-                    <div class="time"><i class="icon-time"></i><span>{{list.timeInfo}}出发</span></div>
-                    <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startPlace}}</span></div>
-                    <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endPlace}}</span></div>
-                    <p class="tip">特殊要求：{{list.tip}}</p>
-                    <p class="order">订单号：{{list.orderNo}}</p>
+                    <div class="time"><i class="icon-time"></i><span>装货时间：{{list.desChargeTime}}出发</span></div>
+                    <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startLoadName}}</span></div>
+                    <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.上海XX}}</span></div>
+                    <!-- <p class="order">订单号：{{list.orderNo}}</p> -->
                 </div>
-                {{if list.status == "1"}}
-                <div class="btn-box border-thin"><span class="btn">取消预约</span></div>
-                {{/if}}
+                
+                <div class="btn-box border-thin">
+                    <p class="tip">注：{{list.specialTip}}</p>
+                    {{if list.statusName == "待审核"}}
+                    <div class="btn border-thin" reserveId="item.reserveId">取消预约</div>
+                    {{/if}}
+                </div>
             </li>
         {{/each}}
     </script>
