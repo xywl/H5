@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv= "Cache-Control" content= "no-cache" /> 
+    <meta http-equiv= "Expires" content= "0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <title>登录</title>       
+</head>
+<body>
+    <!-- wap头部 start-->
+    <div class="header-blank"></div>
+    <header class="header-common">
+        <section>
+            <div class="goback"></div>
+            <div class="h-title">登录</div>
+            <div class="btn"></div>
+        </section>
+    </header>
+    <div class="login-wrapper">
+        <div class="login-btn" id="loginBtn"><i></i><span>微信登录</span></div>
+    </div>
+    <br>
+    <input style="height: 40px;width: 100%" class="ipt" type="text" name="船舶位置" placeholder="code复制" id="XXX" />
+    <script type="text/javascript">
+    var loginUrl = 'temp/data/login.json';//登录
+    </script>
+    <script src="./scripts/zepto.min.js"></script>
+    <script type="text/javascript">
+    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        if(boatIndex.isAndroid){
+            window.doBack = function(){
+                android.doFinish();
+            }
+        }
+        $('#loginBtn').on('click',function(){
+            alert(22);
+            if(boatIndex.isAndroid){
+                android.doWXLogin();
+            }           
+        });
+        //处理微信登录
+        window.doWXLoginComplete = function(code){
+            $('#XXX').val(code);
+            $.ajax({
+                url: loginUrl,
+                dataType:"json",
+                type:"POST", 
+                data:{
+                    code: code
+                },
+                success:function(data){
+                    if(data.success && data.token){
+                        //保存token
+                        if(boatIndex.isAndroid){
+                            android.saveUserTag(userTag);
+                        }
+                        else{
+                            setCookie('token',data.token,30);
+                        }
+                        setTimeout(function(){
+                            if(data.isShip){
+                                //绑定船，进预约页面
+                                window.location.href = 'page02.html';
+                            }
+                            else{
+                                //没绑定船，进船舶信息填写页面
+                                window.location.href = 'page01.html';
+                            }
+                        },100);
+                    }
+                    else if(data.errorMessage){
+                        boatIndex.toast(data.errorMessage);
+                    }
+                },
+                error:function(){
+                    boatIndex.toast('登录失败，请重新登录');
+                }
+            });
+        }
+        //存cookie
+        function setCookie(name, value, iDay){
+            var oDate=new Date();
+            oDate.setDate(oDate.getDate()+iDay);     
+            document.cookie=name+'='+encodeURIComponent(value)+';expires='+oDate;       
+        }
+    });
+    </script>
+</body>
+</html>

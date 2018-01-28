@@ -1,0 +1,868 @@
+@charset "UTF-8";
+
+/*
+*transition
+*/
+
+
+/*
+*transform
+*/
+
+
+/*
+*translate
+*/
+
+
+/*
+*translate
+*/
+
+
+/*
+*rotate
+*/
+
+
+/*
+* @param {number} $borderWidthes    set border width, four numbers express top right bottom left
+* @param {number} $borderColor    set border color, but if value equal 0, express set width equal 0
+* @param {number} $radius set   border radius
+* @param {number} $style set   border style
+*/
+
+
+/*
+YUI 3.17.2 (build 9c3c78e)
+Copyright 2014 Yahoo! Inc. All rights reserved.
+Licensed under the BSD License.
+http://yuilibrary.com/license/
+*/
+
+
+/*
+  TODO will need to remove settings on HTML since we can't namespace it.
+  TODO with the prefix, should I group by selector or property for weight savings?
+*/
+
+html {
+    color: #333;
+    background: #f2f2f2;
+}
+
+
+/*
+  TODO remove settings on BODY since we can't namespace it.
+*/
+
+
+/*
+  TODO test putting a class on HEAD.
+    - Fails on FF. 
+*/
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+fieldset,
+img {
+    border: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/*
+  TODO think about hanlding inheritence differently, maybe letting IE6 fail a bit...
+*/
+
+address,
+caption,
+cite,
+code,
+dfn,
+em,
+strong,
+th,
+var {
+    font-style: normal;
+    font-weight: normal;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+caption,
+th {
+    text-align: left;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+
+q:before,
+q:after {
+    content: '';
+}
+
+abbr,
+acronym {
+    border: 0;
+    font-variant: normal;
+}
+
+
+/* to preserve line-height and selector appearance */
+
+sup {
+    vertical-align: text-top;
+}
+
+sub {
+    vertical-align: text-bottom;
+}
+
+input,
+textarea,
+select {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    *font-size: 100%;
+    /*to enable resizing for IE*/
+}
+
+
+/*because legend doesn't inherit in IE */
+
+legend {
+    color: #000;
+}
+
+
+/* YUI CSS Detection Stamp */
+
+#yui3-css-stamp.cssreset {
+    display: none;
+}
+
+html {
+    font-size: 625%;
+    overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+html,
+body {
+    min-width: 320px;
+    max-width: 750px;
+    margin: 0 auto;
+    background-color: #f3f4f6;
+    color: #353d44;
+    font: 12px/1.5 arial, tahoma, SimHei;
+    overflow: auto;
+}
+
+@media screen and (min-width: 320px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 360px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 375px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media screen and (min-width: 384px) {
+    html {
+        font-size: 20.48px;
+    }
+}
+
+@media screen and (min-width: 400px) {
+    html {
+        font-size: 21.33px;
+    }
+}
+
+@media screen and (min-width: 414px) {
+    html {
+        font-size: 22.08px;
+    }
+}
+
+@media screen and (min-width: 424px) {
+    html {
+        font-size: 22.11px;
+    }
+}
+
+@media screen and (min-width: 480px) {
+    html {
+        font-size: 25.6px;
+    }
+}
+
+@media screen and (min-width: 540px) {
+    html {
+        font-size: 28.8px;
+    }
+}
+
+
+body {
+    font-size: 12px;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+}
+
+:not(input, textarea) {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+input {
+    border: 0;
+    -webkit-appearance: none;
+    outline: none;
+}
+  
+.scroll-loading {
+  text-align: center;
+  height: 37px;
+  padding-top: 15px;
+  font: 12px/1.5 arial,tahoma,SimHei;
+  color: #333; }
+
+.scroll-loading .loading-flag {
+  background: url(https://resjrprd.suning.com/finance/public/v1/style/svg/req-loading-333.svg) no-repeat 0px 0px;
+  background-size: 14px;
+  padding-left: 14px;
+  display: inline; }
+.hide {
+    display: none !important;
+}
+/*1px边框 start*/
+.border-thin {
+  position: relative; }
+
+.border-thin input {
+  outline: none; }
+
+.border-thin:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  content: "";
+  box-sizing: border-box;
+  pointer-events: none;
+  border: 0;
+  transform-origin: 0 0;
+  -webkit-transform-origin: 0 0;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  /*用虚拟键盘的时候需要z-index，不然border会被遮住*/
+  z-index: 100; }
+
+.ios *:before {
+  /*handle ios border-right invalide*/
+  border-top-left-radius: 1px;
+  border-bottom-left-radius: 1px; }
+
+@media (-webkit-min-device-pixel-ratio: 2) {
+  .border-thin:before {
+    width: 200%;
+    height: 200%;
+    transform: scale(0.5);
+    -webkit-transform: scale(0.5); } }
+@media (-webkit-min-device-pixel-ratio: 3) {
+  .border-thin:before {
+    width: 200%;
+    height: 200%;
+    transform: scale(0.5);
+    -webkit-transform: scale(0.5); } }
+/*1px边框 end*/
+
+/*header start*/
+.header-blank {
+    height: 2.2rem;
+}
+
+.header-common {
+    background: #fff;
+    box-shadow: 0px 2px 2px #e5e6e8;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    min-width: 320px;
+    max-width: 750px;
+    z-index: 99999;
+}
+
+.header-common section {
+    display: -webkit-box;
+    height: 2.2rem;
+    line-height: 2.2rem;
+}
+
+.header-common .goback,
+.header-common .btn {
+    width: 2rem;
+}
+
+.header-common .goback i{
+    display: block;
+    width: 2rem;
+    height: 2.2rem;
+    background: url(../images/left.png) no-repeat center;
+    background-size: .5rem;
+}
+
+.header-common .h-title {
+    -webkit-box-flex: 1;
+    text-align: center;
+    font-size: .9rem;
+}
+
+/*header end*/
+.nav-blank{
+  height: 3rem;
+}
+.nav-list{
+  display: flex;
+  background: #fff;
+  height: 2.5rem;
+  position: fixed;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  z-index:999;
+}
+.nav-list:before{
+  border-top: 1px solid #ddd;
+}
+.nav-list li{
+  flex: 1;
+  text-align: center;
+  z-index: 999;
+}
+.nav-list li i{
+  width: 1.05rem;
+  height: 1.05rem;
+  display: block;
+  margin: .45em auto 0;
+}
+.nav-list li .icon1{
+  background: url(../images/icon-nav1.png) no-repeat center;
+  background-size: 100%; 
+}
+.nav-list li p{
+  color:#999;
+  font-size: .7rem;
+}
+.nav-list li.on p{
+  color: #e4393c;
+}
+.nav-list li.on .icon1{
+  background: url(../images/icon-nav1-on.png) no-repeat center;
+  background-size: 100%; 
+}
+.nav-list li .icon2{
+  background: url(../images/icon-nav2.png) no-repeat center;
+  background-size: 100%; 
+}
+.nav-list li.on .icon2{
+  background: url(../images/icon-nav2-on.png) no-repeat center;
+  background-size: 100%; 
+}
+.nav-list li .icon3{
+  background: url(../images/icon-nav3.png) no-repeat center;
+  background-size: 100%; 
+}
+.nav-list li.on .icon3{
+  background: url(../images/icon-nav3-on.png) no-repeat center;
+  background-size: 100%; 
+}
+.edit-wrapper {
+    background: #fff;
+    padding-left: .5rem;
+}
+
+.edit-wrapper li {
+    height: 3rem;
+    line-height: 3rem;
+    display: -webkit-box;
+}
+.edit-wrapper li:before {
+  border-bottom: 1px solid #dadada;
+}
+
+.edit-wrapper li:last-child {
+    border-bottom: 0;
+}
+.edit-wrapper li .left {
+    width: 4.5rem;
+    color: #777;
+    font-size: 0.9rem;
+}
+.edit-wrapper li .left1{
+   width: 5.5rem;
+}
+.edit-wrapper li .left2{
+   width: 6rem;
+   text-align: right;
+}
+.edit-wrapper li .right {
+    -webkit-box-flex: 1;
+    padding: .8rem .5rem .8rem 0;
+    line-height: 1.4rem;
+}
+
+.edit-wrapper li input {
+    width: 100%;
+    font-size: .8rem;
+    line-height: 1.4rem;
+    display: block;
+    color: #363636;
+    text-align: right;
+    overflow: hidden;
+}
+
+.btn-common {
+    background: #4c4b5b;
+    height: 2.6rem;
+    color: #fff;
+    text-align: center;
+    line-height: 2.6rem;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    margin: 1rem 0.7rem;
+}
+.btn-common:active{
+  background: #747386;
+}
+.btn-common.gray {
+    background: #D2D2D2;
+}
+
+/*附近货物*/
+
+.order-list li {
+    background: #fff;
+    box-shadow: 0px 2px 2px #e5e6e8;
+    margin: 10px 10px 0;
+    color: #777;
+    font-size: .8rem;
+}
+
+.order-list li .info-box {
+    padding: 0 .75rem .5rem;
+}
+
+.order-list li .o-title {
+    color: #333;
+    font-size: 1rem;
+    display: flex;
+    line-height: 1.8rem;
+    margin-bottom: .3rem;
+    padding: .3rem .75rem;
+}
+.order-list li .o-title2{
+  margin: 0;
+  padding: .5rem .75rem 0;
+}
+
+.order-list li .o-title:before{
+  border-bottom: 1px solid #dadada;
+}
+.order-list li .o-title .name{
+  flex: 1;
+}
+.order-list li .o-title .state{
+  color:#999;
+}
+.order-list li .time {
+    margin-bottom: .15rem;
+}
+
+.order-list li .info {
+}
+
+.order-list li i,
+.order-list li span {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.order-list li .icon-time {
+    width: .65rem;
+    height: .65rem;
+    background: url(../images/icon-time.png) no-repeat center;
+    background-size: .6rem;
+    margin-right: .8rem;
+}
+
+.order-list li .info i {
+    width: .45rem;
+    height: .45rem;
+    border-radius: 50%;
+    margin-left: .1rem;
+    margin-right: .9rem;
+}
+
+.order-list li .icon-start {
+    background: #35c7a3;
+}
+
+.order-list li .icon-end {
+    background: #ff8d47;
+}
+
+.order-list li .tip {
+    color: #ff8d47;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -webkit-box-flex:1;
+    margin-right: .2rem;
+    font-size: .7rem;
+    text-align: left;
+    height: 1.8rem;
+    line-height: 1.8rem;
+}
+.order-list li .order{
+  color:#999;
+}
+.order-list li .btn-box {
+    padding: .4rem .75rem;
+    text-align: right;
+    display: -webkit-box;
+    align-items: center;
+}
+.order-list li .btn-box:before {
+    border-top: 1px solid #dadada;
+}
+.order-list li .btn {
+    height: 1.8rem;
+    line-height: 1.7rem;
+    border-radius: .2rem;
+    width: 5rem;
+    font-size: .8rem;
+    color: #e4393c;
+    text-align: center;
+}
+.order-list li .btn:before{
+    border: 1px solid #e4393c;
+    border-radius: .4rem;
+}
+.wrapper{
+  background: #fff;
+  box-shadow: 0px 2px 2px #e5e6e8;
+  margin-top: .5rem;
+}
+.pic-list{
+  display: flex;
+  padding:.75rem .5rem;
+}
+.pic-list li{
+  flex:1;
+  padding: 0 .5rem;
+}
+.pic-list li .name{
+  height: 1.6rem;
+  line-height: 1.6rem;
+  font-size: .9rem;
+  color:#777;
+  margin-bottom: .1rem;
+}
+.pic-list li>div{
+  position: relative;
+  height:5rem;
+  text-align: center;
+  color:#909090;
+  font-size: .9rem;
+}
+.pic-list li>div{
+  border:1px dashed #cacaca;
+}
+.pic-list li i{
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 1rem auto 0;
+  background: url(../images/icon-add.png) no-repeat center;
+  background-size: 100%; 
+}
+.pic-list li p{
+  line-height: 2rem;
+}
+.pic-list li .choose{
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  background-position: center;
+  background-repeat: no-repeat; 
+  background-size:cover;
+}
+.pic-list li .choose img{
+  width: 100%;
+  display: block;
+}
+.info-wrapper{
+  margin:.5rem;
+  color:#777;
+  font-size: .9rem;
+  line-height: 1.4rem;
+  padding: 1rem;
+}
+.info-wrapper .tel{
+  color:#39f;
+}
+.btn-line{
+  display: flex;
+  margin:0 .25rem;
+  margin-top: 1.5rem;
+}
+.btn-line .btn{
+  flex: 1;
+  margin: 0 .25rem;
+  height: 2.6rem;
+  line-height: 2.6rem;
+  text-align: center;
+  font-size: 1.2rem;
+  border-radius: .25rem;
+}
+.btn-line .btn-orange{
+  background: #FF7533;
+  color:#fff;
+}
+.btn-line .btn-white{
+  color:#ff8d47;
+  background: #fff;
+}
+
+.btn-line .btn-white:before{
+  border:1px solid #ff8d47;
+  border-radius:5px;
+}
+.arrow{
+  display: inline-block;
+  width: .4rem;
+  height: .4rem;
+  border-top:1px solid #999; 
+  border-left:1px solid #999;
+  transform: rotate(135deg);
+}
+.user-list li{
+  height: 3rem;
+  line-height: 3rem;
+  display: flex;
+  color:#777;
+  padding: 0 .5rem;
+}
+.user-list li.border-thin:before{
+  border-bottom: 1px solid #dadada;
+}
+.user-list li:last-child{
+  border:0;
+}
+.user-list li .left{
+  flex: 1;
+  font-size: .9rem
+}
+
+.news-list li {
+    background: #fff;
+    box-shadow: 0px 2px 2px #e5e6e8;
+    margin: 10px 10px 0;
+    color: #777;
+    font-size: .8rem;
+}
+.news-list li .info-box {
+    padding: .75rem .75rem .5rem;
+}
+.news-list li .i-title{
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.3rem;
+    display: flex;
+}
+.news-list li .time{
+  color:#999;
+}
+.news-list li .order{
+  color:#999;
+  margin-top: .25rem;
+}
+.map-box{
+  position: absolute;
+  top:2.2rem;
+  bottom: 0;
+  left: 0;
+  right:0;
+}
+.map-box .map{
+  height:100%;
+}
+.map-box .its-place{
+  position: absolute;
+  top:.5rem;
+  left: .5rem;
+  right: .5rem;
+  background: #fff;
+  height: 2rem;
+  line-height: 2rem;
+  box-shadow: 0px 2px 2px #e5e6e8;
+  font-size: .9rem;
+  padding: 0 .5rem;
+  color:#777;
+}
+.map-box .local{
+  position: absolute;
+  background: url(../images/icon-place.png) no-repeat center;
+  background-size: 100%;
+  width: 1.5rem;
+  height: 1.5rem;
+  top:50%;
+  left: 50%;
+  margin-left: -0.75rem;
+  margin-top: -1.5rem;
+}
+.bottom-btn{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: .5rem;
+  background: #fff;
+}
+.bottom-btn .btn{
+  height: 2.2rem;
+  line-height: 2.2rem;
+  text-align: center;
+  font-size: .85rem;
+  color:#fff;
+  background: #4c4b5b;
+  border-radius: .25rem;
+}
+.error-box{
+  position: absolute;
+  top:0;
+  left: 0;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.error-box .icon{
+  display: inline-block;
+  border-radius: 50%;
+  background: #ff8d47;
+  width: 6rem;
+  height: 6rem;
+  line-height: 6.4rem;
+  color:#fff;
+  margin: 30% auto 0;
+  font-size: 4.5rem;
+  text-align: center;
+  font-weight: bold;
+}
+.error-box .msg{
+  line-height: 2rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+/*微信登录*/
+.login-wrapper{
+  padding-top: 30%;
+  box-sizing: border-box;
+}
+
+.login-btn{
+  background: rgb(9, 187, 7);
+  height: 2.8rem;
+  line-height: 2.8rem;
+  color: #fff;
+  font-size: 1.1rem;
+  border-radius: 1.4rem;
+  text-align: center;
+  margin: 0 1rem;
+}
+.login-btn span{
+  display: inline-block;
+  vertical-align: middle;
+}
+.login-btn i{
+  display: inline-block;
+  vertical-align: middle;
+  width: 1.3rem;
+  height: 1.3rem;
+  background: url(../images/icon-wx.png) no-repeat center;
+  background-size: 100%;
+  margin-right: .5rem;
+}

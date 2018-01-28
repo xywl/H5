@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv= "Cache-Control" content= "no-cache" /> 
+    <meta http-equiv= "Expires" content= "0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <title>关于我们</title>       
+</head>
+<body>
+    <!-- wap头部 start-->
+    <div class="header-blank"></div>
+    <header class="header-common">
+        <section>
+            <div class="goback"><i></i></div>
+            <div class="h-title">关于我们</div>
+            <div class="btn"></div>
+        </section>
+    </header>
+    <div class="wrapper">
+        <ul class="user-list">
+            <li class="border-thin">
+                <div class="left">联系电话：11111111111111</div>
+            </li>
+            <li class="border-thin">
+                <div class="left">APP最新版本号：V1.0</div>
+            </li>
+            <li class="border-thin">
+                <div class="left">产品介绍：XXXXXXXXXXXXXXXXXXXXX</div>
+            </li>
+        </ul>
+    </div>
+    <ul class="nav-list">
+        <li><i class="icon1"></i><p>抢单</p></li>
+        <li><i class="icon2"></i><p>航程</p></li>
+        <li><i class="icon3"></i><p>我的</p></li>
+    </ul>
+    <div class="nav-blank"></div>
+    <script src="./scripts/zepto.min.js"></script>
+    <script type="text/javascript">
+    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        $('.goback').bind('click',function(){
+            window.location.href = 'page07.html';
+        });
+        window.doBack = function(){
+            window.location.href = 'page07.html';
+        }
+    });
+    </script>
+</body>
+</html>

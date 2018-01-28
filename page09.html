@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv= "Cache-Control" content= "no-cache" /> 
+    <meta http-equiv= "Expires" content= "0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <title>编辑资料</title>       
+</head>
+<body>
+    <!-- wap头部 start-->
+    <div class="header-blank"></div>
+    <header class="header-common">
+        <section>
+            <div class="goback"><i></i></div>
+            <div class="h-title">编辑资料</div>
+            <div class="btn"></div>
+        </section>
+    </header>
+    <div class="wrapper">
+        <ul class="edit-wrapper">
+            <li class="border-thin">
+                <div class="left">船号</div>
+                <div class="right"><input class="ipt" type="text" name="船号" value="XXXXX" placeholder="请输入船号" readonly /></div>
+            </li>
+            <li class="border-thin">
+                <div class="left">姓名</div>
+                <div class="right"><input class="ipt" type="text" name="姓名" value="张三" placeholder="请输入姓名" readonly /></div>
+            </li>
+            <li class="border-thin">
+                <div class="left">手机号</div>
+                <div class="right"><input class="ipt" type="text" lx="phone" name="手机号码" value="139****1111" placeholder="请输入手机号" readonly /></div>
+            </li>
+        </ul>
+        <ul class="pic-list">
+            <li>
+                <p class="name">上传身份证</p>
+                <div>
+                    <i></i>
+                    <p>正面</p>
+                    <label class="choose" for="file1"></label>
+                    <input id="file1" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
+                </div>
+            </li>
+            <li>
+                <p class="name"></p>
+                <div>
+                    <i></i>
+                    <p>反面</p>
+                    <label class="choose" for="file2"></label>
+                    <input id="file" accept="image/png,image/jpeg" type="file2" name="images" class="file-input hide">
+                </div>
+            </li>
+        </ul>
+        <ul class="pic-list">
+            <li>
+                <p class="name">上传银行卡</p>
+                <div>
+                    <i></i>
+                    <p>正面</p>
+                    <label class="choose" for="file3"></label>
+                    <input id="file" accept="image/png,image/jpeg" type="file3" name="images" class="file-input hide">
+                </div>
+            </li>
+            <li>
+                <p class="name"></p>
+                <div>
+                    <i></i>
+                    <p>反面</p>
+                    <label class="choose" for="file4"></label>
+                    <input id="file" accept="image/png,image/jpeg" type="file4" name="images" class="file-input hide">
+                </div>
+            </li>
+        </ul>
+        <ul class="pic-list">
+            <li>
+                <p class="name">船舶证件照</p>
+                <div>
+                    <i></i>
+                    <p>船舶证件照</p>
+                    <label class="choose" for="file5"></label>
+                    <input id="file" accept="image/png,image/jpeg" type="file5" name="images" class="file-input hide">
+                </div>
+            </li>
+            <li>
+                
+            </li>
+        </ul>
+    </div>
+    <div class="btn-common" id="submitBtn">提交</div>
+    <ul class="nav-list">
+        <li><i class="icon1"></i><p>抢单</p></li>
+        <li><i class="icon2"></i><p>航程</p></li>
+        <li><i class="icon3"></i><p>我的</p></li>
+    </ul>
+    <div class="nav-blank"></div>
+    <script src="./scripts/zepto.min.js"></script>
+    <script type="text/javascript">
+    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        $('.goback').bind('click',function(){
+            window.location.href = 'page07.html';
+        });
+        window.doBack = function(){
+            window.location.href = 'page07.html';
+        }
+        var $file = $('.file-input'),
+            choose = $('.choose');
+        if(boatIndex.isAndroid) {
+            choose.bind('click',function(){
+                var id = $(this).next('input').attr('id');
+                if(android){
+                    android.showImgSelectDialog(id);
+                }
+            });
+        }
+        window.showH5Img = function(id,url){
+            if(!url){
+                $.hidePreloader();
+                boatIndex.toast('图片上传失败，请重新尝试')
+                return;
+            }
+            var imgTag = $('#'+id).prev('label'),
+                cssImgUrl = 'url(' + url + ')';
+            imgTag.css("background-image",cssImgUrl);
+            $.hidePreloader();
+        }
+
+        $file.on("change", function(e) {
+            var $this = $(this);
+            formUploadFile(e.target.files[0], function(data) {
+                //返回图片地址
+                var url = data.data.filePath;
+                //生成缩略图
+                var imgTag = $this.prev('label'),
+                cssImgUrl = 'url(' + url + ')';
+                imgTag.css("background-image",cssImgUrl);
+                $.hidePreloader();
+            }, function(json) {
+                boatIndex.toast('图片上传失败，请重新尝试');
+            });
+        }, false);
+        
+        window.showLoading = function(msg){
+            var msg = msg || '加载中';
+            $.showPreloader(msg);
+            setTimeout(function(){
+                $.hidePreloader();
+            },5000);
+        }
+        //文件上传方法
+        function formUploadFile(file, success, error) {
+            if (file.size > 1024 * 1024 * 5) {
+                boatIndex.toast("图片不能超过5M");
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            if (xhr.upload) {
+                xhr.onreadystatechange = function(e) {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            if (success != undefined) {
+                                success(JSON.parse(xhr.responseText));
+                            }
+                        } else {
+                            if (error != undefined) {
+                                error(JSON.parse(xhr.responseText));
+                            }
+                        }
+                    }
+                };
+                // 开始上传
+                xhr.open("POST", uploadFileUrl, true);
+                var formData = new FormData();
+                formData.append("fileName", file);
+                xhr.send(formData);
+            }
+        }
+        //submit
+        $('#submitBtn').bind('touchend',function(){
+            for(var i=0;i<$('.ipt').length;i++){
+                var list = $('.ipt').eq(i),
+                    val = list.val(),
+                    reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+                if(val == ''){
+                    var name = list.attr('name');
+                    $.toast('请输入'+name);
+                    return;
+                }
+                if(list.attr('lx') == 'phone' && !reg.test(val)){
+                    $.toast('请输入正确的手机号码');
+                    return;
+                }
+            }
+        });
+    });
+    
+</body>
+</html>

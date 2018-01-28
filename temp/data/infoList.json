@@ -1,0 +1,101 @@
+{
+    "total": 20,
+    "list": [
+        {
+            "leftDispatchId":"111",
+            "goodsName":"散装，煤炭100吨",
+            "disChargeTime":"2018-01-29 18:00:00",
+            "startLoadId":"",
+            "startLoadName":"南京XX",
+            "endLoadId":"",
+            "endLoadName":"上海XX",
+            "specialTip":"XXXXXXXXXXXXXXXXXX"
+        },
+        {
+            "leftDispatchId":"111",
+            "goodsName":"散装，煤炭100吨",
+            "disChargeTime":"2018-01-29 18:00:00",
+            "startLoadId":"",
+            "startLoadName":"南京XX",
+            "endLoadId":"",
+            "endLoadName":"上海XX",
+            "specialTip":"XXXXXXXXXXXXXXXXXX"
+        },
+        {
+            "leftDispatchId":"111",
+            "goodsName":"散装，煤炭100吨",
+            "disChargeTime":"2018-01-29 18:00:00",
+            "startLoadId":"",
+            "startLoadName":"南京XX",
+            "endLoadId":"",
+            "endLoadName":"上海XX",
+            "specialTip":"XXXXXXXXXXXXXXXXXX"
+        },{
+            "leftDispatchId":"111",
+            "goodsName":"散装，煤炭100吨",
+            "disChargeTime":"2018-01-29 18:00:00",
+            "startLoadId":"",
+            "startLoadName":"南京XX",
+            "endLoadId":"",
+            "endLoadName":"上海XX",
+            "specialTip":"XXXXXXXXXXXXXXXXXX"
+        },{
+            "leftDispatchId":"111",
+            "goodsName":"散装，煤炭100吨",
+            "disChargeTime":"2018-01-29 18:00:00",
+            "startLoadId":"",
+            "startLoadName":"南京XX",
+            "endLoadId":"",
+            "endLoadName":"上海XX",
+            "specialTip":"XXXXXXXXXXXXXXXXXX"
+        },
+        {
+            "leftDispatchId":"111",
+            "goodsName":"散装，煤炭100吨",
+            "disChargeTime":"2018-01-29 18:00:00",
+            "startLoadId":"",
+            "startLoadName":"南京XX",
+            "endLoadId":"",
+            "endLoadName":"上海XX",
+            "specialTip":"XXXXXXXXXXXXXXXXXX"
+        },
+        {
+            "leftDispatchId":"111",
+            "goodsName":"散装，煤炭100吨",
+            "disChargeTime":"2018-01-29 18:00:00",
+            "startLoadId":"",
+            "startLoadName":"南京XX",
+            "endLoadId":"",
+            "endLoadName":"上海XX",
+            "specialTip":"XXXXXXXXXXXXXXXXXX"
+        },{
+            "leftDispatchId":"111",
+            "goodsName":"散装，煤炭100吨",
+            "disChargeTime":"2018-01-29 18:00:00",
+            "startLoadId":"",
+            "startLoadName":"南京XX",
+            "endLoadId":"",
+            "endLoadName":"上海XX",
+            "specialTip":"XXXXXXXXXXXXXXXXXX"
+        },
+        {
+            "leftDispatchId":"111",
+            "goodsName":"散装，煤炭100吨",
+            "disChargeTime":"2018-01-29 18:00:00",
+            "startLoadId":"",
+            "startLoadName":"南京XX",
+            "endLoadId":"",
+            "endLoadName":"上海XX",
+            "specialTip":"XXXXXXXXXXXXXXXXXX"
+        },{
+            "leftDispatchId":"111",
+            "goodsName":"散装，煤炭100吨",
+            "disChargeTime":"2018-01-29 18:00:00",
+            "startLoadId":"",
+            "startLoadName":"南京XX",
+            "endLoadId":"",
+            "endLoadName":"上海XX",
+            "specialTip":"XXXXXXXXXXXXXXXXXX"
+        }
+    ]
+}
