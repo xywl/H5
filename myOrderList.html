@@ -13,18 +13,18 @@
     <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
     <title>我的订单</title>       
 </head>
-<body>
+<body style="min-height: 100%;">
     <!-- wap头部 start-->
     <div class="header-blank"></div>
     <header class="header-common">
         <section>
-            <div class="goback"><!-- <i></i> --></div>
+            <div class="goback"></div>
             <div class="h-title">我的订单</div>
             <div class="btn"></div>
         </section>
     </header>
     <ul class="order-list"></ul>
-    <ul class="nav-list">
+    <ul class="nav-list border-thin">
         <li><i class="icon1"></i><p>抢单</p></li>
         <li class="on"><i class="icon2"></i><p>航程</p></li>
         <li><i class="icon3"></i><p>我的</p></li>
@@ -32,7 +32,7 @@
     <div class="nav-blank"></div>
     <script type="text/html" id="listTempl">
         {{each list as list i}}
-            <li status="{{list.status}}">
+            <li statusCode ="{{list.statusCode}}" statusName="{{list.statusName}}">
                 <div class="o-title o-title2">
                     <div class="name">{{list.goodsName}}{{list.preTon}}吨</div>
                     <div class="state"><span>{{list.statusName}}</span><i class="arrow"></i></div>
@@ -40,18 +40,21 @@
                 <div class="info-box">
                     <div class="time"><i class="icon-time"></i><span>装货时间：{{list.desChargeTime}}出发</span></div>
                     <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startLoadName}}</span></div>
-                    <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.上海XX}}</span></div>
-                    <!-- <p class="order">订单号：{{list.orderNo}}</p> -->
+                    <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endLoadName}}</span></div>
                 </div>
                 
                 <div class="btn-box border-thin">
                     <p class="tip">注：{{list.specialTip}}</p>
                     {{if list.statusName == "待审核"}}
-                    <div class="btn border-thin" reserveId="item.reserveId">取消预约</div>
+                    <div class="btn border-thin" reserveId="{{list.reserveId}}">取消预约</div>
                     {{/if}}
                 </div>
             </li>
         {{/each}}
+    </script>
+    <script>
+        var myOrderUrl = 'temp/data/orderList.json',
+            cancelUrl = 'temp/data/cancel.json';
     </script>
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
@@ -62,7 +65,7 @@
             }
         }
         var params = {
-            url:'temp/data/orderList.json',
+            url: myOrderUrl,
             data:{},
             parent:$('.order-list'),
             templateId:'listTempl',
@@ -70,35 +73,36 @@
             maxRecords:1000,
             success:function(json, ajaxOptions, elements){
                 $(elements).each(function(index,element){
-                    var status = $(element).attr('status');
-                    $(element).find('.btn').bind('touchend',function(){
-                        if(status == '1'){
+                    var statusName = $(this).attr('statusName'),
+                        btn = $(element).find('.btn'),
+                        reserveId = btn.attr('reserveId');
+                    if(statusName == '待审核'){
+                        btn.bind('click',function(){
                             boatIndex.commonAjax({
-                                url:'temp/data/checkUser.json',
-                                data: {},
+                                url: cancelUrl,
+                                data: {
+                                    reserveId: reserveId
+                                },
                                 success:function(data){
                                     if(data.success){
-                                        boatIndex.toast('取消成功');
+                                        boatIndex.toast('订单已关闭');
                                         setTimeout(function(){
                                             location.reload();
                                         },1000);
                                     }
+                                    else if(data.msg){
+                                        boatIndex.toast(data.msg);
+                                    }
                                 },
                                 error:function(data){
-                                    boatIndex.toast('取消失败');
+                                    boatIndex.toast('网络连接失败，请稍后重试...');
                                 }
                             });
-                        }
-                        else if(status == '3'){
-                            window.location.href = 'page06.html';
-                        } 
-                    });
-                    $(element).find('.info-box').bind('touchend',function(){
-                        var status = $(this).attr('status');
-                        if(status == '1'){
-                            window.location.href = 'page04.html';
-                        } 
-                    });
+                        });
+                        $(element).find('.info-box').bind('click',function(){
+                            window.location.href = 'appointSuccess.html?id=' + reserveId ;
+                        });
+                    }
                 });
             }
         };

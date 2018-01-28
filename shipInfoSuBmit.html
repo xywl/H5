@@ -80,12 +80,12 @@
                     if(data.success){
                         window.location.href = 'page02.html';
                     }
-                    else{
-                        if(data.responseMsg)boatIndex.toast(data.responseMsg);
+                    else if(data.msg){
+                        boatIndex.toast(data.msg);
                     }
                 },
                 error:function(data){
-                    boatIndex.toast('上传失败');
+                    boatIndex.toast('网络连接失败，请稍后重试...');
                 }
             });
         });

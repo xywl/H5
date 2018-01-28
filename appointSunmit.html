@@ -64,26 +64,26 @@
     <input type="hidden" id="lat">
     <input type="hidden" id="lng">
     <div class="btn-common" id="submitBtn">提交</div>
-    <ul class="nav-list">
+    <ul class="nav-list border-thin">
         <li><i class="icon1"></i><p>抢单</p></li>
         <li><i class="icon2"></i><p>航程</p></li>
         <li><i class="icon3"></i><p>我的</p></li>
     </ul>
     <div class="nav-blank"></div>
     <script type="text/javascript">
-        //var uploadFileUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/file/upfile';//文件上传地址
-        var uploadFileUrl = 'http://192.168.0.147:16721/xyl/file/upfile';//图片上传
+        var uploadFileUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/file/upfile',//图片上传
+            infoSubmitUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/leftDispatchInfo/add';//提交
     </script>
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        var leftDispatchId = boatIndex.getQueryString('leftDispatchId') || '';
+        var leftDispatchId = boatIndex.getQueryString('id') || '';
         $('.goback').bind('click',function(){
-            window.location.href = 'page02.html';
+            window.location.href = 'grabOrderList.html';
         });
         window.doBack = function(){
-            window.location.href = 'page02.html';
+            window.location.href = 'grabOrderList.html';
         }
         $("#arriveTime").datetimePicker({});
         var $file = $('.file-input'),
@@ -92,7 +92,7 @@
             choose.bind('click',function(){
                 var id = $(this).next('input').attr('id');
                 if(android){
-                    android.showImgSelectDialog(id);
+                    android.showImgSelectDialog(2,id);
                 }
             });
         }
@@ -105,7 +105,7 @@
             var imgTag = $('#'+id).prev('label'),
                 cssImgUrl = 'url(' + url + ')';
             imgTag.css("background-image",cssImgUrl);
-            imgTag.attr("img-url",cssImgUrl);
+            imgTag.attr("img-url",url);
             $.hidePreloader();
         }
 
@@ -118,10 +118,10 @@
                 var imgTag = $this.prev('label'),
                 cssImgUrl = 'url(' + url + ')';
                 imgTag.css("background-image",cssImgUrl);
-                imgTag.attr("img-url",cssImgUrl);
+                imgTag.attr("img-url",url);
                 $.hidePreloader();
             }, function(json) {
-                boatIndex.toast('图片上传失败，请重新尝试');
+                boatIndex.toast('图片上传失败，请重新尝试...');
             });
         }, false);
         
@@ -162,7 +162,7 @@
         }
         //点击地址
         $('#boatLocation').bind('click',function(){
-            window.location.href = 'page11.html';
+            window.location.href = 'map.html';
         });
         
         //获取经纬度
@@ -188,6 +188,8 @@
                         //表示获取成功那么 r 这个参数就包含有当前的地理位置经纬度
                         var p_x = r.latitude;
                         var p_y = r.longitude;
+                        $('#lat').val(p_x);
+                        $('#lng').val(p_y);
                 　　　　 var geoc = new BMap.Geocoder();
              　　　　　　var pt = new BMap.Point(p_y, p_x);//实例化这两个点
                         // 创建信息窗口对象，把信息在初始化 地图信息窗口类的同时写进去
@@ -223,40 +225,40 @@
                     boatIndex.toast("请输入正确的手机号码");
                     return;
                 }
-                var chooseImg = $('.choose');
-                for(var j=0;j<chooseImg.length;j++){
-                    var imgUrl = chooseImg.eq(j).attr('img-url');
-                    if(!imgUrl){
-                        var msg = chooseImg.eq(j).attr('msg');
-                        boatIndex.toast('请上传'+ msg);
-                        return;
-                    }
+            }
+            var chooseImg = $('.choose');
+            for(var j=0;j<chooseImg.length;j++){
+                var imgUrl = chooseImg.eq(j).attr('img-url');
+                if(!imgUrl){
+                    var msg = chooseImg.eq(j).attr('msg');
+                    boatIndex.toast('请上传'+ msg);
+                    return;
                 }
             }
             boatIndex.commonAjax({
                 url: infoSubmitUrl,
+                type: "POST",
                 data: {
-                    lat:$('lat').val(),
-                    lng:$('lng').val(),
-                    preLoad:$('appointNo').val(),
-                    preArrivePortTime:$('arriveTime').val(),
+                    lat:$('#lat').val(),
+                    lng:$('#lng').val(),
+                    preLoad:$('#appointNo').val(),
+                    preArrivePortTime:$('#arriveTime').val(),
                     shipEmptyPhoto:$('.choose').eq(0).attr('img-url'),
                     shipReference:$('.choose').eq(1).attr('img-url'),
                     leftDispatchId: leftDispatchId
                 },
                 success:function(data){
-                    if(data.success){
-                        window.location.href='page04.html'
+                    if(data.success && dara.id){
+                        window.location.href='appointSuccess.html&id=' + dara.id;
                     }
-                    else{
-                        if(data.responseMsg)boatIndex.toast(data.responseMsg);
-                    }
+                    else if(data.msg){
+                        boatIndex.toast(data.msg);
+                    } 
                 },
                 error:function(data){
-                    boatIndex.toast('上传失败');
+                    boatIndex.toast('网络连接失败，请稍后重试...');
                 }
             });
-            
         });
     });
     </script>

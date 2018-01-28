@@ -344,7 +344,12 @@ input {
     transform: scale(0.5);
     -webkit-transform: scale(0.5); } }
 /*1px边框 end*/
-
+.modal{
+  position: fixed;
+}
+.toast{
+  z-index: 99999;
+}
 /*header start*/
 .header-blank {
     height: 2.2rem;
@@ -393,7 +398,7 @@ input {
 .nav-list{
   display: flex;
   background: #fff;
-  height: 2.5rem;
+  height: 3.2rem;
   position: fixed;
   left: 0;
   width: 100%;
@@ -409,41 +414,37 @@ input {
   z-index: 999;
 }
 .nav-list li i{
-  width: 1.05rem;
-  height: 1.05rem;
+  width: 1.3rem;
+  height: 1.3rem;
   display: block;
-  margin: .45em auto 0;
-}
-.nav-list li .icon1{
-  background: url(../images/icon-nav1.png) no-repeat center;
-  background-size: 100%; 
+  margin: .65em auto .1rem;
+  background: url(../images/icon-nav.png) no-repeat center;
+  background-size: 4.15rem;
 }
 .nav-list li p{
-  color:#999;
+  color:#5e5c69;
   font-size: .7rem;
 }
 .nav-list li.on p{
   color: #e4393c;
 }
+.nav-list li .icon1{
+  background-position: 0 0;
+}
 .nav-list li.on .icon1{
-  background: url(../images/icon-nav1-on.png) no-repeat center;
-  background-size: 100%; 
+  background-position: 0 -1.55rem;
 }
 .nav-list li .icon2{
-  background: url(../images/icon-nav2.png) no-repeat center;
-  background-size: 100%; 
+  background-position: -1.55rem 0;
 }
 .nav-list li.on .icon2{
-  background: url(../images/icon-nav2-on.png) no-repeat center;
-  background-size: 100%; 
+  background-position: -1.55rem -1.55rem;
 }
 .nav-list li .icon3{
-  background: url(../images/icon-nav3.png) no-repeat center;
-  background-size: 100%; 
+  background-position: -2.85rem 0;
 }
 .nav-list li.on .icon3{
-  background: url(../images/icon-nav3-on.png) no-repeat center;
-  background-size: 100%; 
+  background-position: -2.85rem -1.55rem;
 }
 .edit-wrapper {
     background: #fff;
@@ -556,12 +557,16 @@ input {
     vertical-align: middle;
 }
 
+.order-list li span{
+  font-size: .9rem;
+}
+
 .order-list li .icon-time {
     width: .65rem;
     height: .65rem;
     background: url(../images/icon-time.png) no-repeat center;
     background-size: .6rem;
-    margin-right: .8rem;
+    margin-right: .6rem;
 }
 
 .order-list li .info i {
@@ -569,7 +574,7 @@ input {
     height: .45rem;
     border-radius: 50%;
     margin-left: .1rem;
-    margin-right: .9rem;
+    margin-right: .7rem;
 }
 
 .order-list li .icon-start {
@@ -581,7 +586,7 @@ input {
 }
 
 .order-list li .tip {
-    color: #ff8d47;
+    color: #777;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -697,7 +702,7 @@ input {
   font-size: 1.2rem;
   border-radius: .25rem;
 }
-.btn-line .btn-orange{
+.btn-line .btn-red{
   background: #e4393c;
   color:#fff;
 }
@@ -744,7 +749,7 @@ input {
     font-size: .8rem;
 }
 .news-list li .info-box {
-    padding: .75rem .75rem .5rem;
+    padding: .55rem .75rem .5rem;
 }
 .news-list li .i-title{
     color: #333;

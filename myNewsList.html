@@ -11,61 +11,60 @@
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
-    <title>张三</title>       
+    <title>我的消息</title>       
 </head>
 <body>
     <!-- wap头部 start-->
     <div class="header-blank"></div>
     <header class="header-common">
         <section>
-            <div class="goback"><!-- <i></i> --></div>
-            <div class="h-title">张三</div>
+            <div class="goback"><i></i></div>
+            <div class="h-title">我的消息</div>
             <div class="btn"></div>
         </section>
     </header>
-    <div class="wrapper">
-        <ul class="user-list">
-            <li class="border-thin">
-                <div class="left">修改资料</div>
-                <div class="right"><i class="arrow"></i></div>
-            </li>
-            <li class="border-thin">
-                <div class="left">我的消息</div>
-                <div class="right"><i class="arrow"></i></div>
-            </li>
-            <li class="border-thin">
-                <div class="left">关于我们</div>
-                <div class="right"><i class="arrow"></i></div>
-            </li>
-        </ul>
-    </div>
-    <div class="btn-common" id="submitBtn">退出登录</div>
-    <ul class="nav-list">
+    <ul class="news-list"></ul>
+    <ul class="nav-list border-thin">
         <li><i class="icon1"></i><p>抢单</p></li>
         <li><i class="icon2"></i><p>航程</p></li>
         <li class="on"><i class="icon3"></i><p>我的</p></li>
     </ul>
     <div class="nav-blank"></div>
+    <script type="text/html" id="listTempl">
+        {{each list as list i}}
+            <li>
+               <div class="info-box">
+                    <div class="i-title">{{list.title}}</div>
+                    <div class="time">{{list.time}}</div>
+                    <p class="order">{{list.content}}</p>
+                </div>
+            </li>
+        {{/each}}
+    </script>
+    <script>
+        var messageListUrl = 'temp/data/newsList.json';
+    </script>
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        if(boatIndex.isAndroid){
-            window.doBack = function(){
-                if(android)android.doFinish();
-            }
-        }
-        $('.user-list li').bind('click',function(){
-            var index = $(this).index();
-            if(index == 0){
-                window.location.href = 'page09.html';
-            }
-            else if(index == 1){
-                window.location.href = 'page10.html';
-            }
-            else if(index == 2){
-                window.location.href = 'page08.html';
-            }
+        $('.goback').bind('click',function(){
+            window.location.href = 'userInfo.html';
         });
+        window.doBack = function(){
+            window.location.href = 'userInfo.html';
+        }
+        var params = {
+            url: messageListUrl,
+            data:{},
+            parent:$('.news-list'),
+            templateId:'listTempl',
+            steps:10,
+            maxRecords:1000,
+            success:function(data){
+            }
+        };
+        var scroll = boatIndex.scrolledAjax(params);
+    
     });
     </script>
 </body>

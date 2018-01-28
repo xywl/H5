@@ -18,12 +18,12 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             $.ajax({
                 url: options.url,
                 dataType:"json",
-                type: options.dataType || "GET", 
+                type: options.type || "GET", 
                 data: options.data || {},
                 async: options.async || true,//请求是否异步，默认为异步
-                beforeSend: function(request) {                
-                    request.setRequestHeader("Authorization", token);
-                },
+                // beforeSend: function(request) {                
+                //     request.setRequestHeader("Authorization", token);
+                // },
                 success: function(data){
                     if(options.success)options.success(data);
                 },
@@ -44,7 +44,6 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                 userTag = name ? name : _this.getCookie(name);
             }
             else{
-                console.log(name)
                 userTag = _this.getCookie(name);
             }
             return userTag
@@ -66,13 +65,21 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             oDate.setDate(oDate.getDate()+iDay);     
             document.cookie=name+'='+encodeURIComponent(value)+';expires='+oDate;       
         },
+        //清除cookie
+        delCookie: function(name){
+            var exp = new Date();
+            exp.setTime(exp.getTime() - 1);
+            var cval = this.getCookie(name);
+            if(cval!=null)
+            document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+        },
         //获取Url参数
         getQueryString: function(name) { 
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
             var r = window.location.search.substr(1).match(reg); 
             if (r != null) return unescape(r[2]); 
             return null; 
-        } 
+        },
         /*
          * function toas弹窗
          * @param msg {string}

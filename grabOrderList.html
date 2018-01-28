@@ -126,11 +126,14 @@
                             data:{},
                             success:function(data){
                                 if(data.success){
-                                    window.location.href = 'page03.html?leftDispatchId=' + leftDispatchId;
+                                    window.location.href = 'page03.html?id=' + leftDispatchId;
                                 }
-                                else{
-                                    //window.location.href = 'page03.html?orderNo=' + orderNo;
+                                else if(data.msg){
+                                    boatIndex.toast(data.msg);
                                 }
+                            },
+                            error: function(){
+                                boatIndex.toast('网络连接失败，请稍后重试...');
                             }
                         })
                     });

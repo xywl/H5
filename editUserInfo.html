@@ -27,15 +27,15 @@
         <ul class="edit-wrapper">
             <li class="border-thin">
                 <div class="left">船号</div>
-                <div class="right"><input class="ipt" type="text" name="船号" value="XXXXX" placeholder="请输入船号" readonly /></div>
+                <div class="right"><input class="ipt" type="text" name="船号" placeholder="请输入船号" id="shipNo" readonly /></div>
             </li>
             <li class="border-thin">
                 <div class="left">姓名</div>
-                <div class="right"><input class="ipt" type="text" name="姓名" value="张三" placeholder="请输入姓名" readonly /></div>
+                <div class="right"><input class="ipt" type="text" name="姓名" placeholder="请输入姓名" id="realName" readonly /></div>
             </li>
             <li class="border-thin">
                 <div class="left">手机号</div>
-                <div class="right"><input class="ipt" type="text" lx="phone" name="手机号码" value="139****1111" placeholder="请输入手机号" readonly /></div>
+                <div class="right"><input class="ipt" type="text" lx="phone" name="手机号码" placeholder="请输入手机号" id="phoneNo" readonly /></div>
             </li>
         </ul>
         <ul class="pic-list">
@@ -44,7 +44,7 @@
                 <div>
                     <i></i>
                     <p>正面</p>
-                    <label class="choose" for="file1"></label>
+                    <label class="choose" for="file1" msg="身份证正面"></label>
                     <input id="file1" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                 </div>
             </li>
@@ -53,8 +53,8 @@
                 <div>
                     <i></i>
                     <p>反面</p>
-                    <label class="choose" for="file2"></label>
-                    <input id="file" accept="image/png,image/jpeg" type="file2" name="images" class="file-input hide">
+                    <label class="choose" for="file2" msg="身份证反面"></label>
+                    <input id="file2" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                 </div>
             </li>
         </ul>
@@ -64,8 +64,8 @@
                 <div>
                     <i></i>
                     <p>正面</p>
-                    <label class="choose" for="file3"></label>
-                    <input id="file" accept="image/png,image/jpeg" type="file3" name="images" class="file-input hide">
+                    <label class="choose" for="file3" msg="银行卡正面"></label>
+                    <input id="file3" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                 </div>
             </li>
             <li>
@@ -73,8 +73,8 @@
                 <div>
                     <i></i>
                     <p>反面</p>
-                    <label class="choose" for="file4"></label>
-                    <input id="file" accept="image/png,image/jpeg" type="file4" name="images" class="file-input hide">
+                    <label class="choose" for="file4" msg="银行卡正面"></label>
+                    <input id="file4" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                 </div>
             </li>
         </ul>
@@ -84,8 +84,8 @@
                 <div>
                     <i></i>
                     <p>船舶证件照</p>
-                    <label class="choose" for="file5"></label>
-                    <input id="file" accept="image/png,image/jpeg" type="file5" name="images" class="file-input hide">
+                    <label class="choose" for="file5" msg="船舶证件照"></label>
+                    <input id="file5" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                 </div>
             </li>
             <li>
@@ -94,21 +94,60 @@
         </ul>
     </div>
     <div class="btn-common" id="submitBtn">提交</div>
-    <ul class="nav-list">
+    <ul class="nav-list border-thin">
         <li><i class="icon1"></i><p>抢单</p></li>
         <li><i class="icon2"></i><p>航程</p></li>
         <li><i class="icon3"></i><p>我的</p></li>
     </ul>
     <div class="nav-blank"></div>
+    <script type="text/javascript">
+        var uploadFileUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/file/upfile',//图片上传
+            infoSubmitUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/leftDispatchInfo/add';//提交
+    </script>
+    <script>
+        var userInfoUrl = 'temp/data/userInfo.json'
+    </script>
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         $('.goback').bind('click',function(){
-            window.location.href = 'page07.html';
+            window.location.href = 'userInfo.html';
         });
         window.doBack = function(){
-            window.location.href = 'page07.html';
+            window.location.href = 'userInfo.html';
         }
+        boatIndex.commonAjax({
+            url: userInfoUrl,
+            async: false,//同步
+            data: {},
+            success:function(data){
+                if(data.success){
+                    if(data.shipNo)$('#shipNo').val(data.shipNo);
+                    if(data.realName)$('#realName').val(data.realName);
+                    if(data.phoneNo)$('#phoneNo').val(data.phoneNo);
+                    renderImg('file1',data.certPhotoZ);
+                    renderImg('file2',data.certPhotoF);
+                    renderImg('file3',data.bankNoPhotoZ);
+                    renderImg('file4',data.bankNoPhotoF);
+                    renderImg('file5',data.shipCertPhoto);
+                    function renderImg(id,imgUrl){
+                        if(imgUrl){
+                            var cssImgUrl = 'url(' + imgUrl + ')',
+                            box = $('#'+id).prev('label');
+                            box.css('background-image',cssImgUrl);
+                            box.attr('img-url',imgUrl);
+                        }
+                        
+                    }
+                }
+                else if(data.msg){
+                    boatIndex.toast(data.msg);
+                }
+            },
+            error:function(data){
+                boatIndex.toast('网络连接失败，请稍后重试...');
+            }
+        });
         var $file = $('.file-input'),
             choose = $('.choose');
         if(boatIndex.isAndroid) {
@@ -128,6 +167,7 @@
             var imgTag = $('#'+id).prev('label'),
                 cssImgUrl = 'url(' + url + ')';
             imgTag.css("background-image",cssImgUrl);
+            imgTag.attr("img-url",url);
             $.hidePreloader();
         }
 
@@ -140,6 +180,7 @@
                 var imgTag = $this.prev('label'),
                 cssImgUrl = 'url(' + url + ')';
                 imgTag.css("background-image",cssImgUrl);
+                imgTag.attr("img-url",url);
                 $.hidePreloader();
             }, function(json) {
                 boatIndex.toast('图片上传失败，请重新尝试');
@@ -182,23 +223,46 @@
             }
         }
         //submit
-        $('#submitBtn').bind('touchend',function(){
-            for(var i=0;i<$('.ipt').length;i++){
-                var list = $('.ipt').eq(i),
-                    val = list.val(),
-                    reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
-                if(val == ''){
-                    var name = list.attr('name');
-                    $.toast('请输入'+name);
-                    return;
-                }
-                if(list.attr('lx') == 'phone' && !reg.test(val)){
-                    $.toast('请输入正确的手机号码');
+        $('#submitBtn').bind('click',function(){
+            var chooseImg = $('.choose');
+            for(var j=0;j<chooseImg.length;j++){
+                var imgUrl = chooseImg.eq(j).attr('img-url');
+                if(!imgUrl){
+                    var msg = chooseImg.eq(j).attr('msg');
+                    boatIndex.toast('请上传'+ msg + '照片');
                     return;
                 }
             }
+            boatIndex.commonAjax({
+                url: infoSubmitUrl,
+                type: "POST",
+                data: {
+                    shipNo: $('#shipNo').val(),
+                    realName: $('#realName').val(),
+                    preLoad: $('#phoneNo').val(),
+                    certPhotoZ: $('.choose').eq(0).attr('img-url'),
+                    certPhotoF: $('.choose').eq(1).attr('img-url'),
+                    bankNoPhotoZ: $('.choose').eq(2).attr('img-url'),
+                    bankNoPhotoF: $('.choose').eq(3).attr('img-url'),
+                    shipCertPhoto: $('.choose').eq(4).attr('img-url')
+                },
+                success:function(data){
+                    if(data.success){
+                        boatIndex.toast('订单已关闭');
+                        setTimeout(function(){
+                            location.reload();
+                        },1000);
+                    }
+                    else if(data.msg){
+                        boatIndex.toast(data.msg);
+                    } 
+                },
+                error:function(data){
+                    boatIndex.toast('网络连接失败，请稍后重试...');
+                }
+            });
         });
     });
-    
+    </script>
 </body>
 </html>

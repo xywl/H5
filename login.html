@@ -61,7 +61,7 @@
                             android.saveUserTag(userTag);
                         }
                         else{
-                            setCookie('token',data.token,30);
+                            boatIndex.setCookie('token',data.token,30);
                         }
                         setTimeout(function(){
                             if(data.isShip){
@@ -82,12 +82,6 @@
                     boatIndex.toast('登录失败，请重新登录');
                 }
             });
-        }
-        //存cookie
-        function setCookie(name, value, iDay){
-            var oDate=new Date();
-            oDate.setDate(oDate.getDate()+iDay);     
-            document.cookie=name+'='+encodeURIComponent(value)+';expires='+oDate;       
         }
     });
     </script>

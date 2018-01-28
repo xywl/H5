@@ -28,53 +28,51 @@
         联系电话：<a class="tel" href="tel:025-1111111">025-1111111<a>
     </div>
     <div class="btn-line">
-        <div class="btn btn-orange" id="confirmBtn">确定</div>
+        <div class="btn btn-red" id="confirmBtn">确定</div>
         <div class="btn btn-white border-thin" id="cancelBtn">取消预约</div>
     </div>
-    <ul class="nav-list">
+    <ul class="nav-list border-thin">
         <li><i class="icon1"></i><p>抢单</p></li>
         <li><i class="icon2"></i><p>航程</p></li>
         <li><i class="icon3"></i><p>我的</p></li>
     </ul>
     <div class="nav-blank"></div>
+    <script>
+        var cancelUrl = 'temp/data/cancel.json';
+    </script>
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        var reserveId = boatIndex.getQueryString('id') || '';
         $('.goback').bind('click',function(){
-            window.location.href = 'page02.html';
+            window.location.href = 'appointSunmit.html';
         });
         window.doBack = function(){
-            window.location.href = 'page02.html';
+            window.location.href = 'appointSunmit.html';
         }
-        //确定
+        //确定预约
         $('#confirmBtn').bind('click',function(){
-            window.location.href = 'page05.html';
-        });
-        //取消
-        $('#cancelBtn').bind('click',function(){
             boatIndex.commonAjax({
-                url: infoSubmitUrl,
+                url: cancelUrl,
                 data: {
-                    lat:$('lat').val(),
-                    lng:$('lng').val(),
-                    preLoad:$('appointNo').val(),
-                    preArrivePortTime:$('arriveTime').val(),
-                    shipEmptyPhoto:$('.choose').eq(0).attr('img-url'),
-                    shipReference:$('.choose').eq(1).attr('img-url')
+                    reserveId: reserveId
                 },
                 success:function(data){
                     if(data.success){
-                        window.location.href='page04.html'
+                        window.location.href='page05.html'
                     }
-                    else{
-                        if(data.responseMsg)boatIndex.toast(data.responseMsg);
+                    else if(data.msg){
+                        boatIndex.toast(data.msg);
                     }
                 },
                 error:function(data){
-                    boatIndex.toast('上传失败');
+                    boatIndex.toast('网络连接失败，请稍后重试...');
                 }
             });
-            window.location.href = 'page05.html';
+        });
+        //取消预约
+        $('#cancelBtn').bind('click',function(){
+            window.location.href = 'myOrderList.html';
         });
 
     });
