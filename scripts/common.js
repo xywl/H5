@@ -1,9 +1,9 @@
 lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
     var userAgent = navigator.userAgent.toLowerCase();
+    alert(userAgent)
     var boatIndex = {
         isAndroid: !!(userAgent.indexOf('android') > -1 || userAgent.indexOf('Linux') > -1),//是否是安卓
         isIos: !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),//是否是IOS
-
         /*
          * function ajax请求
          * @param  {[Object]} options [参数配置]
@@ -81,7 +81,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             return null; 
         },
         /*
-         * function toas弹窗
+         * function toast弹窗
          * @param msg {string}
          */
         toast: function(msg){
