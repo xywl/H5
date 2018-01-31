@@ -29,7 +29,7 @@
     <br>
     <input style="height: 40px;width: 100%" class="ipt" type="text" name="船舶位置" placeholder="code复制" id="XXX" />
     <script type="text/javascript">
-    var loginUrl = 'temp/data/login.json';//登录
+    var loginUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/sign/oauth/weixin/';//登录
     </script>
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
@@ -48,12 +48,10 @@
         window.doWXLoginComplete = function(code){
             $('#XXX').val(code);
             $.ajax({
-                url: loginUrl,
+                url: loginUrl + code,
                 dataType:"json",
                 type:"POST", 
-                data:{
-                    code: code
-                },
+                data:{},
                 success:function(data){
                     if(data.success && data.token){
                         //保存token
