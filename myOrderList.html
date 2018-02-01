@@ -23,7 +23,9 @@
             <div class="btn"></div>
         </section>
     </header>
-    <ul class="order-list"></ul>
+    <div class="content">
+        <ul class="order-list"></ul>
+    </div>
     <ul class="nav-list border-thin">
         <li><i class="icon1"></i><p>抢单</p></li>
         <li class="on"><i class="icon2"></i><p>航程</p></li>
@@ -107,6 +109,12 @@
             }
         };
         var scroll = boatIndex.scrolledAjax(params);
+        scroll.createPulldownRefresh({
+            pullDownArea: $('.order-list'),
+            maxDragY: 120,
+            endCallback: function(){
+            }
+       });
     });
     </script>
 </body>

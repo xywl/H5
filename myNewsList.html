@@ -23,7 +23,9 @@
             <div class="btn"></div>
         </section>
     </header>
-    <ul class="news-list"></ul>
+    <div class="content">
+        <ul class="news-list"></ul>
+    </div>
     <ul class="nav-list border-thin">
         <li><i class="icon1"></i><p>抢单</p></li>
         <li><i class="icon2"></i><p>航程</p></li>
@@ -64,7 +66,12 @@
             }
         };
         var scroll = boatIndex.scrolledAjax(params);
-    
+        scroll.createPulldownRefresh({
+            pullDownArea: $('.news-list'),
+            maxDragY: 120,
+            endCallback: function(){
+            }
+       });
     });
     </script>
 </body>

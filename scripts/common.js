@@ -1,9 +1,11 @@
 lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
     var userAgent = navigator.userAgent.toLowerCase();
-    alert(userAgent)
+    //alert(userAgent)
     var boatIndex = {
         isAndroid: !!(userAgent.indexOf('android') > -1 || userAgent.indexOf('Linux') > -1),//是否是安卓
         isIos: !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),//是否是IOS
+        isXYWL: !!(userAgent.indexOf('xywl') > -1 ),//app
+        isWeiXin: !!(userAgent.indexOf('micromessenger') > -1 ),//微信
         /*
          * function ajax请求
          * @param  {[Object]} options [参数配置]
@@ -11,19 +13,19 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
         commonAjax: function(options){
             var _this = this;
             var token = _this.getUserTag('token');
-            // if(!token){
-            //     window.location.href = 'login.html';
-            //     return;
-            // }
+            if(!token){
+                window.location.href = 'login.html';
+                return;
+            }
             $.ajax({
                 url: options.url,
                 dataType:"json",
                 type: options.type || "GET", 
                 data: options.data || {},
                 async: options.async || true,//请求是否异步，默认为异步
-                // beforeSend: function(request) {                
-                //     request.setRequestHeader("Authorization", token);
-                // },
+                beforeSend: function(request) {                
+                    request.setRequestHeader("token", token);
+                },
                 success: function(data){
                     if(options.success)options.success(data);
                 },
@@ -39,14 +41,14 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
         getUserTag: function(name){
             var _this = this;
             var userTag = '';
-            if(_this.isAndroid){
-                var name = android.getUserTag() || '';
-                userTag = name ? name : _this.getCookie(name);
+            if(_this.isXYWL){
+                var userId = $('#userId').val();
+                userTag = userId ? userId : _this.getCookie(name);
             }
             else{
                 userTag = _this.getCookie(name);
             }
-            return userTag
+            return userTag;
         },
         /*
          * function 获取cookie
@@ -331,6 +333,9 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                     if (loader) {
                         loader.remove();
                     }
+                    if (this.pulldownRefresh) {
+                        this.pulldownRefresh.destory();
+                    }
                 },
                 resetRemainTimes: function() {
                     remainTimes = 3;
@@ -341,6 +346,38 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                     if (this.ajaxObject) {
                         this.ajaxObject.abort();
                     };
+                },
+                createPulldownRefresh: function(options) {
+                    var element = options.element,
+                        pullDownArea = options.pullDownArea || parent,
+                        insertBeforeEl = options.insertBeforeEl,
+                        endCallback = options.endCallback,
+                        id = options.id,
+                        ids = id ? id.split(' ') : [],
+                        elementObj = parent.find('.ui-pulldown-refresh').length === 0;
+                    if (!element) {
+                        var html = '<div class="ui-pulldown-refresh">' + '<div style="bottom:' + (options.bottom || 0) + ';">' + '<i></i>' + '<span>下拉刷新</span>' + '</div>' + '</div>';
+                        elementObj ? html : html = '';
+                        insertBeforeEl = insertBeforeEl || pullDownArea;
+                        element = $(html).insertBefore(insertBeforeEl);
+                    }
+
+                    var self = this;
+                    //pulldown下拉刷新页面
+                    this.pulldownRefresh = boatIndex.pulldownRefresh({
+                        element: element,
+                        maxDragY: options.maxDragY || 80,
+                        pullDownArea: pullDownArea,
+                        insertBeforeEl: insertBeforeEl,
+                        endCallback: function(opt) {
+                            //创建ajax
+                            self.abort();
+                            self.update(ids, opt);
+                            if (!!endCallback) {
+                                endCallback();
+                            }
+                        }
+                    });
                 },
                 update: function(ids, opt) {
                     var list = firstStatus.list,
@@ -418,18 +455,230 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                 }
             }
         },
+        pulldownRefresh: function(opt) { //下拉刷新页面
+            var _this = this;
+            var insertBeforeEl = opt.insertBeforeEl,
+                element = opt.element,
+                destory = false,
+                noDie = opt.noDie,
+                tipEl = element.find('div');
+            var startY, endY, subY, startX, sMoveX, sMoveY, endX, scrollTop, bodyHeight,
+                // 清空位移
+                moveX = 0,
+                moveY = 0;
+
+            function hide() {
+                element.css({ "height": "0" });
+            }
+
+            function animation() {
+                element.css({ "-webkit-transition": "height 0.4s ease" });
+            }
+
+            function clearLick() {
+                element.css({ "-webkit-transition": "" });
+            }
+
+            function refreshNoData() {
+                element.find("span").html("已是最新数据");
+                element.find("i").addClass("ui-hide");
+                //延时显示
+                setTimeout(function() {
+                    hide();
+                    element.css({ "-webkit-transition": "height 0.5s liner" });
+                }, 1000);
+            }
+            boatIndex.touchstart(insertBeforeEl, function(event){
+                if (destory) return;
+                startX = event.screenX;
+                startY = event.screenY;
+                scrollTop = $(window).scrollTop();
+                $('.zc-title .title-list').css('opacity', 0).hide();
+                bodyHeight = $("body").height();
+                clearLick();
+            });
+            boatIndex.touchmove(insertBeforeEl,function(event){
+                if (destory) return;
+                if (scrollTop > 0) {
+                    return;
+                }
+                endX = event.screenX;
+                endY = event.screenY;
+                moveX = endX - startX;
+                moveY = endY - startY;
+                //过滤横向移动
+                sMoveX = moveX < 0 ? -moveX : moveX;
+                sMoveY = (moveY < 0 ? -moveY : moveY);
+
+
+                if (sMoveX * 2 > sMoveY) {
+                    return true;
+                }
+
+                var maxDragY = opt.maxDragY || 80;
+
+
+                var showRefreshTipY = 50;
+                if (moveY < 0) {
+                    return;
+                }
+                element.find("i").removeClass("load");
+                //下拉代码
+                if (scrollTop == 0) {
+                    subY = (moveY / bodyHeight * moveY);
+                    subY = subY > maxDragY ? maxDragY : subY;
+                    element.find("i").removeClass("ui-hide");
+
+                    if (subY > showRefreshTipY && subY <= maxDragY) {
+                        element.find("span").html("释放立即刷新");
+                        element.find("i").addClass("up");
+                    } else {
+                        element.find("span").html("下拉刷新");
+                        element.find("i").removeClass("up");
+                    }
+                    element.css({ "height": subY + "px" });
+                    tipEl.css({ 'margin-left': -tipEl.width() / 2 });
+                    return false;
+                }
+            });
+            boatIndex.touchend(insertBeforeEl, function(event){
+                if (destory) return;
+
+                if (sMoveX > sMoveY) {
+                    return true;
+                }
+                var scrollTop = document.body.scrollTop;
+                if (element.find("i").hasClass("load") && scrollTop < 0) {
+                    element.find("i").removeClass("load");
+                    opt.stopStaut = true;
+                    opt.endCallback(opt);
+                    if (scrollTop > 40) {
+                        document.body.scrollTop = 0;
+                    }
+                    hide();
+                }
+                if ((moveY < 0 || scrollTop !== 0) && element.find("i").hasClass("load")) return false;
+                if (moveY > 0) {
+                    //加载代码
+                    if (opt.endCallback && element.find("i").hasClass("up")) {
+                        opt.stopStaut = false;
+                        opt.hide = hide;
+                        opt.refreshNoData = refreshNoData;
+                        element.find("span").html("加载中...");
+                        element.find("i").addClass("load");
+                        element.css({ "height": "36px" });
+                        tipEl.css({ 'margin-left': -tipEl.width() / 2 });
+                        opt.endCallback(opt);
+                    } else {
+                        hide();
+                    }
+                }
+                animation();
+                // 清空位移
+                moveX = 0;
+                moveY = 0;
+            });
+
+            return {
+                destory: function() {
+                    if (!noDie) {
+                        element.remove();
+                    }
+                    destory = true;
+                }
+            }
+        },
+        registerListener: function($el, eventName, selector, handler){
+            if(!handler){
+                handler = selector;
+                selector = undefined;
+            }
+            var mobile = boatIndex.touchstart || touchstart.isIos,
+                eventNames = {
+                    touchstart: {
+                        name: mobile ? "touchstart" : "mousedown",
+                        path: "touches"
+                    },
+                    touchmove: {
+                        name: mobile ? "touchmove" : "mousemove",
+                        path: "touches"
+                    },
+                    touchend: {
+                        name: mobile ? "touchend" : "mouseup",
+                        path: "changedTouches"
+                    },
+                    touchcancel: {
+                        name: mobile ? "touchcancel" : "mouseup",
+                        path: "touches"
+                    }
+                },
+                config = eventNames[eventName],
+                newListener = function(event){
+                    var evt = event[config.path]?event[config.path][0]:event, self = this;
+                    if(handler){
+                        return handler.call(self, evt, event);
+                    }
+                },
+                args = [config.name, selector, newListener];
+            if(!selector){
+                args = [config.name, newListener];
+            }
+            $el.on.apply($el, args);
+        },
+        /*
+         * function 拖动开始事件
+         * @param  {[Element]} $el [触发对象]
+         * @param  {[string]} selector [选择器]
+         * @param  {[function]} handler [事件回调]
+         */
+        touchstart: function($el, selector, handler){
+            this.registerListener($el, "touchstart", selector, handler);
+        },
+        /*
+         * function 拖动移动事件
+         * @param  {[Element]} $el [触发对象]
+         * @param  {[string]} selector [选择器]
+         * @param  {[function]} handler [事件回调]
+         */
+        touchmove: function($el, selector, handler){
+            this.registerListener($el, "touchmove", selector, handler);
+        },
+        /*
+         * function 拖动结束事件
+         * @param  {[Element]} $el [触发对象]
+         * @param  {[string]} selector [选择器]
+         * @param  {[function]} handler [事件回调]
+         */
+        touchend: function($el, selector, handler){
+            this.registerListener($el, "touchend", selector, handler);
+        },
+        /*
+         * function 拖动取消事件
+         * @param  {[Element]} $el [触发对象]
+         * @param  {[string]} selector [选择器]
+         * @param  {[function]} handler [事件回调]
+         * @param  {[object]} data [绑定数据]
+         */
+        touchcancel: function($el, selector, handler, data){
+            this.registerListener($el, "touchcancel", selector, handler, data);
+        },
         addEvent:function(){
+            var _this = this;
+            if(_this.isXYWL && XYNative && $('#userId').length > 0)XYNative.getUserId('getNativeId');
+            window.getNativeId = function(id){
+                $('#userId').val(id);
+            }
             $('.nav-list li').bind('click',function(){
                 if($(this).hasClass('on'))return;
                 var index = $(this).index();
                 if(index == 0){
-                    window.location.href = 'page02.html';
+                    window.location.href = 'index.html';
                 }
                 else if(index == 1){
-                    window.location.href = 'page05.html';
+                    window.location.href = 'myOrderList.html';
                 }
                 else if(index == 2){
-                    window.location.href = 'page07.html';
+                    window.location.href = 'userInfo.html';
                 }
             });
         },
@@ -440,5 +689,3 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
     boatIndex.init();
     return boatIndex;
 });
-
-

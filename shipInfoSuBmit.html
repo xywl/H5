@@ -23,6 +23,7 @@
             <div class="btn"></div>
         </section>
     </header>
+    <input type="hidden" class="userId">
     <div class="wrapper">
         <ul class="edit-wrapper">
             <li class="border-thin">
@@ -50,6 +51,12 @@
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        $('.goback').bind('click',function(){
+            window.location.href = 'login.html';
+        });
+        window.doBack = function(){
+            window.location.href = 'login.html';
+        }
         //点击提交
         $('#submitBtn').bind('click',function(){
             //校验

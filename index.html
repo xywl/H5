@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv= "Cache-Control" content= "no-cache" /> 
+    <meta http-equiv= "Expires" content= "0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <title>附近货物</title>       
+</head>
+<body>
+    <!-- wap头部 start-->
+    <div class="header-blank"></div>
+    <header class="header-common">
+        <section>
+            <div class="goback"></div>
+            <div class="h-title">附近货物</div>
+            <div class="btn"></div>
+        </section>
+    </header>
+    <div class="content">
+        <ul class="order-list"></ul>
+    </div>
+    <input type="hidden" id="lat">
+    <input type="hidden" id="lng">
+    <input type="hidden" class="userId">
+    <ul class="nav-list border-thin">
+        <li class="on"><i class="icon1"></i><p>抢单</p></li>
+        <li><i class="icon2"></i><p>航程</p></li>
+        <li><i class="icon3"></i><p>我的</p></li>
+    </ul>
+    <div class="nav-blank"></div>
+    <script type="text/html" id="listTempl">
+        {{each list as list i}}
+            <li>
+                <div class="o-title border-thin">
+                    <div class="name">{{list.goodsName}}{{list.preTon}}吨</div>
+                </div>
+                <div class="info-box">
+                    <div class="time"><i class="icon-time"></i><span>装货时间：{{list.disChargeTime}}出发</span></div>
+                    <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startLoadName}}</span></div>
+                    <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endLoadName}}</span></div>
+                    
+                </div>
+                <div class="btn-box border-thin">
+                    <p class="tip">注：{{list.specialTip}}</p>
+                    <div class="btn border-thin" leftDispatchId="{{list.leftDispatchId}}">确认预约</div>
+                </div>
+            </li>
+        {{/each}}
+    </script>
+    <script type="text/javascript">
+        var goodListUrl = 'temp/data/infoList.json',
+            checkAppointUrl = 'temp/data/checkAppoint.json';
+    </script>
+    <script src="./scripts/zepto.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
+    <script type="text/javascript">
+    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+
+        if(boatIndex.isAndroid && boatIndex.isXYWL){
+            window.doBack = function(){
+                XYNative.doFinish();
+            }
+        }
+        //获取经纬度
+        if(boatIndex.isAndroid && boatIndex.isXYWL) {
+            XYNative.getLocation();
+        }
+        else{
+            getAddress();
+        }
+        //获取地址经纬度
+        window.showH5Location = function(lat,lng,address,city){
+            $('#lat').val(lat);
+            $('#lng').val(lng);
+        }
+        function getAddress(){
+            //以下是获取当前的地理位置
+            if (navigator.geolocation) {  //调用导航器geolocation函数
+                var map = new BMap.Map("allmap");
+                var geolocation = new BMap.Geolocation();
+                geolocation.getCurrentPosition(function(r){
+                    if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                        //表示获取成功那么 r 这个参数就包含有当前的地理位置经纬度
+                        $('#lat').val(r.latitude);
+                        $('#lng').val(r.longitude);
+                    }else {
+                        boatIndex.toast('定位失败：'+this.getStatus());
+                    }
+                },{enableHighAccuracy: true});
+            }
+            else{
+                boatIndex.toast("您当前不支持地理定位");//不支持
+            }
+        }
+        //下拉刷新页面
+        var params = {
+            url: goodListUrl,
+            data:{
+                lng: $('#lng').val(),
+                lat: $('#lat').val()
+            },
+            parent:$('.order-list'),
+            templateId:'listTempl',
+            steps:10,
+            maxRecords:1000,
+            success:function(json, ajaxOptions, elements){
+                $(elements).each(function(index,element){
+                    $(element).find('.btn').bind('touchend',function(){
+                        //点击确认预约
+                        var leftDispatchId = $(this).attr('leftDispatchId');
+                        boatIndex.commonAjax({
+                            url:checkAppointUrl,
+                            data:{},
+                            success:function(data){
+                                if(data.success){
+                                    window.location.href = 'page03.html?id=' + leftDispatchId;
+                                }
+                                else if(data.msg){
+                                    boatIndex.toast(data.msg);
+                                }
+                            },
+                            error: function(){
+                                boatIndex.toast('网络连接失败，请稍后重试...');
+                            }
+                        })
+                    });
+                });
+            }
+        };
+       var scroll = boatIndex.scrolledAjax(params);
+       scroll.createPulldownRefresh({
+            pullDownArea: $('.order-list'),
+            maxDragY: 120,
+            endCallback: function(){
+            }
+       })
+    });   
+    </script>
+</body>
+</html>
