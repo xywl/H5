@@ -52,6 +52,12 @@
     <script type="text/javascript">
         lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         $('.goback').bind('click',function(){
+            window.location.href = 'index.html';
+        });
+        window.doBack = function(){
+            window.location.href = 'index.html';
+        }
+        $('.goback').bind('click',function(){
             history.go(-1);
         });
         var $file = $('.file-input'),

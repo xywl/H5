@@ -79,21 +79,13 @@
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         var leftDispatchId = boatIndex.getQueryString('id') || '';
-        $('.goback').bind('click',function(){
-            window.location.href = 'grabOrderList.html';
-        });
-        window.doBack = function(){
-            window.location.href = 'grabOrderList.html';
-        }
         $("#arriveTime").datetimePicker({});
         var $file = $('.file-input'),
             choose = $('.choose');
-        if(boatIndex.isAndroid) {
+        if(boatIndex.isAndroid && boatIndex.isXYML) {
             choose.bind('click',function(){
                 var id = $(this).next('input').attr('id');
-                if(android){
-                    android.showImgSelectDialog(2,id);
-                }
+                XYNative.showImgSelectDialog(2,id);
             });
         }
         window.showH5Img = function(id,url){
@@ -134,8 +126,8 @@
         }
         //文件上传方法
         function formUploadFile(file, success, error) {
-            if (file.size > 1024 * 1024 * 5) {
-                boatIndex.toast("图片不能超过5M");
+            if (file.size > 1024 * 1024 * 10) {
+                boatIndex.toast("图片不能超过10M");
                 return;
             }
             var xhr = new XMLHttpRequest();
@@ -166,8 +158,8 @@
         });
         
         //获取经纬度
-        if(boatIndex.isAndroid) {  
-             if(android)android.getLocation();
+        if(boatIndex.isAndroid && boatIndex.isXYML && XYNative) {  
+             XYNative.getLocation();
         }
         else{
             getAddress();

@@ -88,10 +88,8 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
          */
         toast: function(msg){
             var _this = this;
-            if(_this.isAndroid){
-                if(android){
-                    android.toastMessage(msg);
-                }
+            if(_this.isXYWL && XYNative){
+                XYNative.toastMessage(msg);
             }
             else{
                 $.toast(msg);

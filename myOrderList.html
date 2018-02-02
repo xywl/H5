@@ -40,7 +40,7 @@
                     <div class="state"><span>{{list.statusName}}</span><i class="arrow"></i></div>
                 </div>
                 <div class="info-box">
-                    <div class="time"><i class="icon-time"></i><span>装货时间：{{list.desChargeTime}}出发</span></div>
+                    <div class="time"><i class="icon-time"></i><span>装货时间：{{list.desChargeTime}}</span></div>
                     <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startLoadName}}</span></div>
                     <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endLoadName}}</span></div>
                 </div>
@@ -61,9 +61,9 @@
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        if(boatIndex.isAndroid){
+        if(boatIndex.isAndroid && boatIndex.isXYWL){
             window.doBack = function(){
-                if(android)android.doFinish();
+                XYNative.doFinish();
             }
         }
         var params = {

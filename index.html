@@ -23,12 +23,12 @@
             <div class="btn"></div>
         </section>
     </header>
-    <div class="content">
-        <ul class="order-list"></ul>
-    </div>
     <input type="hidden" id="lat">
     <input type="hidden" id="lng">
     <input type="hidden" class="userId">
+    <div class="content">
+        <ul class="order-list"></ul>
+    </div>
     <ul class="nav-list border-thin">
         <li class="on"><i class="icon1"></i><p>抢单</p></li>
         <li><i class="icon2"></i><p>航程</p></li>
@@ -42,7 +42,7 @@
                     <div class="name">{{list.goodsName}}{{list.preTon}}吨</div>
                 </div>
                 <div class="info-box">
-                    <div class="time"><i class="icon-time"></i><span>装货时间：{{list.disChargeTime}}出发</span></div>
+                    <div class="time"><i class="icon-time"></i><span>装货时间：{{list.disChargeTime}}</span></div>
                     <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startLoadName}}</span></div>
                     <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endLoadName}}</span></div>
                     
@@ -62,7 +62,6 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-
         if(boatIndex.isAndroid && boatIndex.isXYWL){
             window.doBack = function(){
                 XYNative.doFinish();
@@ -112,7 +111,7 @@
             maxRecords:1000,
             success:function(json, ajaxOptions, elements){
                 $(elements).each(function(index,element){
-                    $(element).find('.btn').bind('touchend',function(){
+                    $(element).find('.btn').bind('click',function(){
                         //点击确认预约
                         var leftDispatchId = $(this).attr('leftDispatchId');
                         boatIndex.commonAjax({
@@ -120,7 +119,7 @@
                             data:{},
                             success:function(data){
                                 if(data.success){
-                                    window.location.href = 'page03.html?id=' + leftDispatchId;
+                                    window.location.href = 'appointSunmit.html?id=' + leftDispatchId;
                                 }
                                 else if(data.msg){
                                     boatIndex.toast(data.msg);
@@ -140,7 +139,7 @@
             maxDragY: 120,
             endCallback: function(){
             }
-       })
+       });
     });   
     </script>
 </body>
