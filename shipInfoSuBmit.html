@@ -45,12 +45,13 @@
         </ul>
     </div>
     <div class="btn-common" id="submitBtn">提交</div>
-    <script type="text/javascript">
-        var infoSubmitUrl = 'temp/data/infoSubmit.json';//传播信息上传
-    </script>
+
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        var infoSubmitUrl = boatIndex.appUrl + 'xyl/tempDispatchShip/appAdd';//提交接口
+
+        var token = boatIndex.getQueryString('rnd') || '';
         $('.goback').bind('click',function(){
             window.location.href = 'login.html';
         });
@@ -74,18 +75,34 @@
                     return;
                 }
             }
-
-            boatIndex.commonAjax({
+            $.ajax({
                 url: infoSubmitUrl,
+                type: "POST",
+                dataType:"json",
                 data: {
-                    shipNo:$('boatNum').val(),
-                    userName:$('name').val(),
-                    phoneNo:$('phoneNum').val(),
-                    preTon:$('appointNum').val()
+                    shipNo:$('#boatNum').val(),
+                    name:$('#name').val(),
+                    mobile:$('#phoneNum').val(),
+                    preLoad:$('#appointNum').val()
+                },
+                beforeSend: function(request) {          
+                    request.setRequestHeader("token",token);
                 },
                 success:function(data){
                     if(data.success){
-                        window.location.href = 'index.html';
+                        //保存token
+                        if(boatIndex.isXYWL && boatIndex.nativeClient){
+                            try{
+                                boatIndex.nativeClient.saveUserId(token);
+                            }
+                            catch(e){
+                                alert(e);
+                            }
+                        }
+                        boatIndex.setCookie('token',token,30);
+                        setTimeout(function(){
+                            window.location.href = 'index.html';
+                        },100);
                     }
                     else if(data.msg){
                         boatIndex.toast(data.msg);

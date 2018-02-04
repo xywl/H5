@@ -32,7 +32,7 @@
             </li>
             <li class="border-thin">
                 <div class="left left1">预约吨位</div>
-                <div class="right"><input class="ipt" type="text" name="预约吨位" placeholder="请输入预约吨位" id="appointNo" /></div>
+                <div class="right"><input class="ipt" type="text" name="预约吨位" placeholder="请输入预约吨位" id="preLoad" maxlength="10" /></div>
             </li>
             <li class="border-thin">
                 <div class="left left1">预计到港时间</div>
@@ -70,22 +70,51 @@
         <li><i class="icon3"></i><p>我的</p></li>
     </ul>
     <div class="nav-blank"></div>
+    <!-- http://xingyi.nandasoft-its.com:8080 -->
     <script type="text/javascript">
-        var uploadFileUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/file/upfile',//图片上传
-            infoSubmitUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/leftDispatchInfo/add';//提交
+        
     </script>
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        var leftDispatchId = boatIndex.getQueryString('id') || '';
+        var uploadFileUrl = boatIndex.appUrl +'xyl/file/upfile',//图片上传
+            infoSubmitUrl = boatIndex.appUrl + 'xyl/reservation/add',//提交
+            preLoadUrl = boatIndex.appUrl +'xyl/tempDispatchShip/getAppById';//获取预报吨位
+            //infoSubmitUrl = 'temp/data/shipSubmit.json';
+        var leftId = boatIndex.getQueryString('id') || '';
+        //var token = 'Mzo4YTM2NWYxZTIzZTE4ODMzMjk1M2Q2ZDA3YTJmYWQxMjoxNTIwMjI5Mzg2Njk3'
+        var token = boatIndex.getUserTag('token');
+        boatIndex.commonAjax({
+            url: preLoadUrl,
+            data: {},
+            async: false,
+            success:function(data){
+                if(data.success && data.data && data.data.preLoad){
+                    $('#preLoad').val(data.data.preLoad);
+                }
+                else if(data.msg){
+                    boatIndex.toast(data.msg);
+                } 
+            },
+            error:function(data){
+                boatIndex.toast('网络连接失败，请稍后重试...');
+            }
+        });
         $("#arriveTime").datetimePicker({});
+        //返回
+        $('.goback').bind('click',function(){
+            window.location.href = 'index.html';
+        });
+        window.doBack = function(){
+            window.location.href = 'index.html';
+        };
         var $file = $('.file-input'),
             choose = $('.choose');
-        if(boatIndex.isAndroid && boatIndex.isXYML) {
+        if(boatIndex.isXYWL) {
             choose.bind('click',function(){
                 var id = $(this).next('input').attr('id');
-                XYNative.showImgSelectDialog(2,id);
+                XYNativeClient.showImgSelectDialog(2,id,token,uploadFileUrl);
             });
         }
         window.showH5Img = function(id,url){
@@ -95,23 +124,27 @@
                 return;
             }
             var imgTag = $('#'+id).prev('label'),
-                cssImgUrl = 'url(' + url + ')';
+                cssImgUrl = 'url(' + url + '?token=' + token + ')';
             imgTag.css("background-image",cssImgUrl);
             imgTag.attr("img-url",url);
             $.hidePreloader();
         }
-
         $file.on("change", function(e) {
             var $this = $(this);
             formUploadFile(e.target.files[0], function(data) {
-                //返回图片地址
-                var url = data.data.filePath;
-                //生成缩略图
-                var imgTag = $this.prev('label'),
-                cssImgUrl = 'url(' + url + ')';
-                imgTag.css("background-image",cssImgUrl);
-                imgTag.attr("img-url",url);
                 $.hidePreloader();
+                //返回图片地址
+                if(data.success && data.data.filePath){
+                    var url = data.data.filePath;
+                    //生成缩略图
+                    var imgTag = $this.prev('label'),
+                    cssImgUrl = 'url(' + url + '?token=' + token + ')';
+                    imgTag.css("background-image",cssImgUrl);
+                    imgTag.attr("img-url",url);
+                }
+                else{
+                    boatIndex.toast(data.msg);
+                }
             }, function(json) {
                 boatIndex.toast('图片上传失败，请重新尝试...');
             });
@@ -149,6 +182,7 @@
                 xhr.open("POST", uploadFileUrl, true);
                 var formData = new FormData();
                 formData.append("fileName", file);
+                formData.append("token", token);
                 xhr.send(formData);
             }
         }
@@ -202,6 +236,9 @@
                 boatIndex.toast("您当前不支持地理定位");//不支持
             }
         }
+        $('#preLoad').on('input',function(){
+            this.value=this.value.replace(/[^0-9-]+/,'');
+        });
         //校验
         $('#submitBtn').bind('click',function(){
             for(var i=0;i<$('.ipt').length;i++){
@@ -231,17 +268,17 @@
                 url: infoSubmitUrl,
                 type: "POST",
                 data: {
-                    lat:$('#lat').val(),
-                    lng:$('#lng').val(),
-                    preLoad:$('#appointNo').val(),
-                    preArrivePortTime:$('#arriveTime').val(),
+                    shipLatitude: Math.round($('#lat').val()*1000000),
+                    shipLongitude: Math.round($('#lng').val()*1000000),
+                    preLoad:$('#preLoad').val(),
+                    preArrivePortTime:transFormTime($('#arriveTime').val()),
                     shipEmptyPhoto:$('.choose').eq(0).attr('img-url'),
                     shipReference:$('.choose').eq(1).attr('img-url'),
-                    leftDispatchId: leftDispatchId
+                    id: leftId
                 },
                 success:function(data){
-                    if(data.success && dara.id){
-                        window.location.href='appointSuccess.html&id=' + dara.id;
+                    if(data.success && data.data){
+                        window.location.href = 'appointSuccess.html?id=' + data.data;
                     }
                     else if(data.msg){
                         boatIndex.toast(data.msg);
@@ -251,7 +288,14 @@
                     boatIndex.toast('网络连接失败，请稍后重试...');
                 }
             });
+            function transFormTime(time){
+                //var time = time.replace(/-/g,'/');
+                var date = new Date(time);
+                return (date.getTime())/1000;
+            }
+
         });
+
     });
     </script>
 </body>

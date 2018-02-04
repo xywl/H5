@@ -36,40 +36,39 @@
     </ul>
     <div class="nav-blank"></div>
     <script type="text/html" id="listTempl">
-        {{each list as list i}}
+        {{each data as list i}}
             <li>
                 <div class="o-title border-thin">
-                    <div class="name">{{list.goodsName}}{{list.preTon}}吨</div>
+                    <div class="name">{{list.goodsName}}{{list.dispatchWeight}}吨</div>
                 </div>
                 <div class="info-box">
-                    <div class="time"><i class="icon-time"></i><span>装货时间：{{list.disChargeTime}}</span></div>
-                    <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startLoadName}}</span></div>
-                    <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endLoadName}}</span></div>
+                    <div class="time"><i class="icon-time"></i><span>装货时间：{{list.loadingTime}}</span></div>
+                    <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startPortName}}</span></div>
+                    <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endPortName}}</span></div>
                     
                 </div>
                 <div class="btn-box border-thin">
                     <p class="tip">注：{{list.specialTip}}</p>
-                    <div class="btn border-thin" leftDispatchId="{{list.leftDispatchId}}">确认预约</div>
+                    <div class="btn border-thin" leftId="{{list.id}}">确认预约</div>
                 </div>
             </li>
         {{/each}}
     </script>
-    <script type="text/javascript">
-        var goodListUrl = 'temp/data/infoList.json',
-            checkAppointUrl = 'temp/data/checkAppoint.json';
-    </script>
     <script src="./scripts/zepto.min.js"></script>
+
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
-    <script type="text/javascript">
+    <script>
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        var goodListUrl = boatIndex.appUrl + 'xyl/leftDispatchInfo/getAppList',
+            checkAppointUrl = boatIndex.appUrl + 'xyl/reservation/getAppById';
         if(boatIndex.isAndroid && boatIndex.isXYWL){
             window.doBack = function(){
-                XYNative.doFinish();
+                XYNativeClient.doFinish();
             }
         }
         //获取经纬度
         if(boatIndex.isAndroid && boatIndex.isXYWL) {
-            XYNative.getLocation();
+            XYNativeClient.getLocation();
         }
         else{
             getAddress();
@@ -103,23 +102,31 @@
             url: goodListUrl,
             data:{
                 lng: $('#lng').val(),
-                lat: $('#lat').val()
+                lat: $('#lat').val(),
+                queryParamFlag: 1
             },
+            recordsFlag:"data",
             parent:$('.order-list'),
             templateId:'listTempl',
             steps:10,
             maxRecords:1000,
+            handleData:function(data){
+                // var time = new Date(data.loadingTime);
+                // //data.loadingTime = time;
+                // console.log(data.loadingTime)
+                
+            },
             success:function(json, ajaxOptions, elements){
                 $(elements).each(function(index,element){
                     $(element).find('.btn').bind('click',function(){
                         //点击确认预约
-                        var leftDispatchId = $(this).attr('leftDispatchId');
+                        var leftId = $(this).attr('leftId');
                         boatIndex.commonAjax({
                             url:checkAppointUrl,
                             data:{},
                             success:function(data){
                                 if(data.success){
-                                    window.location.href = 'appointSunmit.html?id=' + leftDispatchId;
+                                    window.location.href = 'appointSubmit.html?id=' + leftId;
                                 }
                                 else if(data.msg){
                                     boatIndex.toast(data.msg);
@@ -136,7 +143,7 @@
        var scroll = boatIndex.scrolledAjax(params);
        scroll.createPulldownRefresh({
             pullDownArea: $('.order-list'),
-            maxDragY: 120,
+            maxDragY: 150,
             endCallback: function(){
             }
        });

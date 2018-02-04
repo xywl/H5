@@ -1,30 +1,31 @@
 lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
     var userAgent = navigator.userAgent.toLowerCase();
-    //alert(userAgent)
     var boatIndex = {
         isAndroid: !!(userAgent.indexOf('android') > -1 || userAgent.indexOf('Linux') > -1),//是否是安卓
         isIos: !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),//是否是IOS
         isXYWL: !!(userAgent.indexOf('xywl') > -1 ),//app
         isWeiXin: !!(userAgent.indexOf('micromessenger') > -1 ),//微信
+        appUrl: 'http://192.168.0.147:16722/',
         /*
          * function ajax请求
          * @param  {[Object]} options [参数配置]
          */
         commonAjax: function(options){
             var _this = this;
-            var token = _this.getUserTag('token');
+            var token = this.getUserTag("token");
             if(!token){
                 window.location.href = 'login.html';
                 return;
             }
+            //options.data.token = token;
             $.ajax({
                 url: options.url,
                 dataType:"json",
                 type: options.type || "GET", 
                 data: options.data || {},
                 async: options.async || true,//请求是否异步，默认为异步
-                beforeSend: function(request) {                
-                    request.setRequestHeader("token", token);
+                beforeSend: function(request) {          
+                    request.setRequestHeader("token",token);
                 },
                 success: function(data){
                     if(options.success)options.success(data);
@@ -88,8 +89,8 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
          */
         toast: function(msg){
             var _this = this;
-            if(_this.isXYWL && XYNative){
-                XYNative.toastMessage(msg);
+            if(_this.isXYWL && XYNativeClient){
+                XYNativeClient.toastMessage(msg);
             }
             else{
                 $.toast(msg);
@@ -187,7 +188,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                     return;
                 }
                 data[pageSize] = steps;
-                data[pageIndex] = Math.ceil(count / steps);
+                data[pageIndex] = Math.ceil(count / steps) - 1;
                 data[endFlag] = (count += steps - 1);
                 data[timestamp] = new Date().getTime();
                 if (totalRecords < data[endFlag]) { //总数小于结束下标
@@ -407,7 +408,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                         dataTemp = $.extend(dataTemp, options.data || {});
                         dataTemp[startFlag] = 1;
                         dataTemp[pageSize] = steps;
-                        dataTemp[pageIndex] = Math.ceil(1 / steps);
+                        dataTemp[pageIndex] = Math.ceil(1 / steps) - 1;
                         dataTemp[endFlag] = steps;
                         dataTemp.timestamp = new Date().getTime();
                         this.ajaxObject = $.ajax({
@@ -433,7 +434,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                                     count = 0;
                                     data[startFlag] = ++count;
                                     data[pageSize] = steps;
-                                    data[pageIndex] = Math.ceil(count / steps);
+                                    data[pageIndex] = Math.ceil(count / steps) - 1;
                                     data[endFlag] = (count += steps - 1);
 
                                     parent.empty();
@@ -507,15 +508,10 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                 //过滤横向移动
                 sMoveX = moveX < 0 ? -moveX : moveX;
                 sMoveY = (moveY < 0 ? -moveY : moveY);
-
-
                 if (sMoveX * 2 > sMoveY) {
                     return true;
                 }
-
                 var maxDragY = opt.maxDragY || 80;
-
-
                 var showRefreshTipY = 50;
                 if (moveY < 0) {
                     return;
@@ -591,7 +587,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                 handler = selector;
                 selector = undefined;
             }
-            var mobile = boatIndex.touchstart || touchstart.isIos,
+            var mobile = boatIndex.isAndroid || boatIndex.isIos,
                 eventNames = {
                     touchstart: {
                         name: mobile ? "touchstart" : "mousedown",
@@ -662,7 +658,8 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
         },
         addEvent:function(){
             var _this = this;
-            if(_this.isXYWL && XYNative && $('#userId').length > 0)XYNative.getUserId('getNativeId');
+
+            if(_this.isXYWL && XYNativeClient && $('#userId').length > 0)XYNativeClient.getUserId('getNativeId');
             window.getNativeId = function(id){
                 $('#userId').val(id);
             }

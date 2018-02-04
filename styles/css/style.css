@@ -880,5 +880,9 @@ input {
   left: 50%;
   bottom: 0;
   margin-left: -35px; }
-
+.scroll-loading{
+  text-align: center;
+  font-size: 14px;
+  line-height: 30px;
+}
 /*下拉刷新 end*/

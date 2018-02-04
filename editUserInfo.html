@@ -31,11 +31,11 @@
             </li>
             <li class="border-thin">
                 <div class="left">姓名</div>
-                <div class="right"><input class="ipt" type="text" name="姓名" placeholder="请输入姓名" id="realName" readonly /></div>
+                <div class="right"><input class="ipt" type="text" name="姓名" placeholder="请输入姓名" id="name" readonly /></div>
             </li>
             <li class="border-thin">
                 <div class="left">手机号</div>
-                <div class="right"><input class="ipt" type="text" lx="phone" name="手机号码" placeholder="请输入手机号" id="phoneNo" readonly /></div>
+                <div class="right"><input class="ipt" type="text" lx="phone" name="手机号码" placeholder="请输入手机号" id="mobile" readonly /></div>
             </li>
         </ul>
         <ul class="pic-list">
@@ -69,27 +69,13 @@
                 </div>
             </li>
             <li>
-                <p class="name"></p>
-                <div>
-                    <i></i>
-                    <p>反面</p>
-                    <label class="choose" for="file4" msg="银行卡正面"></label>
-                    <input id="file4" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
-                </div>
-            </li>
-        </ul>
-        <ul class="pic-list">
-            <li>
                 <p class="name">船舶证件照</p>
                 <div>
                     <i></i>
                     <p>船舶证件照</p>
-                    <label class="choose" for="file5" msg="船舶证件照"></label>
-                    <input id="file5" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
+                    <label class="choose" for="file4" msg="船舶证件照"></label>
+                    <input id="file4" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                 </div>
-            </li>
-            <li>
-                
             </li>
         </ul>
     </div>
@@ -100,16 +86,13 @@
         <li><i class="icon3"></i><p>我的</p></li>
     </ul>
     <div class="nav-blank"></div>
-    <script type="text/javascript">
-        var uploadFileUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/file/upfile',//图片上传
-            infoSubmitUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/leftDispatchInfo/add';//提交
-    </script>
-    <script>
-        var userInfoUrl = 'temp/data/userInfo.json'
-    </script>
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        var userInfoUrl = boatIndex.appUrl +'xyl/ship/getAppById',//获取用户信息
+            uploadFileUrl = boatIndex.appUrl +'xyl/file/upfile',//图片上传
+            infoSubmitUrl = boatIndex.appUrl +'xyl/ship/appModify';//提交
+        var token = boatIndex.getUserTag('token');
         $('.goback').bind('click',function(){
             window.location.href = 'userInfo.html';
         });
@@ -121,18 +104,18 @@
             async: false,//同步
             data: {},
             success:function(data){
-                if(data.success){
-                    if(data.shipNo)$('#shipNo').val(data.shipNo);
-                    if(data.realName)$('#realName').val(data.realName);
-                    if(data.phoneNo)$('#phoneNo').val(data.phoneNo);
-                    renderImg('file1',data.certPhotoZ);
-                    renderImg('file2',data.certPhotoF);
-                    renderImg('file3',data.bankNoPhotoZ);
-                    renderImg('file4',data.bankNoPhotoF);
-                    renderImg('file5',data.shipCertPhoto);
+                if(data.success && data.data){
+                    var info = data.data;
+                    $('#shipNo').val(info.shipNo);
+                    $('#name').val(info.name);
+                    $('#mobile').val(info.mobile);
+                    renderImg('file1',info.idPhoto);
+                    renderImg('file2',info.idPhotoF);
+                    renderImg('file3',info.bankCardPhoto);
+                    renderImg('file4',info.shipPhoto);
                     function renderImg(id,imgUrl){
                         if(imgUrl){
-                            var cssImgUrl = 'url(' + imgUrl + ')',
+                            var cssImgUrl = 'url(' + imgUrl + '?token=' + token + ')';
                             box = $('#'+id).prev('label');
                             box.css('background-image',cssImgUrl);
                             box.attr('img-url',imgUrl);
@@ -154,7 +137,7 @@
             choose.bind('click',function(){
                 var id = $(this).next('input').attr('id');
                 if(android){
-                    android.showImgSelectDialog(6,id);
+                    XYNativeClient.showImgSelectDialog(2,id,token,uploadFileUrl);
                 }
             });
         }
@@ -165,7 +148,7 @@
                 return;
             }
             var imgTag = $('#'+id).prev('label'),
-                cssImgUrl = 'url(' + url + ')';
+                cssImgUrl = 'url(' + url + '?token=' + token + ')';
             imgTag.css("background-image",cssImgUrl);
             imgTag.attr("img-url",url);
             $.hidePreloader();
@@ -178,7 +161,7 @@
                 var url = data.data.filePath;
                 //生成缩略图
                 var imgTag = $this.prev('label'),
-                cssImgUrl = 'url(' + url + ')';
+                cssImgUrl = 'url(' + url + '?token=' + token + ')';
                 imgTag.css("background-image",cssImgUrl);
                 imgTag.attr("img-url",url);
                 $.hidePreloader();
@@ -219,6 +202,7 @@
                 xhr.open("POST", uploadFileUrl, true);
                 var formData = new FormData();
                 formData.append("fileName", file);
+                formData.append("token", token);
                 xhr.send(formData);
             }
         }
@@ -238,19 +222,18 @@
                 type: "POST",
                 data: {
                     shipNo: $('#shipNo').val(),
-                    realName: $('#realName').val(),
-                    preLoad: $('#phoneNo').val(),
-                    certPhotoZ: $('.choose').eq(0).attr('img-url'),
-                    certPhotoF: $('.choose').eq(1).attr('img-url'),
-                    bankNoPhotoZ: $('.choose').eq(2).attr('img-url'),
-                    bankNoPhotoF: $('.choose').eq(3).attr('img-url'),
-                    shipCertPhoto: $('.choose').eq(4).attr('img-url')
+                    name: $('#name').val(),
+                    mobile: $('#mobile').val(),
+                    idPhoto: $('.choose').eq(0).attr('img-url'),
+                    idPhotoF: $('.choose').eq(1).attr('img-url'),
+                    bankCardPhoto: $('.choose').eq(2).attr('img-url'),
+                    shipPhoto: $('.choose').eq(3).attr('img-url')
                 },
                 success:function(data){
                     if(data.success){
-                        boatIndex.toast('订单已关闭');
+                        boatIndex.toast('修改成功');
                         setTimeout(function(){
-                            location.reload();
+                            window.location.href = 'userInfo.html';
                         },1000);
                     }
                     else if(data.msg){

@@ -52,11 +52,10 @@
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        if(boatIndex.isAndroid){
-            window.doBack = function(){
-                if(android)android.doFinish();
-            }
+        window.doBack = function(){
+            XYNativeClient.doFinish();
         }
+
         boatIndex.commonAjax({
             url: userInfoUrl,
             async: false,//同步
@@ -85,10 +84,10 @@
                 window.location.href = 'aboutUs.html';
             }
         });
-        boatIndex.setCookie('token','123456',30);
-        $('#submitBtn').bind('click',function(){
+        
+        $('#submitBtn').on('click',function(){
             if(boatIndex.isAndroid){
-                saveUserTag('');
+                XYNativeClient.saveUserTag('');
             }
             else{
                 boatIndex.delCookie('token');

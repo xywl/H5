@@ -27,41 +27,55 @@
         <div class="login-btn" id="loginBtn"><i></i><span>微信登录</span></div>
     </div>
     <br>
-    <input style="height: 40px;width: 100%" class="ipt" type="text" name="船舶位置" placeholder="code复制" id="XXX" />
+    <!-- <input style="height: 40px;width: 100%" class="ipt" type="text" name="" placeholder="token复制" id="XXX" /> -->
     <script type="text/javascript">
     var loginUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/signin/oauth/weixin/';//登录
     </script>
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        if(boatIndex.isAndroid && boatIndex.isXYWL){
+        if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient){
             window.doBack = function(){
-                XYNative.doFinish();
+                try{
+                    XYNativeClient.doFinish();
+                }
+                catch(e){
+                    alert(e);
+                }
             }
         }
         $('#loginBtn').on('click',function(){
-            if(boatIndex.isXYWL){
-                XYNative.doWXLogin();
+            if(boatIndex.isXYWL && XYNativeClient){
+                try{
+                    XYNativeClient.doWXLogin();
+                }
+                catch(e){
+                    alert(e);
+                }
             }           
         });
         //处理微信登录
         window.doWXLoginComplete = function(code){
-            $('#XXX').val(code);
-            //var code = '011oGADS1Ds4171MTWES1VSSDS1oGADs';
+            //$('#XXX').val(code);
             $.ajax({
                 url: loginUrl + code,
                 dataType:"json",
-                type:"POST", 
+                type:"POST",
+                dataType:"json",
                 data:{},
                 success:function(data){
                     if(data.success && data.data && data.data.token){
                         var token = data.data.token; 
-                        alert(token)
-                        alert(data.data.shipInfoId)            
-                        if(data.data.shipInfoId){//绑定船，进预约页面
+                        //$('#XXX').val(token);
+                        if(data.data.appUser.shipInfoId){//绑定船，进预约页面
                             //保存token
-                            if(boatIndex.isXYWL){
-                                XYNative.saveUserId(token);
+                            if(boatIndex.isXYWL && boatIndex.nativeClient){
+                                try{
+                                    boatIndex.nativeClient.saveUserId(token);
+                                }
+                                catch(e){
+                                    alert(e);
+                                }
                             }
                             boatIndex.setCookie('token',token,30);
                             setTimeout(function(){
@@ -82,6 +96,8 @@
                 }
             });
         }
+        // var token = 'ODoyNTM1ZWM2YmVhNzJlMjBjNjk0MzExMGU2NzZkY2FmZToxNTIwMjU1ODE1NjQy';
+        // boatIndex.setCookie('token',token,30);
     });
     </script>
 </body>
