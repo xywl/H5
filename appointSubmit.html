@@ -11,80 +11,91 @@
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" type="text/css" href="styles/css/style.css?v=1"/>
+    <script src="./scripts/zepto.min.js"></script>
+    <script src="./scripts/config.js"></script>
     <title>预约信息上传</title>       
 </head>
 <body>
-    <!-- wap头部 start-->
-    <div class="header-blank"></div>
-    <header class="header-common">
-        <section>
-            <div class="goback"><i></i></div>
-            <div class="h-title">预约信息上传</div>
-            <div class="btn"></div>
-        </section>
-    </header>
-    <div class="hide" id="allmap"></div>
-    <div class="wrapper">
-        <ul class="edit-wrapper">
-            <li class="border-thin">
-                <div class="left left1">船舶位置上传</div>
-                <div class="right"><input class="ipt" type="text" name="船舶位置" placeholder="请输入船舶位置" id="boatLocation" readonly /></div>
-            </li>
-            <li class="border-thin">
-                <div class="left left1">预约吨位</div>
-                <div class="right"><input class="ipt" type="text" name="预约吨位" placeholder="请输入预约吨位" id="preLoad" maxlength="10" /></div>
-            </li>
-            <li class="border-thin">
-                <div class="left left1">预计到港时间</div>
-                <div class="right"><input class="ipt" type="text" name="预计到港时间" placeholder="请输入预计到港时间" id="arriveTime" readonly /></div>
-            </li>
-        </ul>
-        <ul class="pic-list">
-            <li>
-                <p class="name">空船照片</p>
-                <div class="border-thin">
-                    <i></i>
-                    <p>点击上传</p>
-                    <label class="choose" for="file1" msg="空船照片"></label>
-                    <input id="file1" accept="image/png,image/jpeg"  capture="camera"  type="file" name="images" class="file-input hide">
-                </div>
-                
-            </li>
-            <li>
-                <p class="name">参照物照片</p>
-                <div class="border-thin">
-                    <i></i>
-                    <p>点击上传</p>
-                    <label class="choose" for="file2" msg="参照物照片"></label>
-                    <input id="file2" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
-                </div>
-            </li>
-        </ul>
+    <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <a class="button button-link button-nav pull-left" href="login.html"><span class="icon icon-left"></span></a>
+            <h1 class="title">预约信息上传</h1>
+        </header>
+        <div class="content">
+            <div class="hide" id="allmap"></div>
+            <div class="wrapper">
+                <ul class="edit-wrapper">
+                    <li class="border-thin">
+                        <div class="left left1">船舶位置上传</div>
+                        <div class="right"><input class="ipt" type="text" name="船舶位置" placeholder="请输入船舶位置" id="boatLocation" readonly /></div>
+                    </li>
+                    <li class="border-thin">
+                        <div class="left left1">预约吨位</div>
+                        <div class="right"><input class="ipt" type="text" name="预约吨位" placeholder="请输入预约吨位" id="preLoad" maxlength="10" /></div>
+                    </li>
+                    <li class="border-thin">
+                        <div class="left left1">预计到港时间</div>
+                        <div class="right"><input class="ipt" type="text" name="预计到港时间" placeholder="请输入预计到港时间" id="arriveTime" readonly /></div>
+                    </li>
+                </ul>
+                <ul class="pic-list">
+                    <li>
+                        <p class="name">空船照片</p>
+                        <div class="border-thin">
+                            <i></i>
+                            <p>点击上传</p>
+                            <label class="choose" for="file1" msg="空船照片"></label>
+                            <input id="file1" accept="image/png,image/jpeg"  capture="camera"  type="file" name="images" class="file-input hide">
+                        </div>
+                        
+                    </li>
+                    <li>
+                        <p class="name">参照物照片</p>
+                        <div class="border-thin">
+                            <i></i>
+                            <p>点击上传</p>
+                            <label class="choose" for="file2" msg="参照物照片"></label>
+                            <input id="file2" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <input type="hidden" id="lat">
+            <input type="hidden" id="lng">
+            <div class="btn-common" id="submitBtn">提交</div>
+        </div>
+
+        <!-- 工具栏 -->
+        <nav class="bar bar-tab">
+            <a class="tab-item external" href="index.html">
+                <span class="icon icon-index"></span>
+                <span class="tab-label">抢单</span>
+            </a>
+            <a class="tab-item external" href="myOrderList.html">
+                <span class="icon icon-order"></span>
+                <span class="tab-label">航程</span>
+            </a>
+            <a class="tab-item external" href="userInfo.html">
+                <span class="icon icon-my"></span>
+                <span class="tab-label">我的</span>
+            </a>
+        </nav>
     </div>
-    <input type="hidden" id="lat">
-    <input type="hidden" id="lng">
-    <div class="btn-common" id="submitBtn">提交</div>
-    <ul class="nav-list border-thin">
-        <li><i class="icon1"></i><p>抢单</p></li>
-        <li><i class="icon2"></i><p>航程</p></li>
-        <li><i class="icon3"></i><p>我的</p></li>
-    </ul>
-    <div class="nav-blank"></div>
-    <!-- http://xingyi.nandasoft-its.com:8080 -->
-    <script type="text/javascript">
-        
+
+    <script>
+        var uploadFileUrl = $.config.appUrl +'xyl/file/upfile',//图片上传
+            infoSubmitUrl = $.config.appUrl + 'xyl/reservation/add',//提交
+            preLoadUrl = $.config.appUrl +'xyl/tempDispatchShip/getAppById';//获取预报吨位
     </script>
-    <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script type="text/javascript">
-    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        var uploadFileUrl = boatIndex.appUrl +'xyl/file/upfile',//图片上传
-            infoSubmitUrl = boatIndex.appUrl + 'xyl/reservation/add',//提交
-            preLoadUrl = boatIndex.appUrl +'xyl/tempDispatchShip/getAppById';//获取预报吨位
-            //infoSubmitUrl = 'temp/data/shipSubmit.json';
+    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){  
         var leftId = boatIndex.getQueryString('id') || '';
-        //var token = 'Mzo4YTM2NWYxZTIzZTE4ODMzMjk1M2Q2ZDA3YTJmYWQxMjoxNTIwMjI5Mzg2Njk3'
         var token = boatIndex.getUserTag('token');
+
+        window.doBack = function(){
+            window.location.href = 'login.html';
+        }
         boatIndex.commonAjax({
             url: preLoadUrl,
             data: {},

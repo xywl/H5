@@ -338,100 +338,53 @@ input {
   z-index: 99999;
 }
 /*header start*/
-.header-blank {
-    height: 2.2rem;
+.page{
+  background: #f3f4f6;
 }
-
-.header-common {
-    background: #fff;
-    box-shadow: 0px 2px 2px #e5e6e8;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    min-width: 320px;
-    max-width: 750px;
-    z-index: 99999;
-}
-
-.header-common section {
-    display: -webkit-box;
-    height: 2.2rem;
-    line-height: 2.2rem;
-}
-
-.header-common .goback,
-.header-common .btn {
-    width: 2rem;
-}
-
-.header-common .goback i{
-    display: block;
-    width: 2rem;
-    height: 2.2rem;
-    background: url(../images/left.png) no-repeat center;
-    background-size: .5rem;
-}
-
-.header-common .h-title {
-    -webkit-box-flex: 1;
-    text-align: center;
-    font-size: .9rem;
-}
-
-/*header end*/
-.nav-blank{
-  height: 3rem;
-}
-.nav-list{
-  display: flex;
+.bar-nav{
+  box-shadow: 0px 2px 2px #e5e6e8;
   background: #fff;
-  height: 3.2rem;
-  position: fixed;
-  left: 0;
-  width: 100%;
-  bottom: 0;
-  z-index:999;
-}
-.nav-list:before{
-  border-top: 1px solid #ddd;
-}
-.nav-list li{
-  flex: 1;
-  text-align: center;
   z-index: 999;
 }
-.nav-list li i{
-  width: 1.3rem;
-  height: 1.3rem;
-  display: block;
-  margin: .65em auto .1rem;
-  background: url(../images/icon-nav.png) no-repeat center;
-  background-size: 4.15rem;
+.icon-left:before{
+    color: #777;
 }
-.nav-list li p{
-  color:#5e5c69;
-  font-size: .7rem;
+.bar-tab{
+    height: 3rem;
+    z-index: 999;
+    background: #fff;
 }
-.nav-list li.on p{
+.bar-tab .tab-item.active, .bar-tab .tab-item:active{
   color: #e4393c;
 }
-.nav-list li .icon1{
-  background-position: 0 0;
+.bar-tab .tab-item .icon{
+    width: 1.3rem;
+    height: 1.3rem;
+    display: block;
+    margin: .5rem auto .1rem;
+    background: url(../images/icon-nav.png) no-repeat center;
+    background-size: 4.15rem;
 }
-.nav-list li.on .icon1{
-  background-position: 0 -1.55rem;
+.bar-tab .tab-item .icon-index{
+    background-position: 0 0;
 }
-.nav-list li .icon2{
-  background-position: -1.55rem 0;
+.bar-tab .tab-item.active .icon-index{
+    background-position: 0 -1.55rem;
 }
-.nav-list li.on .icon2{
-  background-position: -1.55rem -1.55rem;
+.bar-tab .tab-item .icon-order{
+    background-position: -1.55rem 0;
 }
-.nav-list li .icon3{
-  background-position: -2.85rem 0;
+.bar-tab .tab-item.active .icon-order{
+    background-position: -1.55rem -1.55rem;
 }
-.nav-list li.on .icon3{
-  background-position: -2.85rem -1.55rem;
+.bar-tab .tab-item .icon-my{
+    background-position: -2.85rem 0;
+}
+.bar-tab .tab-item.active .icon-my{
+    background-position: -2.85rem -1.55rem;
+}
+.content{
+    padding-bottom: 60px;
 }
 .edit-wrapper {
     background: #fff;
@@ -803,18 +756,13 @@ input {
   border-radius: .25rem;
 }
 .error-box{
-  position: absolute;
-  top:0;
-  left: 0;
-  background: #fff;
   width: 100%;
-  height: 100%;
   text-align: center;
 }
 .error-box .icon{
   display: inline-block;
   border-radius: 50%;
-  background: #ff8d47;
+  background: #e4393c;
   width: 6rem;
   height: 6rem;
   line-height: 6.4rem;
@@ -828,6 +776,19 @@ input {
   line-height: 2rem;
   font-size: 1rem;
   margin-top: 1rem;
+}
+.error-box .fresh-btn{
+    display: inline-block;
+    width: 6.5rem;
+    height: 2rem;
+    line-height: 2rem;
+    color: #e4393c;
+    background: #fff;
+    margin-top: 1rem;
+    font-size: 1rem;
+    border: 1px solid #e4393c;
+    border-radius: 5px;
+    font-weight: bold;
 }
 /*微信登录*/
 .login-wrapper{

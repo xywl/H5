@@ -11,58 +11,72 @@
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <script src="./scripts/zepto.min.js"></script>
+    <script src="./scripts/config.js"></script>
     <title>我的</title>       
 </head>
 <body>
-    <!-- wap头部 start-->
-    <div class="header-blank"></div>
-    <header class="header-common">
-        <section>
-            <div class="goback"></div>
-            <div class="h-title"></div>
-            <div class="btn"></div>
-        </section>
-    </header>
-    <div class="wrapper">
-        <ul class="user-list">
-            <li class="border-thin">
-                <div class="left">修改资料</div>
-                <div class="right"><i class="arrow"></i></div>
-            </li>
-            <li class="border-thin">
-                <div class="left">我的消息</div>
-                <div class="right"><i class="arrow"></i></div>
-            </li>
-            <li class="border-thin">
-                <div class="left">关于我们</div>
-                <div class="right"><i class="arrow"></i></div>
-            </li>
-        </ul>
+    <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <h1 class="title"></h1>
+        </header>
+        <div class="content">
+            <div class="wrapper">
+                <ul class="user-list">
+                    <li class="border-thin">
+                        <div class="left">修改资料</div>
+                        <div class="right"><i class="arrow"></i></div>
+                    </li>
+                    <li class="border-thin">
+                        <div class="left">我的消息</div>
+                        <div class="right"><i class="arrow"></i></div>
+                    </li>
+                    <li class="border-thin">
+                        <div class="left">关于我们</div>
+                        <div class="right"><i class="arrow"></i></div>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-common" id="submitBtn">退出登录</div>
+        </div>
+        <!-- 工具栏 -->
+        <nav class="bar bar-tab">
+            <a class="tab-item external" href="index.html">
+                <span class="icon icon-index"></span>
+                <span class="tab-label">抢单</span>
+            </a>
+            <a class="tab-item external" href="myOrderList.html">
+                <span class="icon icon-order"></span>
+                <span class="tab-label">航程</span>
+            </a>
+            <a class="tab-item external active" href="userInfo.html">
+                <span class="icon icon-my"></span>
+                <span class="tab-label">我的</span>
+            </a>
+        </nav>
     </div>
-    <div class="btn-common" id="submitBtn">退出登录</div>
-    <ul class="nav-list border-thin">
-        <li><i class="icon1"></i><p>抢单</p></li>
-        <li><i class="icon2"></i><p>航程</p></li>
-        <li class="on"><i class="icon3"></i><p>我的</p></li>
-    </ul>
-    <div class="nav-blank"></div>
     <script>
-        var userInfoUrl = 'temp/data/userInfo.json'
+        var userInfoUrl = $.config.appUrl +'xyl/ship/getAppById';//获取用户信息
     </script>
-    <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        window.doBack = function(){
-            XYNativeClient.doFinish();
+        if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient){
+            window.doBack = function(){
+                try{
+                    XYNativeClient.doFinish();
+                }
+                catch(e){
+                    alert(e);
+                }
+            }
         }
-
         boatIndex.commonAjax({
             url: userInfoUrl,
             async: false,//同步
             data: {},
             success:function(data){
-                if(data.success &&  data.realName){
-                    $('.h-title').text(data.realName)
+                if(data.success &&  data.data && data.data.name){
+                    $('.bar .title').text(data.data.name);
                 }
                 else if(data.msg){
                     boatIndex.toast(data.msg);

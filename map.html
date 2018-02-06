@@ -14,21 +14,20 @@
     <title>地图</title>       
 </head>
 <body>
-    <!-- wap头部 start-->
-    <div class="header-blank"></div>
-    <header class="header-common">
-        <section>
-            <div class="goback"><i></i></div>
-            <div class="h-title">地图</div>
-            <div class="btn"></div>
-        </section>
-    </header>
-    <div class="map-box">
-        <div class="map" id="allmap"></div>
-        <div class="its-place"></div>
-        <!-- <div class="local"></div> -->
+    <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <a class="button button-link button-nav pull-left" href="grabOrderList.html"><span class="icon icon-left"></span></a>
+            <h1 class="title">地图</h1>
+        </header>
+        <div class="content">
+            <div class="map-box">
+                <div class="map" id="allmap"></div>
+                <div class="its-place"></div>
+                <!-- <div class="local"></div> -->
+            </div>
+        </div>
+        <!-- <div class="bottom-btn"><div class="btn" id="confirmBtn">确认添加</div></div> -->
     </div>
-    <!-- <div class="bottom-btn"><div class="btn" id="confirmBtn">确认添加</div></div> -->
     <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script type="text/javascript">

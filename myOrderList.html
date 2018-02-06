@@ -12,27 +12,48 @@
     phone=no" name="format-detection" />
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <script src="./scripts/zepto.min.js"></script>
+    <script src="./scripts/config.js"></script>
     <title>我的订单</title>       
 </head>
-<body style="min-height: 100%;">
-    <!-- wap头部 start-->
-    <div class="header-blank"></div>
-    <header class="header-common">
-        <section>
-            <div class="goback"></div>
-            <div class="h-title">我的订单</div>
-            <div class="btn"></div>
-        </section>
-    </header>
-    <div class="content">
-        <ul class="order-list"></ul>
+<body>
+    <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <h1 class="title">我的订单</h1>
+        </header>
+        <input type="hidden" id="lat">
+        <input type="hidden" id="lng">
+        <input type="hidden" class="userId">
+        
+        <div class="content infinite-scroll infinite-scroll-bottom pull-to-refresh-content" data-distance="100" data-ptr-distance="55">
+            <div class="pull-to-refresh-layer">
+                <div class="preloader"></div>
+                <div class="pull-to-refresh-arrow"></div>
+            </div>
+            <ul class="order-list"></ul>
+            
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader">
+              <div class="preloader"></div>
+            </div>
+            <div class="nav-blank"></div>
+        </div>
+        <!-- 工具栏 -->
+        <nav class="bar bar-tab">
+            <a class="tab-item external" href="index.html">
+                <span class="icon icon-index"></span>
+                <span class="tab-label">抢单</span>
+            </a>
+            <a class="tab-item external active" href="myOrderList.html">
+                <span class="icon icon-order"></span>
+                <span class="tab-label">航程</span>
+            </a>
+            <a class="tab-item external" href="userInfo.html">
+                <span class="icon icon-my"></span>
+                <span class="tab-label">我的</span>
+            </a>
+        </nav>>
     </div>
-    <ul class="nav-list border-thin">
-        <li><i class="icon1"></i><p>抢单</p></li>
-        <li class="on"><i class="icon2"></i><p>航程</p></li>
-        <li><i class="icon3"></i><p>我的</p></li>
-    </ul>
-    <div class="nav-blank"></div>
     <script type="text/html" id="listTempl">
         {{each data as list i}}
             <li>
@@ -56,18 +77,19 @@
         {{/each}}
     </script>
     <script>
-        var myOrderUrl = 'temp/data/orderList.json',
-            cancelUrl = 'temp/data/cancel.json';
+        var myOrderUrl = $.config.appUrl + 'xyl/reservation/getMyOrder',
+            cancelUrl = $.config.appUrl + 'xyl/reservation/modify';//取消预约接口
     </script>
-    <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        var myOrderUrl = boatIndex.appUrl + 'xyl/reservation/getMyOrder',
-            cancelUrl = boatIndex.appUrl + 'xyl/reservation/modify'//取消预约接口
-
-        if(boatIndex.isAndroid && boatIndex.isXYWL){
+        if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient){
             window.doBack = function(){
-                XYNative.doFinish();
+                try{
+                    XYNativeClient.doFinish();
+                }
+                catch(e){
+                    alert(e);
+                }
             }
         }
         var params = {
@@ -75,9 +97,6 @@
             data:{},
             parent:$('.order-list'),
             templateId:'listTempl',
-            steps:10,
-            maxRecords:1000,
-            recordsFlag:"data",
             success:function(json, ajaxOptions, elements){
                 $(elements).each(function(index,element){
                     //var statusName = $(this).attr('statusName'),
@@ -92,20 +111,22 @@
                                 data: {
                                     id: reserveId
                                 },
-                                success:function(data){
+                                success:function(data,elements,parent){
                                     if(data.success){
                                         boatIndex.toast('订单已关闭');
                                         setTimeout(function(){
                                             location.reload();
                                         },1000);
                                     }
-                                    else if(data.msg){
-                                        boatIndex.toast(data.msg);
+                                    else{
+                                        if(data.msg)boatIndex.toast(data.msg);
                                     }
                                 },
                                 error:function(data){
                                     boatIndex.toast('网络连接失败，请稍后重试...');
+
                                 }
+                                
                             });
                         });
                         $(element).find('.info-box').bind('click',function(){
@@ -113,15 +134,24 @@
                         });
                     //}
                 });
+            },
+            zero:function(parent){
+                var html = '<div class="error-box"><div class="icon">i</div><div class="msg">暂无数据</div></div>';
+                parent.html(html);
             }
         };
-        var scroll = boatIndex.scrolledAjax(params);
-        scroll.createPulldownRefresh({
-            pullDownArea: $('.order-list'),
-            maxDragY: 120,
-            endCallback: function(){
-            }
-       });
+        boatIndex.infinitScroll(params);
+        $(document).on('refresh', '.pull-to-refresh-content',function(e) {
+            // 模拟1s的加载过程
+            setTimeout(function() {
+                if($('.error-box').length > 0){
+                    boatIndex.infinitScroll(params);
+                }
+                // 加载完毕需要重置
+                $.pullToRefreshDone('.pull-to-refresh-content');
+            }, 1000);
+        });
+        $.init();
     });
     </script>
 </body>

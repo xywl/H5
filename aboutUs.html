@@ -11,43 +11,50 @@
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <script src="./scripts/zepto.min.js"></script>
+    <script src="./scripts/config.js"></script>
     <title>关于我们</title>       
 </head>
 <body>
-    <!-- wap头部 start-->
-    <div class="header-blank"></div>
-    <header class="header-common">
-        <section>
-            <div class="goback"><i></i></div>
-            <div class="h-title">关于我们</div>
-            <div class="btn"></div>
-        </section>
-    </header>
-    <div class="wrapper">
-        <ul class="user-list">
-            <li class="border-thin">
-                <div class="left">联系电话：11111111111111</div>
-            </li>
-            <li class="border-thin">
-                <div class="left">APP最新版本号：V1.0</div>
-            </li>
-            <li class="border-thin">
-                <div class="left">产品介绍：XXXXXXXXXXXXXXXXXXXXX</div>
-            </li>
-        </ul>
+    <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <a class="button button-link button-nav pull-left" href="userInfo.html"><span class="icon icon-left"></span></a>
+            <h1 class="title">关于我们</h1>
+        </header>
+        
+        <div class="content">
+            <div class="wrapper">
+                <ul class="user-list">
+                    <li class="border-thin">
+                        <div class="left">联系电话：11111111111111</div>
+                    </li>
+                    <li class="border-thin">
+                        <div class="left">APP最新版本号：V1.0</div>
+                    </li>
+                    <li class="border-thin">
+                        <div class="left">产品介绍：XXXXXXXXXXXXXXXXXXXXX</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 工具栏 -->
+        <nav class="bar bar-tab">
+            <a class="tab-item external" href="index.html">
+                <span class="icon icon-index"></span>
+                <span class="tab-label">抢单</span>
+            </a>
+            <a class="tab-item external" href="myOrderList.html">
+                <span class="icon icon-order"></span>
+                <span class="tab-label">航程</span>
+            </a>
+            <a class="tab-item external" href="userInfo.html">
+                <span class="icon icon-my"></span>
+                <span class="tab-label">我的</span>
+            </a>
+        </nav>
     </div>
-    <ul class="nav-list border-thin">
-        <li><i class="icon1"></i><p>抢单</p></li>
-        <li><i class="icon2"></i><p>航程</p></li>
-        <li><i class="icon3"></i><p>我的</p></li>
-    </ul>
-    <div class="nav-blank"></div>
-    <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        $('.goback').bind('click',function(){
-            window.location.href = 'userInfo.html';
-        });
         window.doBack = function(){
             window.location.href = 'userInfo.html';
         }

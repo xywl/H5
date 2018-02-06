@@ -11,91 +11,99 @@
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <script src="./scripts/zepto.min.js"></script>
+    <script src="./scripts/config.js"></script>
     <title>编辑资料</title>       
 </head>
 <body>
-    <!-- wap头部 start-->
-    <div class="header-blank"></div>
-    <header class="header-common">
-        <section>
-            <div class="goback"><i></i></div>
-            <div class="h-title">编辑资料</div>
-            <div class="btn"></div>
-        </section>
-    </header>
-    <div class="wrapper">
-        <ul class="edit-wrapper">
-            <li class="border-thin">
-                <div class="left">船号</div>
-                <div class="right"><input class="ipt" type="text" name="船号" placeholder="请输入船号" id="shipNo" readonly /></div>
-            </li>
-            <li class="border-thin">
-                <div class="left">姓名</div>
-                <div class="right"><input class="ipt" type="text" name="姓名" placeholder="请输入姓名" id="name" readonly /></div>
-            </li>
-            <li class="border-thin">
-                <div class="left">手机号</div>
-                <div class="right"><input class="ipt" type="text" lx="phone" name="手机号码" placeholder="请输入手机号" id="mobile" readonly /></div>
-            </li>
-        </ul>
-        <ul class="pic-list">
-            <li>
-                <p class="name">上传身份证</p>
-                <div>
-                    <i></i>
-                    <p>正面</p>
-                    <label class="choose" for="file1" msg="身份证正面"></label>
-                    <input id="file1" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
-                </div>
-            </li>
-            <li>
-                <p class="name"></p>
-                <div>
-                    <i></i>
-                    <p>反面</p>
-                    <label class="choose" for="file2" msg="身份证反面"></label>
-                    <input id="file2" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
-                </div>
-            </li>
-        </ul>
-        <ul class="pic-list">
-            <li>
-                <p class="name">上传银行卡</p>
-                <div>
-                    <i></i>
-                    <p>正面</p>
-                    <label class="choose" for="file3" msg="银行卡正面"></label>
-                    <input id="file3" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
-                </div>
-            </li>
-            <li>
-                <p class="name">船舶证件照</p>
-                <div>
-                    <i></i>
-                    <p>船舶证件照</p>
-                    <label class="choose" for="file4" msg="船舶证件照"></label>
-                    <input id="file4" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
-                </div>
-            </li>
-        </ul>
+    <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <a class="button button-link button-nav pull-left" href="userInfo.html"><span class="icon icon-left"></span></a>
+            <h1 class="title">编辑资料</h1>
+        </header>
+        <div class="content">
+            <div class="wrapper">
+                <ul class="edit-wrapper">
+                    <li class="border-thin">
+                        <div class="left">船号</div>
+                        <div class="right"><input class="ipt" type="text" name="船号" placeholder="请输入船号" id="shipNo" readonly /></div>
+                    </li>
+                    <li class="border-thin">
+                        <div class="left">姓名</div>
+                        <div class="right"><input class="ipt" type="text" name="姓名" placeholder="请输入姓名" id="name" readonly /></div>
+                    </li>
+                    <li class="border-thin">
+                        <div class="left">手机号</div>
+                        <div class="right"><input class="ipt" type="text" lx="phone" name="手机号码" placeholder="请输入手机号" id="mobile" readonly /></div>
+                    </li>
+                </ul>
+                <ul class="pic-list">
+                    <li>
+                        <p class="name">上传身份证</p>
+                        <div>
+                            <i></i>
+                            <p>正面</p>
+                            <label class="choose" for="file1" msg="身份证正面"></label>
+                            <input id="file1" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
+                        </div>
+                    </li>
+                    <li>
+                        <p class="name"></p>
+                        <div>
+                            <i></i>
+                            <p>反面</p>
+                            <label class="choose" for="file2" msg="身份证反面"></label>
+                            <input id="file2" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
+                        </div>
+                    </li>
+                </ul>
+                <ul class="pic-list">
+                    <li>
+                        <p class="name">上传银行卡</p>
+                        <div>
+                            <i></i>
+                            <p>正面</p>
+                            <label class="choose" for="file3" msg="银行卡正面"></label>
+                            <input id="file3" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
+                        </div>
+                    </li>
+                    <li>
+                        <p class="name">船舶证件照</p>
+                        <div>
+                            <i></i>
+                            <p>船舶证件照</p>
+                            <label class="choose" for="file4" msg="船舶证件照"></label>
+                            <input id="file4" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="btn-common" id="submitBtn">提交</div>
+        </div>
+        <!-- 工具栏 -->
+        <nav class="bar bar-tab">
+            <a class="tab-item external" href="index.html">
+                <span class="icon icon-index"></span>
+                <span class="tab-label">抢单</span>
+            </a>
+            <a class="tab-item external" href="myOrderList.html">
+                <span class="icon icon-order"></span>
+                <span class="tab-label">航程</span>
+            </a>
+            <a class="tab-item external" href="userInfo.html">
+                <span class="icon icon-my"></span>
+                <span class="tab-label">我的</span>
+            </a>
+        </nav>
     </div>
-    <div class="btn-common" id="submitBtn">提交</div>
-    <ul class="nav-list border-thin">
-        <li><i class="icon1"></i><p>抢单</p></li>
-        <li><i class="icon2"></i><p>航程</p></li>
-        <li><i class="icon3"></i><p>我的</p></li>
-    </ul>
-    <div class="nav-blank"></div>
-    <script src="./scripts/zepto.min.js"></script>
+    <script>
+        var userInfoUrl = $.config.appUrl +'xyl/ship/getAppById',//获取用户信息
+            uploadFileUrl = $.config.appUrl +'xyl/file/upfile',//图片上传
+            infoSubmitUrl = $.config.appUrl +'xyl/ship/appModify';//提交
+    </script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        var userInfoUrl = boatIndex.appUrl +'xyl/ship/getAppById',//获取用户信息
-            uploadFileUrl = boatIndex.appUrl +'xyl/file/upfile',//图片上传
-            infoSubmitUrl = boatIndex.appUrl +'xyl/ship/appModify';//提交
         var token = boatIndex.getUserTag('token');
-        $('.goback').bind('click',function(){
-            window.location.href = 'userInfo.html';
-        });
         window.doBack = function(){
             window.location.href = 'userInfo.html';
         }
@@ -133,12 +141,10 @@
         });
         var $file = $('.file-input'),
             choose = $('.choose');
-        if(boatIndex.isAndroid) {
+        if(boatIndex.isAndroid && XYNativeClient) {
             choose.bind('click',function(){
                 var id = $(this).next('input').attr('id');
-                if(android){
-                    XYNativeClient.showImgSelectDialog(2,id,token,uploadFileUrl);
-                }
+                XYNativeClient.showImgSelectDialog(6,id,token,uploadFileUrl);
             });
         }
         window.showH5Img = function(id,url){

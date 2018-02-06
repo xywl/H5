@@ -11,27 +11,26 @@
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <script src="./scripts/zepto.min.js"></script>
+    <script src="./scripts/config.js"></script>
     <title>登录</title>       
 </head>
 <body>
-    <!-- wap头部 start-->
-    <div class="header-blank"></div>
-    <header class="header-common">
-        <section>
-            <div class="goback"></div>
-            <div class="h-title">登录</div>
-            <div class="btn"></div>
-        </section>
-    </header>
-    <div class="login-wrapper">
-        <div class="login-btn" id="loginBtn"><i></i><span>微信登录</span></div>
+    <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <h1 class="title">登录</h1>
+        </header>
+        <div class="content">
+            <div class="login-wrapper">
+                <div class="login-btn" id="loginBtn"><i></i><span>微信登录</span></div>
+            </div>
+            <br>
+            <input style="height: 40px;width: 100%" class="ipt" type="text" name="" placeholder="token复制" id="XXX" />
+        </div>
     </div>
-    <br>
-    <!-- <input style="height: 40px;width: 100%" class="ipt" type="text" name="" placeholder="token复制" id="XXX" /> -->
     <script type="text/javascript">
-    var loginUrl = 'http://xingyi.nandasoft-its.com:8080/xyl/signin/oauth/weixin/';//登录
+    var loginUrl = $.config.appUrl + '/xyl/signin/oauth/weixin/';//登录
     </script>
-    <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient){
@@ -66,7 +65,7 @@
                 success:function(data){
                     if(data.success && data.data && data.data.token){
                         var token = data.data.token; 
-                        //$('#XXX').val(token);
+                        $('#XXX').val(token);
                         if(data.data.appUser.shipInfoId){//绑定船，进预约页面
                             //保存token
                             if(boatIndex.isXYWL && boatIndex.nativeClient){
@@ -96,7 +95,7 @@
                 }
             });
         }
-        // var token = 'ODoyNTM1ZWM2YmVhNzJlMjBjNjk0MzExMGU2NzZkY2FmZToxNTIwMjU1ODE1NjQy';
+        // var token = 'MzplM2YwZWZhZDU1ZTJiZGQ1ODU4ODEzYTdlMjlhNWNhODoxNTIwNDc2NTIyMzQ0';
         // boatIndex.setCookie('token',token,30);
     });
     </script>

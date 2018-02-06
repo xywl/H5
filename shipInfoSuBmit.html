@@ -11,50 +11,62 @@
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <script src="./scripts/zepto.min.js"></script>
+    <script src="./scripts/config.js"></script>
     <title>船舶信息填写</title>       
 </head>
 <body>
-    <!-- wap头部 start-->
-    <div class="header-blank"></div>
-    <header class="header-common">
-        <section>
-            <div class="goback"></div>
-            <div class="h-title">船舶信息填写</div>
-            <div class="btn"></div>
-        </section>
-    </header>
-    <input type="hidden" class="userId">
-    <div class="wrapper">
-        <ul class="edit-wrapper">
-            <li class="border-thin">
-                <div class="left">船号</div>
-                <div class="right"><input class="ipt" type="text" name="船号" placeholder="请输入船号" id="boatNum" /></div>
-            </li>
-            <li class="border-thin">
-                <div class="left">姓名</div>
-                <div class="right"><input class="ipt" type="text" name="姓名" placeholder="请输入姓名" id="name" /></div>
-            </li>
-            <li class="border-thin">
-                <div class="left">手机号</div>
-                <div class="right"><input class="ipt" type="tel" lx="phone" name="手机号码" placeholder="请输入手机号码" id="phoneNum" /></div>
-            </li>
-            <li>
-                <div class="left">预约吨号</div>
-                <div class="right"><input class="ipt" type="text" placeholder="请输入预约吨号" id="appointNum" /></div>
-            </li>
-        </ul>
+     <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <a class="button button-link button-nav pull-left" href="login.html"><span class="icon icon-left"></span></a>
+            <h1 class="title">船舶信息填写</h1>
+        </header>
+        <div class="content">
+            <input type="hidden" class="userId">
+            <div class="wrapper">
+            <ul class="edit-wrapper">
+                <li class="border-thin">
+                    <div class="left">船号</div>
+                    <div class="right"><input class="ipt" type="text" name="船号" placeholder="请输入船号" id="boatNum" /></div>
+                </li>
+                <li class="border-thin">
+                    <div class="left">姓名</div>
+                    <div class="right"><input class="ipt" type="text" name="姓名" placeholder="请输入姓名" id="name" /></div>
+                </li>
+                <li class="border-thin">
+                    <div class="left">手机号</div>
+                    <div class="right"><input class="ipt" type="tel" lx="phone" name="手机号码" placeholder="请输入手机号码" id="phoneNum" /></div>
+                </li>
+                <li>
+                    <div class="left">预约吨号</div>
+                    <div class="right"><input class="ipt" type="text" placeholder="请输入预约吨号" id="appointNum" /></div>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-common" id="submitBtn">提交</div>
+        </div>
+        <!-- 工具栏 -->
+        <nav class="bar bar-tab">
+            <a class="tab-item external" href="index.html">
+                <span class="icon icon-index"></span>
+                <span class="tab-label">抢单</span>
+            </a>
+            <a class="tab-item external" href="myOrderList.html">
+                <span class="icon icon-order"></span>
+                <span class="tab-label">航程</span>
+            </a>
+            <a class="tab-item external" href="userInfo.html">
+                <span class="icon icon-my"></span>
+                <span class="tab-label">我的</span>
+            </a>
+        </nav>
     </div>
-    <div class="btn-common" id="submitBtn">提交</div>
-
-    <script src="./scripts/zepto.min.js"></script>
+    <script>
+        var infoSubmitUrl = $.config.appUrl + 'xyl/tempDispatchShip/appAdd';//提交接口
+    </script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        var infoSubmitUrl = boatIndex.appUrl + 'xyl/tempDispatchShip/appAdd';//提交接口
-
         var token = boatIndex.getQueryString('rnd') || '';
-        $('.goback').bind('click',function(){
-            window.location.href = 'login.html';
-        });
         window.doBack = function(){
             window.location.href = 'login.html';
         }
