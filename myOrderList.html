@@ -56,21 +56,20 @@
     </div>
     <script type="text/html" id="listTempl">
         {{each data as list i}}
-            <li>
-                <div class="o-title o-title2">
+            <li reserveId="{{list.id}}">
+                <div class="o-title o-title2 J_link">
                     <div class="name">{{list.goodsName}}{{list.dispatchWeight}}吨</div>
                     <div class="state"><span>{{list.statusName}}</span><i class="arrow"></i></div>
                 </div>
-                <div class="info-box">
+                <div class="info-box J_link">
                     <div class="time"><i class="icon-time"></i><span>装货时间：{{list.dischargeTime}}</span></div>
                     <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startPortName}}</span></div>
                     <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endPortName}}</span></div>
                 </div>
-                
                 <div class="btn-box border-thin">
                     <p class="tip">注：{{list.specialTip}}</p>
                     {{if list.statusName == "已预约"}}
-                    <div class="btn border-thin J_cancel" reserveId="{{list.id}}">取消预约</div>
+                    <div class="btn border-thin J_cancel">取消预约</div>
                     {{/if}}
                 </div>
             </li>
@@ -99,40 +98,34 @@
             templateId:'listTempl',
             success:function(json, ajaxOptions, elements){
                 $(elements).each(function(index,element){
-                    //var statusName = $(this).attr('statusName'),
-                        //btn = $(element).find('.btn'),
-                        //reserveId = btn.attr('reserveId');
-                    var btnCancel = $(element).find('.J_cancel');//取消预约
-                    //if(statusName == '已预约'){
-                        btnCancel.bind('click',function(){
-                            var reserveId = $(this).attr('reserveId');
-                            boatIndex.commonAjax({
-                                url: cancelUrl,
-                                data: {
-                                    id: reserveId
-                                },
-                                success:function(data,elements,parent){
-                                    if(data.success){
-                                        boatIndex.toast('订单已关闭');
-                                        setTimeout(function(){
-                                            location.reload();
-                                        },1000);
-                                    }
-                                    else{
-                                        if(data.msg)boatIndex.toast(data.msg);
-                                    }
-                                },
-                                error:function(data){
-                                    boatIndex.toast('网络连接失败，请稍后重试...');
-
+                    var reserveId = $(element).attr('reserveId'),
+                        J_link = $(element).find('.J_link'),
+                        J_cancel = $(element).find('.J_cancel');
+                    J_link.on('click',function(){
+                         window.location.href = 'appointSuccess.html?id=' + reserveId;
+                    });
+                    J_cancel.on('click',function(){
+                        boatIndex.commonAjax({
+                            url: cancelUrl,
+                            data: {
+                                id: reserveId
+                            },
+                            success:function(data,elements,parent){
+                                if(data.success){
+                                    boatIndex.toast('订单已关闭');
+                                    setTimeout(function(){
+                                        location.reload();
+                                    },1000);
                                 }
-                                
-                            });
+                                else{
+                                    if(data.msg)boatIndex.toast(data.msg);
+                                }
+                            },
+                            error:function(data){
+                                boatIndex.toast('网络连接失败，请稍后重试...');
+                            }
                         });
-                        $(element).find('.info-box').bind('click',function(){
-                            window.location.href = 'appointSuccess.html?id=' + reserveId ;
-                        });
-                    //}
+                    });
                 });
             },
             zero:function(parent){

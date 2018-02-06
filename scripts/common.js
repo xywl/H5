@@ -5,7 +5,6 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
         isIos: !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),//是否是IOS
         isXYWL: !!(userAgent.indexOf('xywl') > -1 ),//app
         isWeiXin: !!(userAgent.indexOf('micromessenger') > -1 ),//微信
-        appUrl: 'http://xingyi.nandasoft-its.com:8080/',
         /*
          * function ajax请求
          * @param  {[Object]} options [参数配置]
@@ -25,7 +24,13 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                         request.setRequestHeader("token",token);
                     },
                     success: function(data){
-                        if(options.success)options.success(data);
+                        if(data.errCode == 90003){
+                            _this.toast('请登录');
+                            setTimeout(function(){
+                                window.location.href = 'login.html'
+                            },1000);
+                        }
+                        else if(options.success)options.success(data);
                     },
                     error: function(data){
                         if(options.error)options.error(data);
