@@ -100,14 +100,20 @@
         });
         
         $('#submitBtn').on('click',function(){
-            if(boatIndex.isAndroid){
-                XYNativeClient.saveUserTag('');
-            }
-            else{
-                boatIndex.delCookie('token');
-            }
-            window.location.href = 'login.html';
+            $.confirm('您确定要退出登录？', function(){
+                //OK
+                if(boatIndex.isXYWL){
+                    XYNativeClient.saveUserTag('');
+                }
+                else{
+                    boatIndex.delCookie('token');
+                }
+                window.location.href = 'login.html';
+            }, function(){
+
+            });
         });
+        $.init();
     });
     </script>
 </body>

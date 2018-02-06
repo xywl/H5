@@ -204,7 +204,6 @@ body {
     margin: 0 auto;
     background-color: #f3f4f6;
     color: #353d44;
-    font: 12px/1.5 arial, tahoma, SimHei;
     overflow: auto;
 }
 
@@ -260,11 +259,6 @@ body {
     html {
         font-size: 28.8px;
     }
-}
-
-
-body {
-    font-size: 12px;
 }
 
 * {
