@@ -25,7 +25,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                     },
                     success: function(data){
                         if(data.errCode == 90003){
-                            _this.toast('请登录');
+                            _this.toast('登录失效，请重新登录');
                             setTimeout(function(){
                                 window.location.href = 'login.html'
                             },1000);
@@ -85,6 +85,11 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             function addItems(number,data) {
                 if(!data.data || data.data.length < 1)return;
                 var length = data.data.length;
+                if (options.handleData) {
+                    for (var i = 0; i < length; i++) {
+                        options.handleData(data.data[i], i);
+                    }
+                }
                 // 生成新条目的HTML
                 var html = template(options.templateId,data);
                 // 添加新条目

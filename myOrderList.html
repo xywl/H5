@@ -67,7 +67,7 @@
                     <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endPortName}}</span></div>
                 </div>
                 <div class="btn-box border-thin">
-                    <p class="tip">注：{{list.specialTip}}</p>
+                    <p class="tip">{{if list.specialTip}}注：{{list.specialTip}{{/if}}}</p>
                     {{if list.statusName == "已预约"}}
                     <div class="btn border-thin J_cancel">取消预约</div>
                     {{/if}}
@@ -93,9 +93,12 @@
         }
         var params = {
             url: myOrderUrl,
-            data:{},
+            data:{queryParamFlag:1},
             parent:$('.order-list'),
             templateId:'listTempl',
+            handleData: function(data){
+                data.dischargeTime = getLongDate(data.dischargeTime*1000);
+            },
             success:function(json, ajaxOptions, elements){
                 $(elements).each(function(index,element){
                     var reserveId = $(element).attr('reserveId'),
@@ -145,6 +148,52 @@
             }, 1000);
         });
         $.init();
+        //获取时间
+        function getLongDate(str){
+            var oDate = new Date(str),  
+            oYear = oDate.getFullYear(),  
+            oMonth = oDate.getMonth()+1,  
+            oDay = oDate.getDate(),  
+            oHour = oDate.getHours(),  
+            oMin = oDate.getMinutes(),  
+            oSen = oDate.getSeconds(),
+            oTime;
+            if(tommorrow(str*1000,1)){
+                oTime = '明天 '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//
+            }
+            else if(tommorrow(str*1000,2)){
+                oTime = '后天 '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//
+            }
+            else{
+                oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间 
+            }
+            return oTime;  
+        };  
+        //补0操作  
+        function getzf(num){  
+            if(parseInt(num) < 10){  
+                num = '0'+num;  
+            }  
+            return num;  
+        }
+        //判断明天后天
+        function tommorrow(str,num){
+            var oDate = new Date(str),
+                oTime = oDate.getTime(),
+                nData = new Date(),
+                nTime = nData.getTime(),
+                tDate = new Date(nTime + num*24*60*60*1000),
+            tYear = tDate.getFullYear(),  
+            tMonth = tDate.getMonth(),
+            tDay = tDate.getDate(),
+            sDate = new Date(tYear,tMonth,tDay,0,0,0),
+            eDate = new Date(tYear,tMonth,tDay,23,59,59);
+            sTime = sDate.getTime(),
+            eTime = eDate.getTime();
+            if(sTime <= oTime && oTime <= eTime ){
+                return true;
+            }
+        }
     });
     </script>
 </body>
