@@ -77,6 +77,7 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script>
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        
         if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient){
             window.doBack = function(){
                 try{
@@ -154,6 +155,10 @@
                         })
                     });
                 });
+            },
+            zero:function(parent){
+                var html = '<div class="error-box"><div class="icon">i</div><div class="msg">暂无数据</div></div>';
+                parent.html(html);
             }
         }
         boatIndex.infinitScroll(params);

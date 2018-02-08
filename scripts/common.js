@@ -39,9 +39,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             }
             else{
                 _this.toast('请登录');
-                setTimeOut(function(){
-                    window.location.href = 'login.html';
-                },1000);
+                window.location.href = 'login.html';
             }
             
         },
@@ -202,7 +200,6 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
         },
         addEvent:function(){
             var _this = this;
-
             if(_this.isXYWL && XYNativeClient && $('#userId').length > 0)XYNativeClient.getUserId('getNativeId');
             window.getNativeId = function(id){
                 $('#userId').val(id);
