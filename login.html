@@ -57,6 +57,11 @@
         window.doWXLoginComplete = function(code){
             //$('#XXX').val(code);
             //var code = '011APh0E0axGFd2SNCYD0gH30E0APh0X';
+            //var msg = msg || '加载中';
+            $.showPreloader('登录中');
+            setTimeout(function(){
+                $.hidePreloader();
+            },5000);
             $.ajax({
                 url: loginUrl + code,
                 dataType:"json",
@@ -64,6 +69,7 @@
                 dataType:"json",
                 data:{},
                 success:function(data){
+                    $.hidePreloader();
                     if(data.success && data.data && data.data.token){
                         var token = data.data.token;
                         if(data.data.appUser.shipInfoId){//绑定船，进预约页面
@@ -91,6 +97,7 @@
                     }
                 },
                 error:function(){
+                    $.hidePreloader();
                     boatIndex.toast('登录失败，请重新登录');
                 }
             });

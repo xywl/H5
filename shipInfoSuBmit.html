@@ -34,10 +34,10 @@
                 </li>
                 <li class="border-thin">
                     <div class="left">手机号</div>
-                    <div class="right"><input class="ipt" type="tel" lx="phone" name="手机号码" placeholder="请输入手机号码" id="phoneNum" /></div>
+                    <div class="right"><input class="ipt" type="tel" lx="phone" name="手机号码" placeholder="请输入手机号码" maxlength="11" id="phoneNum" /></div>
                 </li>
                 <li>
-                    <div class="left">预约吨号</div>
+                    <div class="left">预报吨位</div>
                     <div class="right"><input class="ipt" type="text" placeholder="请输入预约吨号" id="appointNum" /></div>
                 </li>
             </ul>
@@ -61,7 +61,7 @@
         </nav>
     </div>
     <script>
-        var infoSubmitUrl = $.config.appUrl + 'xyl/tempDispatchShip/appAdd';//提交接口
+        var infoSubmitUrl = $.config.appUrl + '/xyl/tempDispatchShip/appAdd';//提交接口
     </script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
@@ -102,7 +102,6 @@
                 success:function(data){
                     if(data.success){
                         //保存token
-                        alert(token)
                         if(boatIndex.isXYWL && boatIndex.nativeClient){
                             try{
                                 boatIndex.nativeClient.saveUserId(token);
