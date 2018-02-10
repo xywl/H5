@@ -31,8 +31,8 @@
                         <div class="right"><input class="ipt" type="text" name="船舶位置" placeholder="请输入船舶位置" id="boatLocation" readonly /></div>
                     </li>
                     <li class="border-thin">
-                        <div class="left left1">预约吨位</div>
-                        <div class="right"><input class="ipt" type="text" name="预约吨位" placeholder="请输入预约吨位" id="preLoad" maxlength="10" /></div>
+                        <div class="left left1">预报吨号</div>
+                        <div class="right"><input class="ipt" type="text" name="预报吨号" placeholder="请输入预约吨位" id="preLoad" maxlength="10" /></div>
                     </li>
                     <li class="border-thin">
                         <div class="left left1">预计到港时间</div>
@@ -43,8 +43,10 @@
                     <li>
                         <p class="name">空船照片</p>
                         <div class="border-thin">
-                            <i></i>
-                            <p>点击上传</p>
+                            <div class="info">
+                                <i></i>
+                                <p>点击上传</p>
+                            </div>
                             <label class="choose" for="file1" msg="空船照片"></label>
                             <input id="file1" accept="image/png,image/jpeg"  capture="camera"  type="file" name="images" class="file-input hide">
                         </div>
@@ -53,8 +55,10 @@
                     <li>
                         <p class="name">参照物照片</p>
                         <div class="border-thin">
-                            <i></i>
-                            <p>点击上传</p>
+                            <div class="info">
+                                <i></i>
+                                <p>点击上传</p>
+                            </div>
                             <label class="choose" for="file2" msg="参照物照片"></label>
                             <input id="file2" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                         </div>
@@ -136,28 +140,29 @@
                 return;
             }
             var imgTag = $('#'+id).prev('label'),
-                cssImgUrl = 'url(' + url + '?token=' + token + ')';
-            imgTag.css("background-image",cssImgUrl);
-            imgTag.attr("img-url",url);
+                src = url + '?token=' + token;
+            imgTag.prev('.info').addClass('hide');
+            imgTag.html('<img src='+src+'>');
             $.hidePreloader();
         }
         $file.on("change", function(e) {
             var $this = $(this);
             formUploadFile(e.target.files[0], function(data) {
-                $.hidePreloader();
                 //返回图片地址
                 if(data.success && data.data.filePath){
                     var url = data.data.filePath;
                     //生成缩略图
                     var imgTag = $this.prev('label'),
-                    cssImgUrl = 'url(' + url + '?token=' + token + ')';
-                    imgTag.css("background-image",cssImgUrl);
-                    imgTag.attr("img-url",url);
+                        src = url + '?token=' + token;
+                    imgTag.prev('.info').addClass('hide');
+                    imgTag.html('<img src='+src+'>');
                 }
                 else{
                     boatIndex.toast(data.msg);
                 }
+                $.hidePreloader();
             }, function(json) {
+                $.hidePreloader();
                 boatIndex.toast('图片上传失败，请重新尝试...');
             });
         }, false);
@@ -269,8 +274,7 @@
             }
             var chooseImg = $('.choose');
             for(var j=0;j<chooseImg.length;j++){
-                var imgUrl = chooseImg.eq(j).attr('img-url');
-                if(!imgUrl){
+                if(chooseImg.eq(j).find('img').length>0){
                     var msg = chooseImg.eq(j).attr('msg');
                     boatIndex.toast('请上传'+ msg);
                     return;
@@ -301,7 +305,6 @@
                 }
             });
             function transFormTime(time){
-                //var time = time.replace(/-/g,'/');
                 var date = new Date(time);
                 return (date.getTime())/1000;
             }

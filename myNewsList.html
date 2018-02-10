@@ -77,7 +77,9 @@
             data:{},
             parent:$('.news-list'),
             templateId:'listTempl',
-            success:function(data){
+            zero:function(parent){
+                var html = '<div class="zero-box"><div class="icon"><i></i></div><div class="msg">暂无消息</div></div>';
+                parent.html(html);
             }
         };
         boatIndex.infinitScroll(params);

@@ -28,7 +28,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                             _this.toast('登录失效，请重新登录');
                             setTimeout(function(){
                                 window.location.href = 'login.html'
-                            },1000);
+                            },300);
                         }
                         else if(options.success)options.success(data);
                     },
@@ -39,7 +39,9 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             }
             else{
                 _this.toast('请登录');
-                window.location.href = 'login.html';
+                setTimeout(function(){
+                    window.location.href = 'login.html'
+                },300);
             }
             
         },
@@ -65,15 +67,16 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                 data: options.data || {},
                 success: function(data){
                     total = data.total || 0;
-                    if(endIndex >= total){
-                        // 删除加载提示符
-                        $('.infinite-scroll-preloader').remove();
-                    };
                     if(total == 0){
                         if(options.zero)options.zero(options.parent);
                     }
                     //预先加载10条
                     addItems(pageSize,data);
+                    if(endIndex >= total){
+                        // 删除加载提示符
+                        $('.infinite-scroll-preloader').remove();
+                        if(options.endCallback)options.endCallback(options.parent);
+                    };
                 },
                 error: function(){
                     if(options.error)options.error;
@@ -129,7 +132,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                             $.detachInfiniteScroll($('.infinite-scroll'));
                             // 删除加载提示符
                             $('.infinite-scroll-preloader').remove();
-                            return;
+                            if(options.endCallback)options.endCallback(options.parent);
                         }
                     }
                 });
@@ -204,19 +207,6 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             window.getNativeId = function(id){
                 $('#userId').val(id);
             }
-            $('.nav-list li').bind('click',function(){
-                if($(this).hasClass('on'))return;
-                var index = $(this).index();
-                if(index == 0){
-                    window.location.href = 'index.html';
-                }
-                else if(index == 1){
-                    window.location.href = 'myOrderList.html';
-                }
-                else if(index == 2){
-                    window.location.href = 'userInfo.html';
-                }
-            });
         },
         init:function(){
            this.addEvent();

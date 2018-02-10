@@ -604,13 +604,13 @@ input {
   left: 0;
   right: 0;
   overflow: hidden;
-  background-position: center;
+  /*background-position: center;
   background-repeat: no-repeat; 
-  background-size:cover;
+  background-size:cover;*/
 }
 .pic-list li .choose img{
   width: 100%;
-  display: block;
+  height: auto;
 }
 .info-wrapper{
   margin:.5rem;
@@ -656,6 +656,12 @@ input {
   border-top:1px solid #999; 
   border-left:1px solid #999;
   transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+.no-more{
+  text-align: center;
+  color: #777;
+  line-height: 50px;
 }
 .user-list li{
   height: 3rem;
@@ -815,28 +821,31 @@ input {
 .login-btn:active{
   background: rgba(36, 208, 34 , 1);
 }
-/*下拉刷新 start*/
-.ui-hide {
-  background-image: none !important; }
-
-.ui-pulldown-refresh {
-  position: relative;
-  height: 0;
-  line-height: 36px;
-  font-size: 14px;
-  color: #707070;
-  text-align: center;
-  background-color: #f2f2f2;
-  overflow: hidden; }
-
-.ui-pulldown-refresh div {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  margin-left: -35px; }
-.scroll-loading{
-  text-align: center;
-  font-size: 14px;
-  line-height: 30px;
+/*没有数据状态*/
+.zero-box{
+  margin-top: 30%;
+  width: 100%;
 }
-/*下拉刷新 end*/
+.zero-box .icon{
+  display: block;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background: #fff;
+  margin:0 auto;
+  box-sizing: border-box;
+  padding: 1rem 0 0 1rem;
+}
+.zero-box .icon i{
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+  background: url(../images/icon-wait.png) no-repeat center;
+  background-size: 100%;
+}
+.zero-box .msg{
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 1rem;
+  margin-top: 1rem;
+}

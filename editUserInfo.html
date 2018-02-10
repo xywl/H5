@@ -27,23 +27,25 @@
                 <ul class="edit-wrapper">
                     <li class="border-thin">
                         <div class="left">船号</div>
-                        <div class="right"><input class="ipt" type="text" name="船号" placeholder="请输入船号" id="shipNo" readonly /></div>
+                        <div class="right"><input class="ipt" type="text" name="船号" placeholder="请输入船号" id="shipNo" /></div>
                     </li>
                     <li class="border-thin">
                         <div class="left">姓名</div>
-                        <div class="right"><input class="ipt" type="text" name="姓名" placeholder="请输入姓名" id="name" readonly /></div>
+                        <div class="right"><input class="ipt" type="text" name="姓名" placeholder="请输入姓名" id="name" /></div>
                     </li>
                     <li class="border-thin">
                         <div class="left">手机号</div>
-                        <div class="right"><input class="ipt" type="text" lx="phone" name="手机号码" placeholder="请输入手机号" id="mobile" readonly /></div>
+                        <div class="right"><input class="ipt" type="tel" lx="phone" name="手机号码" placeholder="请输入手机号" id="mobile" maxlength="11" /></div>
                     </li>
                 </ul>
                 <ul class="pic-list">
                     <li>
                         <p class="name">上传身份证</p>
                         <div>
-                            <i></i>
-                            <p>正面</p>
+                            <div class="info">
+                                <i></i>
+                                <p>正面</p>
+                            </div>
                             <label class="choose" for="file1" msg="身份证正面"></label>
                             <input id="file1" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                         </div>
@@ -51,8 +53,10 @@
                     <li>
                         <p class="name"></p>
                         <div>
-                            <i></i>
-                            <p>反面</p>
+                            <div class="info">
+                                <i></i>
+                                <p>反面</p>
+                            </div>
                             <label class="choose" for="file2" msg="身份证反面"></label>
                             <input id="file2" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                         </div>
@@ -62,8 +66,10 @@
                     <li>
                         <p class="name">上传银行卡</p>
                         <div>
-                            <i></i>
-                            <p>正面</p>
+                            <div class="info">
+                                <i></i>
+                                <p>正面</p>
+                            </div>
                             <label class="choose" for="file3" msg="银行卡正面"></label>
                             <input id="file3" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                         </div>
@@ -71,8 +77,10 @@
                     <li>
                         <p class="name">船舶证件照</p>
                         <div>
-                            <i></i>
-                            <p>船舶证件照</p>
+                            <div class="info">
+                                <i></i>
+                                <p>船舶证件照</p>
+                            </div>
                             <label class="choose" for="file4" msg="船舶证件照"></label>
                             <input id="file4" accept="image/png,image/jpeg" type="file" name="images" class="file-input hide">
                         </div>
@@ -155,9 +163,10 @@
                 return;
             }
             var imgTag = $('#'+id).prev('label'),
-                cssImgUrl = 'url(' + url + '?token=' + token + ')';
-            imgTag.css("background-image",cssImgUrl);
-            imgTag.attr("img-url",url);
+                src = url + '?token=' + token;
+            imgTag.prev('.info').addClass('hide');
+            imgTag.html('<img src='+src+'>');
+            //imgTag.attr("img-url",url);
             $.hidePreloader();
         }
 
@@ -168,11 +177,13 @@
                 var url = data.data.filePath;
                 //生成缩略图
                 var imgTag = $this.prev('label'),
-                cssImgUrl = 'url(' + url + '?token=' + token + ')';
-                imgTag.css("background-image",cssImgUrl);
-                imgTag.attr("img-url",url);
+                    src = url + '?token=' + token;
+                imgTag.prev('.info').addClass('hide');
+                imgTag.html('<img src='+src+'>');
+                //imgTag.attr("img-url",url);
                 $.hidePreloader();
             }, function(json) {
+                $.hidePreloader();
                 boatIndex.toast('图片上传失败，请重新尝试');
             });
         }, false);
@@ -218,7 +229,7 @@
             var chooseImg = $('.choose');
             for(var j=0;j<chooseImg.length;j++){
                 var imgUrl = chooseImg.eq(j).attr('img-url');
-                if(!imgUrl){
+                if(chooseImg.eq(j).find('img').length>0){
                     var msg = chooseImg.eq(j).attr('msg');
                     boatIndex.toast('请上传'+ msg + '照片');
                     return;

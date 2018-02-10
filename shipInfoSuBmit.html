@@ -38,23 +38,22 @@
                 </li>
                 <li>
                     <div class="left">预报吨位</div>
-                    <div class="right"><input class="ipt" type="text" placeholder="请输入预约吨号" id="appointNum" /></div>
+                    <div class="right"><input class="ipt" type="text" name="预报吨位" placeholder="请输入预报吨位" id="appointNum" /></div>
                 </li>
             </ul>
         </div>
         <div class="btn-common" id="submitBtn">提交</div>
-        </div>
         <!-- 工具栏 -->
         <nav class="bar bar-tab">
-            <a class="tab-item external" href="index.html">
+            <a class="tab-item external" href="javascript:void(0)">
                 <span class="icon icon-index"></span>
                 <span class="tab-label">抢单</span>
             </a>
-            <a class="tab-item external" href="myOrderList.html">
+            <a class="tab-item external" href="javascript:void(0)">
                 <span class="icon icon-order"></span>
                 <span class="tab-label">航程</span>
             </a>
-            <a class="tab-item external" href="userInfo.html">
+            <a class="tab-item external" href="javascript:void(0)">
                 <span class="icon icon-my"></span>
                 <span class="tab-label">我的</span>
             </a>
@@ -65,7 +64,8 @@
     </script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        var token = boatIndex.getQueryString('rnd') || '';
+        var token = boatIndex.getQueryString('rnd') || '',
+            flag = false;
         window.doBack = function(){
             window.location.href = 'login.html';
         }
@@ -111,6 +111,7 @@
                             }
                         }
                         boatIndex.setCookie('token',token,30);
+                        flag = true;
                         setTimeout(function(){
                             window.location.href = 'index.html';
                         },300);
@@ -123,6 +124,22 @@
                     boatIndex.toast('网络连接失败，请稍后重试...');
                 }
             });
+        });
+        $('.bar-tab a').bind('click',function(){
+            if(!flag){
+                boatIndex.toast('请输入船舶信息');
+                return;
+            }
+            var index = $(this).index();
+            if(index == 0){
+                window.location.href = 'index.html';
+            }
+            else if(index == 1){
+                window.location.href = 'myOrderList.html';
+            }
+            else if(index == 2){
+                window.location.href = 'userInfo.html';
+            }
         });
     });
     </script>
