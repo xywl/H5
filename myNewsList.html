@@ -18,7 +18,7 @@
 <body>
     <div id="page-ptr" class="page">
         <header class="bar bar-nav">
-            <a class="button button-link button-nav pull-left back" href="/demos"><span class="icon icon-left"></span></a>
+            <a class="button button-link button-nav pull-left back" href="javascript:void(0)"><span class="icon icon-left"></span></a>
             <h1 class="title">我的消息</h1>
         </header>
         <input type="hidden" class="userId">
@@ -66,11 +66,11 @@
     </script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        $('.goback').bind('click',function(){
-            window.location.href = 'userInfo.html';
+        $('.bar-nav a').bind('click',function(){
+            history.go(-1);
         });
         window.doBack = function(){
-            window.location.href = 'userInfo.html';
+            history.go(-1);
         }
         var params = {
             url: messageListUrl,

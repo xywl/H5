@@ -11,12 +11,13 @@
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
     <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <script src="./scripts/zepto.min.js"></script>
     <title>地图</title>       
 </head>
 <body>
     <div id="page-ptr" class="page">
         <header class="bar bar-nav">
-            <a class="button button-link button-nav pull-left" href="grabOrderList.html"><span class="icon icon-left"></span></a>
+            <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
             <h1 class="title">地图</h1>
         </header>
         <div class="content">
@@ -28,15 +29,14 @@
         </div>
         <!-- <div class="bottom-btn"><div class="btn" id="confirmBtn">确认添加</div></div> -->
     </div>
-    <script src="./scripts/zepto.min.js"></script>
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        $('.goback').bind('click',function(){
-            window.location.href = 'grabOrderList.html';
+        $('.bar-nav a').bind('click',function(){
+            history.go(-1);
         });
         window.doBack = function(){
-            window.location.href = 'grabOrderList.html';
+            history.go(-1);
         }
         if (navigator.geolocation) {  //调用导航器geolocation函数
             var map = new BMap.Map("allmap");

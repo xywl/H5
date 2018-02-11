@@ -18,7 +18,7 @@
 <body>
     <div id="page-ptr" class="page">
         <header class="bar bar-nav">
-            <a class="button button-link button-nav pull-left" href="login.html"><span class="icon icon-left"></span></a>
+            <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
             <h1 class="title">预约信息上传</h1>
         </header>
         <input type="hidden" class="userId">
@@ -98,8 +98,11 @@
         var leftId = boatIndex.getQueryString('id') || '';
         var token = boatIndex.getUserTag('token');
 
+        $('.bar-nav a').bind('click',function(){
+            history.go(-1);
+        });
         window.doBack = function(){
-            window.location.href = 'login.html';
+            history.go(-1);
         }
         boatIndex.commonAjax({
             url: preLoadUrl,
@@ -274,7 +277,7 @@
             }
             var chooseImg = $('.choose');
             for(var j=0;j<chooseImg.length;j++){
-                if(chooseImg.eq(j).find('img').length>0){
+                if(chooseImg.eq(j).find('img').length <= 0){
                     var msg = chooseImg.eq(j).attr('msg');
                     boatIndex.toast('请上传'+ msg);
                     return;

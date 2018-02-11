@@ -1,7 +1,7 @@
 /**
  * 存放对 msui 的 config，需在 zepto 之后 msui 之前加载
  *
- * Created by bd on 15/12/21.
+ * Created by bd on 18/2/11.
  */
 $.config = {
     // 路由功能开关过滤器，返回 false 表示当前点击链接不使用路由

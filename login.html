@@ -24,8 +24,8 @@
             <div class="login-wrapper">
                 <div class="login-btn" id="loginBtn"><i></i><span>微信登录</span></div>
             </div>
-            <br>
-            <input style="height: 40px;width: 100%" class="ipt" type="text" name="" placeholder="token复制" id="XXX" />
+            <!-- <br>
+            <input style="height: 40px;width: 100%" class="ipt" type="text" name="" placeholder="token复制" id="XXX" /> -->
         </div>
     </div>
     <script type="text/javascript">
@@ -74,7 +74,7 @@
                     $.hidePreloader();                    
                     if(data.success && data.data && data.data.token){
                         var token = data.data.token;
-                        $('#XXX').val(token);
+                        //$('#XXX').val(token);
                         if(data.data.appUser.shipInfoId){//绑定船，进预约页面
                             //保存token
                             if(boatIndex.isXYWL && boatIndex.nativeClient){
@@ -87,12 +87,12 @@
                             }
                             boatIndex.setCookie('token',token,30);
                             setTimeout(function(){
-                                //window.location.href = 'index.html';
+                                window.location.href = 'index.html';
                             },300);
                         }
                         else{
                             //没绑定船，进船舶信息填写页面
-                            //window.location.href = 'shipInfoSuBmit.html?rnd=' + token;
+                            window.location.href = 'shipInfoSuBmit.html?rnd=' + token;
                         }
                     }
                     else if(data.msg){
@@ -105,7 +105,6 @@
                 }
             });
         }
-        boatIndex.setCookie('token','Mzo2Mzc5ZTJhMzk5OWU0ZWJkMjNiYzg3MDI2MTMxYzNkZDoxNTIwODQzMDUzNTA2',30)
     });
     </script>
 </body>

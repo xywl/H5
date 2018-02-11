@@ -76,7 +76,7 @@
         {{/each}}
     </script>
     <script>
-        var myOrderUrl = $.config.appUrl + '/xyl/reservation/getMyOrder',
+        var myOrderUrl = $.config.appUrl + '/xyl/reservation/getMyOrder',//我的订单接口
             cancelUrl = $.config.appUrl + '/xyl/reservation/modify';//取消预约接口
     </script>
     <script type="text/javascript">
@@ -110,6 +110,7 @@
                     J_cancel.on('click',function(){
                         boatIndex.commonAjax({
                             url: cancelUrl,
+                            type: 'POST',
                             data: {
                                 id: reserveId
                             },

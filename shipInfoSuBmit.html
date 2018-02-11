@@ -18,7 +18,7 @@
 <body>
      <div id="page-ptr" class="page">
         <header class="bar bar-nav">
-            <a class="button button-link button-nav pull-left" href="login.html"><span class="icon icon-left"></span></a>
+            <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
             <h1 class="title">船舶信息填写</h1>
         </header>
         <div class="content">
@@ -66,8 +66,11 @@
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         var token = boatIndex.getQueryString('rnd') || '',
             flag = false;
+        $('.bar-nav a').bind('click',function(){
+            history.go(-1);
+        });
         window.doBack = function(){
-            window.location.href = 'login.html';
+            history.go(-1);
         }
         //点击提交
         $('#submitBtn').bind('click',function(){

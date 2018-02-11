@@ -20,7 +20,7 @@
 <body>
     <div id="page-ptr" class="page">
         <header class="bar bar-nav">
-            <a class="button button-link button-nav pull-left" href="userInfo.html"><span class="icon icon-left"></span></a>
+            <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
             <h1 class="title">关于我们</h1>
         </header>
         
@@ -57,8 +57,11 @@
     </div>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        $('.bar-nav a').bind('click',function(){
+            history.go(-1);
+        });
         window.doBack = function(){
-            window.location.href = 'userInfo.html';
+            history.go(-1);
         }
     });
     </script>
