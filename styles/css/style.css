@@ -334,6 +334,11 @@ input {
 /*header start*/
 .page{
   background: #f3f4f6;
+  top:1rem;
+}
+.nav-plcaceholder{
+  height: 1rem;
+  background: #fff;
 }
 .bar-nav{
   box-shadow: 0px 2px 2px #e5e6e8;
@@ -377,8 +382,8 @@ input {
 .bar-tab .tab-item.active .icon-my{
     background-position: -2.85rem -1.55rem;
 }
-.content{
-    padding-bottom: 60px;
+.bar-nav~.content{
+    padding-bottom: 3rem;
 }
 .edit-wrapper {
     background: #fff;

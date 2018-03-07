@@ -16,7 +16,8 @@
     <title>船舶信息填写</title>       
 </head>
 <body>
-     <div id="page-ptr" class="page">
+    <div class="nav-plcaceholder"></div>
+    <div id="page-ptr" class="page">
         <header class="bar bar-nav">
             <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
             <h1 class="title">船舶信息填写</h1>
@@ -64,7 +65,7 @@
     </script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        var token = boatIndex.getQueryString('rnd') || '',
+        var token = boatIndex.getQueryString('rnd') || 'MzoyZTFjM2JkZjZkZjExZWFkYjE2YWNkMjU1OTcxYzFiODoxNTIyNjQ3NjM3NzM2',
             flag = false;
         $('.bar-nav a').bind('click',function(){
             history.go(-1);
@@ -105,9 +106,9 @@
                 success:function(data){
                     if(data.success){
                         //保存token
-                        if(boatIndex.isXYWL && boatIndex.nativeClient){
+                        if(boatIndex.isXYWL && XYNativeClient){
                             try{
-                                boatIndex.nativeClient.saveUserId(token);
+                                XYNativeClient.saveUserId(token);
                             }
                             catch(e){
                                 alert(e);

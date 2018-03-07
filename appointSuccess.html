@@ -16,6 +16,7 @@
     <title>预约完成</title>       
 </head>
 <body>
+    <div class="nav-plcaceholder"></div>
     <div id="page-ptr" class="page">
         <header class="bar bar-nav">
             <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
@@ -25,7 +26,7 @@
         <div class="content">
             <div class="wrapper info-wrapper">
                 预约下单完成，审核中，预计1-2个工作日完成审核<br>
-                联系电话：<a class="tel" href="tel:025-1111111">025-1111111<a>
+                联系电话：<a class="tel" href="tel:18551618419">025-1111111<a>
             </div>
             <div class="btn-line">
                 <div class="btn btn-red" id="confirmBtn">确定</div>
@@ -59,6 +60,13 @@
         window.doBack = function(){
             history.go(-1);
         }
+        //电话
+        $('.tel').bind('click',function(){
+            if(boatIndex.isXYWL && boatIndex.isAndroid && XYNativeClient){
+                XYNativeClient.doCallPhone("18551618419");
+            }
+        });
+        
         var reserveId = boatIndex.getQueryString('id') || '';
         //取消
         $('#cancelBtn').bind('click',function(){

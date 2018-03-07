@@ -151,7 +151,7 @@
         min-width: 320px;
         max-width: 750px;
         margin: 0 auto;
-        background-color: #f3f4f6;
+        background-color: #fff;
         color: #353d44;
         font: 12px/1.5 arial, tahoma, SimHei;
         overflow: auto;
@@ -210,27 +210,23 @@
             font-size: 28.8px;
         }
     }
-
-
     body {
         font-size: 12px;
     }
 
 
     /*header start*/
-    .header-blank {
-        height: 2.2rem;
+    .nav-placeholder {
+        height: 1rem;
+        background: #fff;
     }
 
     .header-common {
         background: #fff;
         box-shadow: 0px 2px 2px #e5e6e8;
-        position: fixed;
         width: 100%;
-        top: 0;
         min-width: 320px;
         max-width: 750px;
-        z-index: 99999;
     }
 
     .header-common section {
@@ -251,10 +247,6 @@
     }
     /*header end*/
     .error-box{
-      position: absolute;
-      top:0;
-      left: 0;
-      background: #fff;
       width: 100%;
       height: 100%;
       text-align: center;
@@ -295,7 +287,7 @@
 </head>
 <body>
     <!-- wap头部 start-->
-    <div class="header-blank"></div>
+    <div class="nav-placeholder"></div>
     <header class="header-common">
         <section>
             <div class="goback"></div>

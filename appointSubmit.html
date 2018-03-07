@@ -16,6 +16,7 @@
     <title>预约信息上传</title>       
 </head>
 <body>
+    <div class="nav-plcaceholder"></div>
     <div id="page-ptr" class="page">
         <header class="bar bar-nav">
             <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
@@ -95,7 +96,7 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){  
-        var leftId = boatIndex.getQueryString('id') || '';
+        var leftId = boatIndex.getQueryString('id') || '11';
         var token = boatIndex.getUserTag('token');
 
         $('.bar-nav a').bind('click',function(){

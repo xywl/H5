@@ -194,7 +194,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
         toast: function(msg){
             var _this = this,
                 msg = msg || '报错';
-            if(_this.isXYWL && XYNativeClient){
+            if(_this.isXYWL && _this.isAndroid && XYNativeClient){
                 XYNativeClient.toastMessage(msg);
             }
             else{

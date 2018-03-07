@@ -16,6 +16,7 @@
     <title>登录</title>       
 </head>
 <body>
+    <div class="nav-plcaceholder"></div>
     <div id="page-ptr" class="page">
         <header class="bar bar-nav">
             <h1 class="title">登录</h1>
@@ -46,7 +47,6 @@
         $('#loginBtn').on('click',function(){
             $.showPreloader('登录中');
             setTimeout(function(){
-                
                 if(boatIndex.isXYWL && XYNativeClient){
                     try{
 
@@ -61,7 +61,7 @@
         });
         //处理微信登录
         window.doWXLoginComplete = function(code){
-            //$('#XXX').val(code);
+            alert(code)
             //var code = '011APh0E0axGFd2SNCYD0gH30E0APh0X';
             $('#loginBtn').addClass('hide');
             $.ajax({
@@ -74,12 +74,12 @@
                     $.hidePreloader();                    
                     if(data.success && data.data && data.data.token){
                         var token = data.data.token;
-                        //$('#XXX').val(token);
+                        $('#XXX').val(token);
                         if(data.data.appUser.shipInfoId){//绑定船，进预约页面
                             //保存token
-                            if(boatIndex.isXYWL && boatIndex.nativeClient){
+                            if(boatIndex.isXYWL && XYNativeClient){
                                 try{
-                                    boatIndex.nativeClient.saveUserId(token);
+                                    XYNativeClient.saveUserId(token);
                                 }
                                 catch(e){
                                     alert(e);
