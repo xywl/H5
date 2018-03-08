@@ -335,8 +335,9 @@ input {
 .page{
   background: #f3f4f6;
   top:1rem;
+  height: inherit;
 }
-.nav-plcaceholder{
+.nav-plcaceholder{c
   height: 1rem;
   background: #fff;
 }

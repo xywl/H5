@@ -49,8 +49,7 @@
             setTimeout(function(){
                 if(boatIndex.isXYWL && XYNativeClient){
                     try{
-
-                        XYNativeClient.doWXLogin();
+                        XYNativeClient.doWXLogin("doWXLoginComplete");
                     }
                     catch(e){
                         alert(e);
@@ -61,7 +60,7 @@
         });
         //处理微信登录
         window.doWXLoginComplete = function(code){
-            alert(code)
+            //alert(code)
             //var code = '011APh0E0axGFd2SNCYD0gH30E0APh0X';
             $('#loginBtn').addClass('hide');
             $.ajax({
@@ -79,7 +78,7 @@
                             //保存token
                             if(boatIndex.isXYWL && XYNativeClient){
                                 try{
-                                    XYNativeClient.saveUserId(token);
+                                    XYNativeClient.setUserId(token);
                                 }
                                 catch(e){
                                     alert(e);

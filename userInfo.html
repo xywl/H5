@@ -105,7 +105,7 @@
             $.confirm('您确定要退出登录？', function(){
                 //OK
                 if(boatIndex.isXYWL){
-                    XYNativeClient.saveUserTag('');
+                    XYNativeClient.setUserId('');
                 }
                 else{
                     boatIndex.delCookie('token');

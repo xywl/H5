@@ -108,7 +108,7 @@
                         //保存token
                         if(boatIndex.isXYWL && XYNativeClient){
                             try{
-                                XYNativeClient.saveUserId(token);
+                                XYNativeClient.setUserId(token);
                             }
                             catch(e){
                                 alert(e);
