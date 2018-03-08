@@ -142,9 +142,7 @@
         $(document).on('refresh', '.pull-to-refresh-content',function(e) {
             // 模拟1s的加载过程
             setTimeout(function() {
-                if($('.error-box').length > 0){
-                    boatIndex.infinitScroll(params);
-                }
+                boatIndex.infinitScroll(params);
                 // 加载完毕需要重置
                 $.pullToRefreshDone('.pull-to-refresh-content');
             }, 1000);

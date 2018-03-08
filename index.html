@@ -120,7 +120,8 @@
                 boatIndex.toast("您当前不支持地理定位");//不支持
             }
         }
-       var params = {
+
+        var params = {
             url: goodListUrl,
             data:{
                 lng: $('#lng').val(),
@@ -158,21 +159,24 @@
                 });
             },
             zero:function(parent){
-                var html = '<div class="error-box"><div class="icon">i</div><div class="msg">暂无附近货物，持续寻找中</div></div>';
+                var html = '<div class="zero-box"><div class="icon"><i></i></div><div class="msg">暂无附近货物，持续寻找中</div></div>';
                 parent.html(html);
             },
             endCallback:function(parent){
-                var html = '<p class="no-more">没有更多了~</p>';
-                parent.parent().append(html);
+                if(parent.find('li').length>0){
+                    var html = '<p class="no-more">没有更多了~</p>';
+                    parent.parent().append(html);
+                }
             }
         }
         boatIndex.infinitScroll(params);
         $(document).on('refresh', '.pull-to-refresh-content',function(e) {
             // 模拟2s的加载过程
             setTimeout(function() {
+                boatIndex.infinitScroll(params);
                 // 加载完毕需要重置
                 $.pullToRefreshDone('.pull-to-refresh-content');
-            }, 2000);
+            }, 1000);
         });
         $.init();
         //获取时间

@@ -87,6 +87,7 @@
         $(document).on('refresh', '.pull-to-refresh-content',function(e) {
             // 模拟2s的加载过程
             setTimeout(function() {
+                boatIndex.infinitScroll(params);
                 // 加载完毕需要重置
                 $.pullToRefreshDone('.pull-to-refresh-content');
             }, 1000);
