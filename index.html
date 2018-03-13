@@ -165,7 +165,7 @@
             endCallback:function(parent){
                 if(parent.find('li').length>0){
                     var html = '<p class="no-more">没有更多了~</p>';
-                    parent.parent().append(html);
+                    parent.append(html);
                 }
             }
         }
@@ -173,6 +173,7 @@
         $(document).on('refresh', '.pull-to-refresh-content',function(e) {
             // 模拟2s的加载过程
             setTimeout(function() {
+                $('.order-list').empty();
                 boatIndex.infinitScroll(params);
                 // 加载完毕需要重置
                 $.pullToRefreshDone('.pull-to-refresh-content');
