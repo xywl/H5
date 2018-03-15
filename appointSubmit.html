@@ -147,6 +147,7 @@
                 src = url + '?token=' + token;
             imgTag.prev('.info').addClass('hide');
             imgTag.html('<img src='+src+'>');
+            imgTag.attr('img-url',url);
             $.hidePreloader();
         }
         $file.on("change", function(e) {
@@ -160,6 +161,7 @@
                         src = url + '?token=' + token;
                     imgTag.prev('.info').addClass('hide');
                     imgTag.html('<img src='+src+'>');
+                    imgTag.attr('img-url',url);
                 }
                 else{
                     boatIndex.toast(data.msg);

@@ -136,9 +136,9 @@
                     renderImg('file4',info.shipPhoto);
                     function renderImg(id,imgUrl){
                         if(imgUrl){
-                            var cssImgUrl = 'url(' + imgUrl + '?token=' + token + ')';
+                            var src = imgUrl + '?token=' + token;
                             box = $('#'+id).prev('label');
-                            box.css('background-image',cssImgUrl);
+                            box.html('<img src=' + src + '>');
                             box.attr('img-url',imgUrl);
                         }
                         
@@ -170,7 +170,7 @@
                 src = url + '?token=' + token;
             imgTag.prev('.info').addClass('hide');
             imgTag.html('<img src='+src+'>');
-            //imgTag.attr("img-url",url);
+            imgTag.attr("img-url",url);
             $.hidePreloader();
         }
 
@@ -184,7 +184,7 @@
                     src = url + '?token=' + token;
                 imgTag.prev('.info').addClass('hide');
                 imgTag.html('<img src='+src+'>');
-                //imgTag.attr("img-url",url);
+                imgTag.attr("img-url",url);
                 $.hidePreloader();
             }, function(json) {
                 $.hidePreloader();

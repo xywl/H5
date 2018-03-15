@@ -65,7 +65,7 @@
     </script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        var token = boatIndex.getQueryString('rnd') || 'MzoyZTFjM2JkZjZkZjExZWFkYjE2YWNkMjU1OTcxYzFiODoxNTIyNjQ3NjM3NzM2',
+        var token = boatIndex.getQueryString('rnd'),
             flag = false;
         $('.bar-nav a').bind('click',function(){
             history.go(-1);
