@@ -28,7 +28,9 @@
                 <div class="preloader"></div>
                 <div class="pull-to-refresh-arrow"></div>
             </div>
-            <ul class="news-list"></ul>
+            <ul class="news-list">
+                <div class="zero-box"><div class="icon"><i></i></div><div class="msg">即将上线，敬请期待</div></div>
+            </ul>
             <!-- 加载提示符 -->
             <div class="infinite-scroll-preloader">
               <div class="preloader"></div>
@@ -83,17 +85,17 @@
                 parent.html(html);
             }
         };
-        boatIndex.infinitScroll(params);
-        $(document).on('refresh', '.pull-to-refresh-content',function(e) {
-            // 模拟2s的加载过程
-            setTimeout(function() {
-                $('.news-list').empty();
-                boatIndex.infinitScroll(params);
-                // 加载完毕需要重置
-                $.pullToRefreshDone('.pull-to-refresh-content');
-            }, 1000);
-        });
-        $.init();
+        // boatIndex.infinitScroll(params);
+        // $(document).on('refresh', '.pull-to-refresh-content',function(e) {
+        //     // 模拟2s的加载过程
+        //     setTimeout(function() {
+        //         $('.news-list').empty();
+        //         boatIndex.infinitScroll(params);
+        //         // 加载完毕需要重置
+        //         $.pullToRefreshDone('.pull-to-refresh-content');
+        //     }, 1000);
+        // });
+        // $.init();
     });
     </script>
 </body>

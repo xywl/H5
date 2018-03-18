@@ -140,9 +140,9 @@
                         var leftId = $(this).attr('leftId');
                         boatIndex.commonAjax({
                             url:checkAppointUrl,
-                            data:{
-                                id: leftId
-                            },
+                            // data:{
+                            //     id: leftId
+                            // },
                             success:function(data){
                                 if(data.success){
                                     window.location.href = 'appointSubmit.html?id=' + leftId;

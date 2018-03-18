@@ -79,6 +79,8 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                     };
                 },
                 error: function(){
+                    // 删除加载提示符
+                    $('.infinite-scroll-preloader').remove();
                     if(options.error)options.error;
                 }
             });
