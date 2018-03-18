@@ -212,11 +212,10 @@
         //点击地址
         $('#boatLocation').bind('click',function(){
             window.location.href = 'map.html';
-        });
-        
+        }); 
         //获取经纬度
-        if(boatIndex.isAndroid && boatIndex.isXYML && XYNative) {  
-             XYNative.getLocation();
+        if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient) {
+            XYNativeClient.getLocation();
         }
         else{
             getAddress();

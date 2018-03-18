@@ -90,7 +90,7 @@
             }
         }
         //获取经纬度
-        if(boatIndex.isAndroid && boatIndex.isXYWL) {
+        if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient) {
             XYNativeClient.getLocation();
         }
         else{
