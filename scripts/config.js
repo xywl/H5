@@ -12,5 +12,5 @@ $.config = {
         }
         return true;
     },
-    appUrl: 'http://xingyi.nandasoft-its.com'
+    appUrl: 'https://xingyi.nandasoft-its.com'
 };
