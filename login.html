@@ -66,14 +66,14 @@
             $.ajax({
                 url: loginUrl + code,
                 dataType:"json",
-                type:"POST",
+                type:"GET",
                 dataType:"json",
                 data:{},
                 success:function(data){
                     $.hidePreloader();                    
                     if(data.success && data.data && data.data.token){
                         var token = data.data.token;
-                        $('#XXX').val(token);
+                        //$('#XXX').val(token);
                         if(data.data.appUser.shipInfoId){//绑定船，进预约页面
                             //保存token
                             if(boatIndex.isXYWL && XYNativeClient){
