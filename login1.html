@@ -61,7 +61,7 @@
         // //处理微信登录
         // window.doWXLoginComplete = function(code){
             //alert(code)
-            var code = '011APh0E0axGFd2SNCYD0gH30E0APh0X';
+            var code = '061KmJof2hPYvA0L08pf2uwQof2KmJol';
             //$('#loginBtn').addClass('hide');
             $.ajax({
                 url: loginUrl + code,
@@ -73,7 +73,7 @@
                     $.hidePreloader();                    
                     if(data.success && data.data && data.data.token){
                         var token = data.data.token;
-                        $('#XXX').val(token);
+                        //$('#XXX').val(token);
                         if(data.data.appUser.shipInfoId){//绑定船，进预约页面
                             //保存token
                             if(boatIndex.isXYWL && XYNativeClient){
