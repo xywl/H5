@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv= "Cache-Control" content= "no-cache" /> 
+    <meta http-equiv= "Expires" content= "0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
+    <script src="./scripts/zepto.min.js"></script>
+    <script src="./scripts/config.js"></script>
+    <title>登录</title>       
+</head>
+<body>
+    <div class="nav-plcaceholder"></div>
+    <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <h1 class="title">登录</h1>
+        </header>
+        <div class="content">
+            <div class="login-wrapper">
+                <div class="login-btn" id="loginBtn"><i></i><span>微信登录</span></div>
+            </div>
+            <!-- <br>
+            <input style="height: 40px;width: 100%" class="ipt" type="text" name="" placeholder="token复制" id="XXX" /> -->
+        </div>
+    </div>
+    <script type="text/javascript">
+    var loginUrl = $.config.appUrl + '/xyl/signin/oauth/weixin/';//登录
+    </script>
+    <script type="text/javascript">
+    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient){
+            window.doBack = function(){
+                try{
+                    XYNativeClient.doFinish();
+                }
+                catch(e){
+                    alert(e);
+                }
+            }
+        }
+        $('#loginBtn').on('click',function(){
+            $.showPreloader('登录中');
+            setTimeout(function(){
+                if(boatIndex.isXYWL && XYNativeClient){
+                    try{
+                        XYNativeClient.doWXLogin("doWXLoginComplete");
+                    }
+                    catch(e){
+                        alert(e);
+                    }
+                }   
+            },1000)
+                    
+        });
+        // //处理微信登录
+        // window.doWXLoginComplete = function(code){
+            //alert(code)
+            var code = '011APh0E0axGFd2SNCYD0gH30E0APh0X';
+            //$('#loginBtn').addClass('hide');
+            $.ajax({
+                url: loginUrl + code,
+                dataType:"json",
+                type:"POST",
+                dataType:"json",
+                data:{},
+                success:function(data){
+                    $.hidePreloader();                    
+                    if(data.success && data.data && data.data.token){
+                        var token = data.data.token;
+                        $('#XXX').val(token);
+                        if(data.data.appUser.shipInfoId){//绑定船，进预约页面
+                            //保存token
+                            if(boatIndex.isXYWL && XYNativeClient){
+                                try{
+                                    XYNativeClient.setUserId(token);
+                                }
+                                catch(e){
+                                    alert(e);
+                                }
+                            }
+                            boatIndex.setCookie('token',token,30);
+                            setTimeout(function(){
+                                window.location.href = 'index.html';
+                            },300);
+                        }
+                        else{
+                            //没绑定船，进船舶信息填写页面
+                            window.location.href = 'shipInfoSuBmit.html?rnd=' + token;
+                        }
+                    }
+                    else if(data.msg){
+                        boatIndex.toast(data.msg);
+                    }
+                },
+                error:function(){
+                    $.hidePreloader();
+                    boatIndex.toast('登录失败，请重新登录');
+                }
+            });
+        //}
+    });
+    </script>
+</body>
+</html>
