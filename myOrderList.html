@@ -68,7 +68,7 @@
                     <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endPortName}}</span></div>
                 </div>
                 <div class="btn-box border-thin">
-                    <p class="tip">{{if list.specialTip}}注：{{list.specialTip}{{/if}}}</p>
+                    <p class="tip">{{if list.specialTip}}注：{{list.specialTip}{{/if}}</p>
                     {{if list.statusName == "已预约"}}
                     <div class="btn border-thin J_cancel">取消预约</div>
                     {{/if}}
@@ -101,6 +101,7 @@
                 data.dischargeTime = getLongDate(data.dischargeTime*1000);
             },
             success:function(json, ajaxOptions, elements){
+                alert(2)
                 $(elements).each(function(index,element){
                     var reserveId = $(element).attr('reserveId'),
                         J_link = $(element).find('.J_link'),
@@ -154,7 +155,7 @@
             var oDate = new Date(str),  
             oYear = oDate.getFullYear(),  
             oMonth = oDate.getMonth()+1,  
-            oDay = oDate.getDate(),  S
+            oDay = oDate.getDate(),
             oHour = oDate.getHours(),  
             oMin = oDate.getMinutes(),  
             oSen = oDate.getSeconds(),
