@@ -66,6 +66,8 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                 url:options.url,
                 data: options.data || {},
                 success: function(data){
+                    alert(data.total);
+                    alert(data.data);
                     total = data.total || 0;
                     if(total == 0){
                         if(options.zero)options.zero(options.parent);
