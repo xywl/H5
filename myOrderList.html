@@ -106,6 +106,7 @@
                         J_link = $(element).find('.J_link'),
                         J_cancel = $(element).find('.J_cancel');
                     J_link.on('click',function(){
+                        if(!J_cancel)return;
                          window.location.href = 'appointSuccess.html?id=' + reserveId;
                     });
                     J_cancel.on('click',function(){
