@@ -295,7 +295,7 @@
                     preArrivePortTime:transFormTime($('#arriveTime').val()),
                     shipEmptyPhoto:$('.choose').eq(0).attr('img-url'),
                     shipReference:$('.choose').eq(1).attr('img-url'),
-                    id: leftId
+                    leftDispatchId: leftId
                 },
                 success:function(data){
                     if(data.success && data.data){

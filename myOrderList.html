@@ -68,7 +68,7 @@
                     <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endPortName}}</span></div>
                 </div>
                 <div class="btn-box border-thin">
-                    <p class="tip">{{if list.specialTip}}注：{{list.specialTip}{{/if}}}</p>
+                    <p class="tip">{{if list.specialTip}}注：{{list.specialTip}{{/if}}</p>
                     {{if list.statusName == "已预约"}}
                     <div class="btn border-thin J_cancel">取消预约</div>
                     {{/if}}
@@ -106,6 +106,7 @@
                         J_link = $(element).find('.J_link'),
                         J_cancel = $(element).find('.J_cancel');
                     J_link.on('click',function(){
+                        if(!J_cancel)return;
                          window.location.href = 'appointSuccess.html?id=' + reserveId;
                     });
                     J_cancel.on('click',function(){
@@ -154,7 +155,7 @@
             var oDate = new Date(str),  
             oYear = oDate.getFullYear(),  
             oMonth = oDate.getMonth()+1,  
-            oDay = oDate.getDate(),  S
+            oDay = oDate.getDate(),
             oHour = oDate.getHours(),  
             oMin = oDate.getMinutes(),  
             oSen = oDate.getSeconds(),
