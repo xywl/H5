@@ -25,8 +25,9 @@
             <div class="login-wrapper">
                 <div class="login-btn" id="loginBtn"><i></i><span>微信登录</span></div>
             </div>
-            <!-- <br>
-            <input style="height: 40px;width: 100%" class="ipt" type="text" name="" placeholder="token复制" id="XXX" /> -->
+            <br>
+            <!-- <input style="height: 40px;width: 100%" class="ipt" type="text" name="" placeholder="token复制" id="XXX" /> -->
+            <p id="XXX">123</p>
         </div>
     </div>
     <script type="text/javascript">
@@ -45,7 +46,7 @@
             }
         }
         $('#loginBtn').on('click',function(){
-            $.showPreloader('登录中');
+            //$.showPreloader('登录中');
             setTimeout(function(){
                 if(boatIndex.isXYWL && XYNativeClient){
                     try{
@@ -59,10 +60,8 @@
                     
         });
         // //处理微信登录
-        // window.doWXLoginComplete = function(code){
-            //alert(code)
-            var code = '061KmJof2hPYvA0L08pf2uwQof2KmJol';
-            //$('#loginBtn').addClass('hide');
+        window.doWXLoginComplete = function(code){
+            $('#loginBtn').addClass('hide');
             $.ajax({
                 url: loginUrl + code,
                 dataType:"json",
@@ -73,7 +72,7 @@
                     $.hidePreloader();                    
                     if(data.success && data.data && data.data.token){
                         var token = data.data.token;
-                        //$('#XXX').val(token);
+                        $('#XXX').text(token);
                         if(data.data.appUser.shipInfoId){//绑定船，进预约页面
                             //保存token
                             if(boatIndex.isXYWL && XYNativeClient){
@@ -86,12 +85,12 @@
                             }
                             boatIndex.setCookie('token',token,30);
                             setTimeout(function(){
-                                window.location.href = 'index.html';
+                                //window.location.href = 'index.html';
                             },300);
                         }
                         else{
                             //没绑定船，进船舶信息填写页面
-                            window.location.href = 'shipInfoSuBmit.html?rnd=' + token;
+                            //window.location.href = 'shipInfoSuBmit.html?rnd=' + token;
                         }
                     }
                     else if(data.msg){
@@ -103,7 +102,7 @@
                     boatIndex.toast('登录失败，请重新登录');
                 }
             });
-        //}
+        }
     });
     </script>
 </body>

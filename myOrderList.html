@@ -57,12 +57,12 @@
     </div>
     <script type="text/html" id="listTempl">
         {{each data as list i}}
-            <li reserveId="{{list.id}}">
-                <div class="o-title o-title2 J_link">
+            <li reserveId="{{list.id}}" class="{{if list.statusName == '已预约'}}J_link{{/if}}">
+                <div class="o-title o-title2">
                     <div class="name">{{list.goodsName}}{{list.dispatchWeight}}吨</div>
                     <div class="state"><span>{{list.statusName}}</span><i class="arrow"></i></div>
                 </div>
-                <div class="info-box J_link">
+                <div class="info-box">
                     <div class="time"><i class="icon-time"></i><span>装货时间：{{list.dischargeTime}}</span></div>
                     <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startPortName}}</span></div>
                     <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endPortName}}</span></div>
@@ -103,13 +103,13 @@
             success:function(json, ajaxOptions, elements){
                 $(elements).each(function(index,element){
                     var reserveId = $(element).attr('reserveId'),
-                        J_link = $(element).find('.J_link'),
+                        J_link = $(element).hasClass('J_link')?$(element),
                         J_cancel = $(element).find('.J_cancel');
                     J_link.on('click',function(){
-                        if(!J_cancel)return;
                          window.location.href = 'appointSuccess.html?id=' + reserveId;
                     });
-                    J_cancel.on('click',function(){
+                    J_cancel.on('click',function(e){
+                        e.stopPropagation();
                         boatIndex.commonAjax({
                             url: cancelUrl,
                             type: 'POST',
