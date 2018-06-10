@@ -235,14 +235,14 @@
         }
         //submit
         $('#submitBtn').bind('click',function(){
-            var chooseImg = $('.choose');
-            for(var j=0;j<chooseImg.length;j++){
-                if(chooseImg.eq(j).find('img').length <= 0){
-                    var msg = chooseImg.eq(j).attr('msg');
-                    boatIndex.toast('请上传'+ msg + '照片');
-                    return;
-                }
-            }
+            // var chooseImg = $('.choose');
+            // for(var j=0;j<chooseImg.length;j++){
+            //     if(chooseImg.eq(j).find('img').length <= 0){
+            //         var msg = chooseImg.eq(j).attr('msg');
+            //         boatIndex.toast('请上传'+ msg + '照片');
+            //         return;
+            //     }
+            // }
             boatIndex.commonAjax({
                 url: infoSubmitUrl,
                 type: "POST",
