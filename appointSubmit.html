@@ -265,20 +265,20 @@
         });
         //校验
         $('#submitBtn').bind('click',function(){
-            // for(var i=0;i<$('.ipt').length;i++){
-            //     var list = $('.ipt').eq(i),
-            //         val = list.val(),
-            //         reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
-            //     if(val == ''){
-            //         var name = list.attr('name');
-            //         boatIndex.toast('请输入'+name);
-            //         return;
-            //     }
-            //     if(list.attr('lx') == 'phone' && !reg.test(val)){
-            //         boatIndex.toast("请输入正确的手机号码");
-            //         return;
-            //     }
-            // }
+            for(var i=0;i<$('.ipt').length;i++){
+                var list = $('.ipt').eq(i),
+                    val = list.val(),
+                    reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+                if(val == ''){
+                    var name = list.attr('name');
+                    boatIndex.toast('请输入'+name);
+                    return;
+                }
+                if(list.attr('lx') == 'phone' && !reg.test(val)){
+                    boatIndex.toast("请输入正确的手机号码");
+                    return;
+                }
+            }
             boatIndex.commonAjax({
                 url: getTimeUrl,
                 data: {},
@@ -328,14 +328,14 @@
                     boatIndex.toast('网络连接失败，请稍后重试...');
                 }
             });
-            // var chooseImg = $('.choose');
-            // for(var j=0;j<chooseImg.length;j++){
-            //     if(chooseImg.eq(j).find('img').length <= 0){
-            //         var msg = chooseImg.eq(j).attr('msg');
-            //         boatIndex.toast('请上传'+ msg);
-            //         return;
-            //     }
-            // }
+            var chooseImg = $('.choose');
+            for(var j=0;j<chooseImg.length;j++){
+                if(chooseImg.eq(j).find('img').length <= 0){
+                    var msg = chooseImg.eq(j).attr('msg');
+                    boatIndex.toast('请上传'+ msg);
+                    return;
+                }
+            }
             
             
             function transFormTime(time){
