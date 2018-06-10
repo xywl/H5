@@ -11,8 +11,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
          */
         commonAjax: function(options){
             var _this = this;
-            //var token = this.getUserTag("token");
-            var token = 'MzM6YzIyOWVlODY1OWMzZTk4MjM4ODdjOWRlMDhmMzUzY2M6MTUzMTIwMzgyMTUxMw=='
+            var token = this.getUserTag("token");
             if(token){
                 //options.data.token = token;
                 $.ajax({
