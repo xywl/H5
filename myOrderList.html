@@ -56,7 +56,7 @@
     </div>
     <script type="text/html" id="listTempl">
         {{each data as list i}}
-            <li reserveId="{{list.id}}" class="{{if list.statusName == '已预约'}}J_link{{/if}}">
+            <li reserveId="{{list.id}}" status="list.status" class="{{if list.status == 1}}J_link{{/if}}">
                 <div class="o-title o-title2">
                     <div class="name">{{list.goodsName}}{{list.dispatchWeight}}吨</div>
                     <div class="state"><span>{{list.statusName}}</span><i class="arrow"></i></div>
@@ -66,12 +66,13 @@
                     <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startPortName}}</span></div>
                     <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endPortName}}</span></div>
                 </div>
+                {{if list.status == 1}}
                 <div class="btn-box border-thin">
                     <p class="tip">{{if list.specialTip}}注：{{list.specialTip}{{/if}}</p>
-                    {{if list.statusName == "已预约"}}
+                    
                     <div class="btn border-thin J_cancel">取消预约</div>
-                    {{/if}}
                 </div>
+                {{/if}}
             </li>
         {{/each}}
     </script>
@@ -99,38 +100,43 @@
             handleData: function(data){
                 data.dischargeTime = getLongDate(data.dischargeTime*1000);
             },
-            success:function(json, ajaxOptions, elements){
+            success:function(json, elements){
+                console.log(elements)
                 $(elements).each(function(index,element){
-                    var reserveId = $(element).attr('reserveId'),
-                        J_link = $(element).hasClass('J_link')?$(element):null,
-                        J_cancel = $(element).find('.J_cancel');
-                    J_link.on('click',function(){
-                         window.location.href = 'appointSuccess.html?id=' + reserveId;
-                    });
-                    J_cancel.on('click',function(e){
-                        e.stopPropagation();
-                        boatIndex.commonAjax({
-                            url: cancelUrl,
-                            type: 'POST',
-                            data: {
-                                id: reserveId
-                            },
-                            success:function(data,elements,parent){
-                                if(data.success){
-                                    boatIndex.toast('订单已关闭');
-                                    setTimeout(function(){
-                                        location.reload();
-                                    },1000);
-                                }
-                                else{
-                                    if(data.msg)boatIndex.toast(data.msg);
-                                }
-                            },
-                            error:function(data){
-                                boatIndex.toast('网络连接失败，请稍后重试...');
-                            }
+                    if($(element).attr('status') == 1){
+                        var reserveId = $(element).attr('reserveId'),
+                            J_link = $(element),
+                            J_cancel = $(element).find('.J_cancel');
+                        J_link.on('click',function(){
+                             window.location.href = 'appointSuccess.html?id=' + reserveId;
                         });
-                    });
+                        J_cancel.on('click',function(e){
+                            e.stopPropagation();
+                            boatIndex.commonAjax({
+                                url: cancelUrl,
+                                type: 'POST',
+                                data: {
+                                    id: reserveId
+                                },
+                                success:function(data,elements,parent){
+                                    if(data.success){
+                                        boatIndex.toast('订单已关闭');
+                                        setTimeout(function(){
+                                            location.reload();
+                                        },1000);
+                                    }
+                                    else{
+                                        if(data.msg)boatIndex.toast(data.msg);
+                                    }
+                                },
+                                error:function(data){
+                                    boatIndex.toast('网络连接失败，请稍后重试...');
+                                }
+                            });
+                        });
+
+                    };
+                    
                 });
             },
             zero:function(parent){

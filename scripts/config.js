@@ -12,5 +12,5 @@ $.config = {
         }
         return true;
     },
-    appUrl: 'http://47.100.45.229'
+    appUrl: 'http://192.168.43.202:16722'
 };
