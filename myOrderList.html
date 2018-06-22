@@ -56,17 +56,17 @@
     </div>
     <script type="text/html" id="listTempl">
         {{each data as list i}}
-            <li reserveId="{{list.id}}" status="list.status" class="{{if list.status == 1}}J_link{{/if}}">
+            <li reserveId="{{list.id}}" status="{{list.status}}" checkStatus="{{list.checkStatus}}" class="{{if list.status == 1 && list.checkStatus == 0}}J_link{{/if}}">
                 <div class="o-title o-title2">
                     <div class="name">{{list.goodsName}}{{list.dispatchWeight}}吨</div>
-                    <div class="state"><span>{{list.statusName}}</span><i class="arrow"></i></div>
+                    <div class="state"><span>{{if list.status == 1 && list.checkStatusName}}{{list.checkStatusName}}{{else}}{{list.statusName}}{{/if}}</span><i class="arrow"></i></div>
                 </div>
                 <div class="info-box">
                     <div class="time"><i class="icon-time"></i><span>装货时间：{{list.dischargeTime}}</span></div>
                     <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startPortName}}</span></div>
                     <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endPortName}}</span></div>
                 </div>
-                {{if list.status == 1}}
+                {{if list.status == 1 && list.checkStatus == 0}}
                 <div class="btn-box border-thin">
                     <p class="tip">{{if list.specialTip}}注：{{list.specialTip}{{/if}}</p>
                     
@@ -103,7 +103,7 @@
             success:function(json, elements){
                 console.log(elements)
                 $(elements).each(function(index,element){
-                    if($(element).attr('status') == 1){
+                    if($(element).attr('status') == 1 && $(element).attr('checkStatus') == 0){
                         var reserveId = $(element).attr('reserveId'),
                             J_link = $(element),
                             J_cancel = $(element).find('.J_cancel');
