@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv= "Cache-Control" content= "no-cache" />
+    <meta http-equiv= "Cache-Control" content= "no-cache" /> 
     <meta http-equiv= "Expires" content= "0" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
@@ -13,32 +13,47 @@
     <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
     <script src="./scripts/zepto.min.js"></script>
     <script src="./scripts/config.js"></script>
-    <title>我的订单</title>
+    <title>我的订单</title>       
 </head>
 <body>
-<div class="nav-plcaceholder"></div>
-<div id="page-ptr" class="page">
-    <header class="bar bar-nav">
-        <h1 class="title">我的订单</h1>
-    </header>
-    <input type="hidden" id="lat">
-    <input type="hidden" id="lng">
-    <input type="hidden" class="userId">
-
-    <div class="content infinite-scroll infinite-scroll-bottom pull-to-refresh-content" data-distance="100" data-ptr-distance="55">
-        <div class="pull-to-refresh-layer">
-            <div class="preloader"></div>
-            <div class="pull-to-refresh-arrow"></div>
+    <div class="nav-plcaceholder"></div>
+    <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <h1 class="title">我的订单</h1>
+        </header>
+        <input type="hidden" id="lat">
+        <input type="hidden" id="lng">
+        <input type="hidden" class="userId">
+        
+        <div class="content infinite-scroll infinite-scroll-bottom pull-to-refresh-content" data-distance="100" data-ptr-distance="55">
+            <div class="pull-to-refresh-layer">
+                <div class="preloader"></div>
+                <div class="pull-to-refresh-arrow"></div>
+            </div>
+            <ul class="order-list"></ul>
+            
+            <!-- 加载提示符 -->
+            <div class="infinite-scroll-preloader">
+              <div class="preloader"></div>
+            </div>
+            <div class="nav-blank"></div>
         </div>
-        <ul class="order-list"></ul>
-
-        <!-- 加载提示符 -->
-        <div class="infinite-scroll-preloader">
-            <div class="preloader"></div>
-        </div>
-        <div class="nav-blank"></div>
+        <!-- 工具栏 -->
+        <nav class="bar bar-tab">
+            <a class="tab-item external" href="index.html">
+                <span class="icon icon-index"></span>
+                <span class="tab-label">抢单</span>
+            </a>
+            <a class="tab-item external active" href="myOrderList.html">
+                <span class="icon icon-order"></span>
+                <span class="tab-label">航程</span>
+            </a>
+            <a class="tab-item external" href="userInfo.html">
+                <span class="icon icon-my"></span>
+                <span class="tab-label">我的</span>
+            </a>
+        </nav>>
     </div>
-<<<<<<< HEAD
     <script type="text/html" id="listTempl">
         {{each data as list i}}
             <li reserveId="{{list.id}}" status="{{list.status}}" checkStatus="{{list.checkStatus}}" class="{{if list.status == 1 && list.checkStatus == 0}}J_link{{/if}}">
@@ -66,51 +81,6 @@
             cancelUrl = $.config.appUrl + '/xyl/reservation/modify';//取消预约接口
     </script>
     <script type="text/javascript">
-=======
-    <!-- 工具栏 -->
-    <nav class="bar bar-tab">
-        <a class="tab-item external" href="index.html">
-            <span class="icon icon-index"></span>
-            <span class="tab-label">抢单</span>
-        </a>
-        <a class="tab-item external active" href="myOrderList.html">
-            <span class="icon icon-order"></span>
-            <span class="tab-label">航程</span>
-        </a>
-        <a class="tab-item external" href="userInfo.html">
-            <span class="icon icon-my"></span>
-            <span class="tab-label">我的</span>
-        </a>
-    </nav>>
-</div>
-<script type="text/html" id="listTempl">
-    {{each data as list i}}
-    <li reserveId="{{list.id}}" status="{{list.status}}" checkStatus="{{list.checkStatus}}" class="{{if list.status == 1 && list.checkStatus == 0}}J_link{{/if}}">
-        <div class="o-title o-title2">
-            <div class="name">{{list.goodsName}}{{list.dispatchWeight}}吨</div>
-            <div class="state"><span>{{if list.status == 1 && list.checkStatusName}}{{list.checkStatusName}}{{else}}{{list.statusName}}{{/if}}</span><i class="arrow"></i></div>
-        </div>
-        <div class="info-box">
-            <div class="time"><i class="icon-time"></i><span>装货时间：{{list.dischargeTime}}</span></div>
-            <div class="info"><i class="icon-start"></i><span>装货码头：{{list.startPortName}}</span></div>
-            <div class="info"><i class="icon-end"></i><span>卸货码头：{{list.endPortName}}</span></div>
-        </div>
-        {{if list.status == 1 && list.checkStatus == 0}}
-        <div class="btn-box border-thin">
-            <p class="tip">{{if list.specialTip}}注：{{list.specialTip}{{/if}}</p>
-
-            <div class="btn border-thin J_cancel">取消预约</div>
-        </div>
-        {{/if}}
-    </li>
-    {{/each}}
-</script>
-<script>
-    var myOrderUrl = $.config.appUrl + '/xyl/reservation/getMyOrder',//我的订单接口
-        cancelUrl = $.config.appUrl + '/xyl/reservation/modify';//取消预约接口
-</script>
-<script type="text/javascript">
->>>>>>> 82a9da73501beba45712b8bf8c58f1020c2f69f0
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient){
             window.doBack = function(){
@@ -138,11 +108,7 @@
                             J_link = $(element),
                             J_cancel = $(element).find('.J_cancel');
                         J_link.on('click',function(){
-<<<<<<< HEAD
                              window.location.href = 'appointSuccess.html?id=' + reserveId;
-=======
-                            window.location.href = 'appointSuccess.html?id=' + reserveId;
->>>>>>> 82a9da73501beba45712b8bf8c58f1020c2f69f0
                         });
                         J_cancel.on('click',function(e){
                             e.stopPropagation();
@@ -170,11 +136,7 @@
                         });
 
                     };
-<<<<<<< HEAD
                     
-=======
-
->>>>>>> 82a9da73501beba45712b8bf8c58f1020c2f69f0
                 });
             },
             zero:function(parent){
@@ -195,14 +157,14 @@
         $.init();
         //获取时间
         function getLongDate(str){
-            var oDate = new Date(str),
-                oYear = oDate.getFullYear(),
-                oMonth = oDate.getMonth()+1,
-                oDay = oDate.getDate(),
-                oHour = oDate.getHours(),
-                oMin = oDate.getMinutes(),
-                oSen = oDate.getSeconds(),
-                oTime;
+            var oDate = new Date(str),  
+            oYear = oDate.getFullYear(),  
+            oMonth = oDate.getMonth()+1,  
+            oDay = oDate.getDate(),
+            oHour = oDate.getHours(),  
+            oMin = oDate.getMinutes(),  
+            oSen = oDate.getSeconds(),
+            oTime;
             if(tommorrow(str*1000,1)){
                 oTime = '明天 '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//
             }
@@ -210,16 +172,16 @@
                 oTime = '后天 '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//
             }
             else{
-                oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间
+                oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间 
             }
-            return oTime;
-        };
-        //补0操作
-        function getzf(num){
-            if(parseInt(num) < 10){
-                num = '0'+num;
-            }
-            return num;
+            return oTime;  
+        };  
+        //补0操作  
+        function getzf(num){  
+            if(parseInt(num) < 10){  
+                num = '0'+num;  
+            }  
+            return num;  
         }
         //判断明天后天
         function tommorrow(str,num){
@@ -228,18 +190,18 @@
                 nData = new Date(),
                 nTime = nData.getTime(),
                 tDate = new Date(nTime + num*24*60*60*1000),
-                tYear = tDate.getFullYear(),
-                tMonth = tDate.getMonth(),
-                tDay = tDate.getDate(),
-                sDate = new Date(tYear,tMonth,tDay,0,0,0),
-                eDate = new Date(tYear,tMonth,tDay,23,59,59);
+            tYear = tDate.getFullYear(),  
+            tMonth = tDate.getMonth(),
+            tDay = tDate.getDate(),
+            sDate = new Date(tYear,tMonth,tDay,0,0,0),
+            eDate = new Date(tYear,tMonth,tDay,23,59,59);
             sTime = sDate.getTime(),
-                eTime = eDate.getTime();
+            eTime = eDate.getTime();
             if(sTime <= oTime && oTime <= eTime ){
                 return true;
             }
         }
     });
-</script>
+    </script>
 </body>
 </html>
