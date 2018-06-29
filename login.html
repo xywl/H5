@@ -73,7 +73,7 @@
                     $.hidePreloader();
                     //保存appUser
                     if(data.success && data.data &&  data.data.appUser){
-                        var  appUser = data.data.appUser
+                        var  appUser = data.data.appUser.id;
                         if(boatIndex.isXYWL && XYNativeClient){
                             try{
                                 XYNativeClient.savePushAlias(appUser);

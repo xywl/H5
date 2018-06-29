@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv= "Cache-Control" content= "no-cache" />
+    <meta http-equiv= "Cache-Control" content= "no-cache" /> 
     <meta http-equiv= "Expires" content= "0" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
@@ -13,91 +13,91 @@
     <link rel="stylesheet" type="text/css" href="styles/css/style.css?v=1"/>
     <script src="./scripts/zepto.min.js"></script>
     <script src="./scripts/config.js"></script>
-    <title>预约信息上传</title>
+    <title>预约信息上传</title>       
 </head>
 <body>
-<div class="nav-plcaceholder"></div>
-<div id="page-ptr" class="page">
-    <header class="bar bar-nav">
-        <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
-        <h1 class="title">预约信息上传</h1>
-    </header>
-    <input type="hidden" class="userId">
-    <div class="content">
-        <div class="hide" id="allmap"></div>
-        <div class="wrapper">
-            <ul class="edit-wrapper">
-                <li class="border-thin">
-                    <div class="left left1">船舶位置上传</div>
-                    <div class="right"><input class="ipt" type="text" name="船舶位置" placeholder="请输入船舶位置" id="boatLocation" readonly /></div>
-                </li>
-                <li class="border-thin">
-                    <div class="left left1">预报吨位</div>
-                    <div class="right"><input class="ipt" type="text" name="预报吨位" placeholder="请输入预约吨位" id="preLoad" maxlength="10" /></div>
-                </li>
-                <li class="border-thin">
-                    <div class="left left1">预计到港时间</div>
-                    <div class="right"><input class="ipt" type="text" name="预计到港时间" placeholder="请输入预计到港时间" id="arriveTime" readonly /></div>
-                </li>
-            </ul>
-            <ul class="pic-list">
-                <li>
-                    <p class="name">空船照片</p>
-                    <div class="border-thin">
-                        <div class="info">
-                            <i></i>
-                            <p>点击上传</p>
+    <div class="nav-plcaceholder"></div>
+    <div id="page-ptr" class="page">
+        <header class="bar bar-nav">
+            <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
+            <h1 class="title">预约信息上传</h1>
+        </header>
+        <input type="hidden" class="userId">
+        <div class="content">
+            <div class="hide" id="allmap"></div>
+            <div class="wrapper">
+                <ul class="edit-wrapper">
+                    <li class="border-thin">
+                        <div class="left left1">船舶位置上传</div>
+                        <div class="right"><input class="ipt" type="text" name="船舶位置" placeholder="请输入船舶位置" id="boatLocation" readonly /></div>
+                    </li>
+                    <li class="border-thin">
+                        <div class="left left1">预报吨位</div>
+                        <div class="right"><input class="ipt" type="text" name="预报吨位" placeholder="请输入预约吨位" id="preLoad" maxlength="10" /></div>
+                    </li>
+                    <li class="border-thin">
+                        <div class="left left1">预计到港时间</div>
+                        <div class="right"><input class="ipt" type="text" name="预计到港时间" placeholder="请输入预计到港时间" id="arriveTime" readonly /></div>
+                    </li>
+                </ul>
+                <ul class="pic-list">
+                    <li>
+                        <p class="name">空船照片</p>
+                        <div class="border-thin">
+                            <div class="info">
+                                <i></i>
+                                <p>点击上传</p>
+                            </div>
+                            <label class="choose" for="file1" msg="空船照片"></label>
+                            <input id="file1" accept="image/png,image/jpeg" capture="camera"  type="file" name="images" class="file-input hide">
                         </div>
-                        <label class="choose" for="file1" msg="空船照片"></label>
-                        <input id="file1" accept="image/png,image/jpeg" capture="camera"  type="file" name="images" class="file-input hide">
-                    </div>
-
-                </li>
-                <li>
-                    <p class="name">参照物照片</p>
-                    <div class="border-thin">
-                        <div class="info">
-                            <i></i>
-                            <p>点击上传</p>
+                        
+                    </li>
+                    <li>
+                        <p class="name">参照物照片</p>
+                        <div class="border-thin">
+                            <div class="info">
+                                <i></i>
+                                <p>点击上传</p>
+                            </div>
+                            <label class="choose" for="file2" msg="参照物照片"></label>
+                            <input id="file2" accept="image/png,image/jpeg" capture="camera" type="file" name="images" class="file-input hide">
                         </div>
-                        <label class="choose" for="file2" msg="参照物照片"></label>
-                        <input id="file2" accept="image/png,image/jpeg" capture="camera" type="file" name="images" class="file-input hide">
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                </ul>
+            </div>
+            <input type="hidden" id="lat">
+            <input type="hidden" id="lng">
+            <div class="btn-common" id="submitBtn">提交</div>
         </div>
-        <input type="hidden" id="lat">
-        <input type="hidden" id="lng">
-        <div class="btn-common" id="submitBtn">提交</div>
+
+        <!-- 工具栏 -->
+        <nav class="bar bar-tab">
+            <a class="tab-item external" href="index.html">
+                <span class="icon icon-index"></span>
+                <span class="tab-label">抢单</span>
+            </a>
+            <a class="tab-item external" href="myOrderList.html">
+                <span class="icon icon-order"></span>
+                <span class="tab-label">航程</span>
+            </a>
+            <a class="tab-item external" href="userInfo.html">
+                <span class="icon icon-my"></span>
+                <span class="tab-label">我的</span>
+            </a>
+        </nav>
     </div>
 
-    <!-- 工具栏 -->
-    <nav class="bar bar-tab">
-        <a class="tab-item external" href="index.html">
-            <span class="icon icon-index"></span>
-            <span class="tab-label">抢单</span>
-        </a>
-        <a class="tab-item external" href="myOrderList.html">
-            <span class="icon icon-order"></span>
-            <span class="tab-label">航程</span>
-        </a>
-        <a class="tab-item external" href="userInfo.html">
-            <span class="icon icon-my"></span>
-            <span class="tab-label">我的</span>
-        </a>
-    </nav>
-</div>
+    <script>
+        var uploadFileUrl = $.config.appUrl +'/xyl/file/upfile',//图片上传
+            infoSubmitUrl = $.config.appUrl + '/xyl/reservation/add',//提交
+            preLoadUrl = $.config.appUrl +'/xyl/tempDispatchShip/getAppById',//获取预报吨位
+            getTimeUrl = $.config.appUrl +'/xyl/time/getTime';
 
-<script>
-    var uploadFileUrl = $.config.appUrl +'/xyl/file/upfile',//图片上传
-        infoSubmitUrl = $.config.appUrl + '/xyl/reservation/add',//提交
-        preLoadUrl = $.config.appUrl +'/xyl/tempDispatchShip/getAppById',//获取预报吨位
-        getTimeUrl = $.config.appUrl +'/xyl/time/getTime';
-
-</script>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
-<script type="text/javascript">
-    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+    </script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
+    <script type="text/javascript">
+    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){  
         var leftId = boatIndex.getQueryString('id') || '11';
         var token = boatIndex.getUserTag('token');
 
@@ -117,7 +117,7 @@
                 }
                 else if(data.msg){
                     boatIndex.toast(data.msg);
-                }
+                } 
             },
             error:function(data){
                 boatIndex.toast('网络连接失败，请稍后重试...');
@@ -174,7 +174,7 @@
                 boatIndex.toast('图片上传失败，请重新尝试...');
             });
         }, false);
-
+        
         window.showLoading = function(msg){
             var msg = msg || '加载中';
             $.showPreloader(msg);
@@ -214,7 +214,7 @@
         //点击地址
         $('#boatLocation').bind('click',function(){
             window.location.href = 'map.html';
-        });
+        }); 
         //获取经纬度
         if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient) {
             XYNativeClient.getLocation();
@@ -240,12 +240,12 @@
                         var p_y = r.longitude;
                         $('#lat').val(p_x);
                         $('#lng').val(p_y);
-                        var geoc = new BMap.Geocoder();
-                        var pt = new BMap.Point(p_y, p_x);//实例化这两个点
+                　　　　 var geoc = new BMap.Geocoder();
+             　　　　　　var pt = new BMap.Point(p_y, p_x);//实例化这两个点
                         // 创建信息窗口对象，把信息在初始化 地图信息窗口类的同时写进去
-                        showAddress(pt);
+            　　　　　 　showAddress(pt);
                         function showAddress(point){
-                            geoc.getLocation(point,function(rs){
+                            geoc.getLocation(point,function(rs){ 
                                 var addComp = rs.addressComponents;
                                 $('#boatLocation').val(addComp.city + addComp.district + addComp.street + addComp.streetNumber);
                             });
@@ -311,7 +311,7 @@
                                         }
                                         else if(data.msg){
                                             boatIndex.toast(data.msg);
-                                        }
+                                        } 
                                     },
                                     error:function(data){
                                         boatIndex.toast('网络连接失败，请稍后重试...');
@@ -322,7 +322,7 @@
                     }
                     else if(data.msg){
                         boatIndex.toast(data.msg);
-                    }
+                    } 
                 },
                 error:function(data){
                     boatIndex.toast('网络连接失败，请稍后重试...');
@@ -336,8 +336,8 @@
                     return;
                 }
             }
-
-
+            
+            
             function transFormTime(time){
                 var date = new Date(time);
                 return (date.getTime())/1000;
@@ -346,6 +346,6 @@
         });
 
     });
-</script>
+    </script>
 </body>
 </html>
