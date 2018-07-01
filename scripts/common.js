@@ -11,10 +11,9 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
          */
         commonAjax: function(options){
             var _this = this;
-            //var token = this.getUserTag("token");
-            var token = 'MTo1MmZhYjE5ZmY5YzA2NzFiYjBhZmQyZjc5YTdiNjBjNToxNTMyODczNjQyOTIw'
+            var token = this.getUserTag("token");
+            //var token = 'MTo1MmZhYjE5ZmY5YzA2NzFiYjBhZmQyZjc5YTdiNjBjNToxNTMyODczNjQyOTIw'
             if(token){
-                //options.data.token = token;
                 $.ajax({
                     url: options.url,
                     dataType:"json",
@@ -73,9 +72,11 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                     }
                     //预先加载10条
                     addItems(pageSize,data);
+                    console.log(endIndex)
                     if(endIndex >= total){
                         // 删除加载提示符
                         $('.infinite-scroll-preloader').remove();
+
                         if(options.endCallback)options.endCallback(options.parent);
                     };
                 },
@@ -110,6 +111,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             // 注册'infinite'事件处理函数
             $(document).on('infinite', '.infinite-scroll-bottom', function() {
                 // 如果正在加载，则退出
+
                 if (loading) return;
                 // 设置flag
                 loading = true;

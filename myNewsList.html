@@ -83,19 +83,27 @@
             zero:function(parent){
                 var html = '<div class="zero-box"><div class="icon"><i></i></div><div class="msg">暂无消息</div></div>';
                 parent.html(html);
+            },
+            endCallback:function(parent){
+                if(parent.find('li').length>0){
+                    var html = '<p class="no-more">没有更多了~</p>';
+                    parent.append(html);
+                }
             }
         };
-        // boatIndex.infinitScroll(params);
-        // $(document).on('refresh', '.pull-to-refresh-content',function(e) {
-        //     // 模拟2s的加载过程
-        //     setTimeout(function() {
-        //         $('.news-list').empty();
-        //         boatIndex.infinitScroll(params);
-        //         // 加载完毕需要重置
-        //         $.pullToRefreshDone('.pull-to-refresh-content');
-        //     }, 1000);
-        // });
-        // $.init();
+        $('.news-list').html('');
+        boatIndex.infinitScroll(params);
+        $(document).on('refresh', '.pull-to-refresh-content',function(e) {
+            $(document).off('infinite');
+            // 模拟2s的加载过程
+            setTimeout(function() {
+                $('.news-list').empty();
+                boatIndex.infinitScroll(params);
+                // 加载完毕需要重置
+                $.pullToRefreshDone('.pull-to-refresh-content');
+            }, 1000);
+        });
+        $.init();
     });
     </script>
 </body>

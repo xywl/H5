@@ -279,6 +279,14 @@
                     return;
                 }
             }
+            var chooseImg = $('.choose');
+            for(var j=0;j<chooseImg.length;j++){
+                if(chooseImg.eq(j).find('img').length <= 0){
+                    var msg = chooseImg.eq(j).attr('msg');
+                    boatIndex.toast('请上传'+ msg);
+                    return;
+                }
+            }
             boatIndex.commonAjax({
                 url: getTimeUrl,
                 data: {},
@@ -328,14 +336,7 @@
                     boatIndex.toast('网络连接失败，请稍后重试...');
                 }
             });
-            var chooseImg = $('.choose');
-            for(var j=0;j<chooseImg.length;j++){
-                if(chooseImg.eq(j).find('img').length <= 0){
-                    var msg = chooseImg.eq(j).attr('msg');
-                    boatIndex.toast('请上传'+ msg);
-                    return;
-                }
-            }
+            
             
             
             function transFormTime(time){

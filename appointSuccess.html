@@ -70,7 +70,8 @@
         var reserveId = boatIndex.getQueryString('id') || '';
         //取消
         $('#cancelBtn').bind('click',function(){
-            boatIndex.commonAjax({
+            $.confirm('是否取消预约？', function(){
+                boatIndex.commonAjax({
                 url: cancelUrl,
                 type: 'POST',
                 data: {
@@ -97,6 +98,8 @@
                     boatIndex.toast('网络连接失败，请稍后重试...');
                 }
             });
+            });
+            
         });
         $('#confirmBtn').bind('click',function(){
             window.location.href = 'myOrderList.html';
