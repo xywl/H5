@@ -74,7 +74,7 @@
                     //保存appUser
                     if(data.success && data.data &&  data.data.appUser){
                         var  appUser = data.data.appUser.id;
-                        if(boatIndex.isXYWL && XYNativeClient){
+                        if(boatIndex.isXYWL && XYNativeClient && XYNativeClient.savePushAlias){
                             try{
                                 XYNativeClient.savePushAlias(appUser);
                             }
