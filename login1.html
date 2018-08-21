@@ -66,48 +66,48 @@
         // //处理微信登录
         //window.doWXLoginComplete = function(code){
             //$('#loginBtn').addClass('hide');
-            $.ajax({
-                url: loginUrl + '011xcIzb1sCMLv0whfyb1Gduzb1xcIzp',
-                dataType:"json",
-                type:"GET",
-                dataType:"json",
-                data:{},
-                success:function(data){
-                    $.hidePreloader();
-                    console.log(data)                 
-                    if(data.success && data.data && data.data.token){
+            // $.ajax({
+            //     url: loginUrl + '011xcIzb1sCMLv0whfyb1Gduzb1xcIzp',
+            //     dataType:"json",
+            //     type:"GET",
+            //     dataType:"json",
+            //     data:{},
+            //     success:function(data){
+            //         $.hidePreloader();
+            //         console.log(data)                 
+            //         if(data.success && data.data && data.data.token){
                         
-                        var token = data.data.token;
-                        $('#XXX').text(token);
-                        if(data.data.appUser.shipInfoId){//绑定船，进预约页面
-                            //保存token
-                            if(boatIndex.isXYWL && XYNativeClient){
-                                try{
-                                    XYNativeClient.setUserId(token);
-                                }
-                                catch(e){
-                                    alert(e);
-                                }
-                            }
-                            boatIndex.setCookie('token',token,30);
-                            setTimeout(function(){
-                                //window.location.href = 'index.html';
-                            },300);
-                        }
-                        else{
-                            //没绑定船，进船舶信息填写页面
-                            //window.location.href = 'shipInfoSuBmit.html?rnd=' + token;
-                        }
-                    }
-                    else if(data.msg){
-                        boatIndex.toast(data.msg);
-                    }
-                },
-                error:function(){
-                    $.hidePreloader();
-                    boatIndex.toast('登录失败，请重新登录');
-                }
-            });
+            //             var token = data.data.token;
+            //             $('#XXX').text(token);
+            //             if(data.data.appUser.shipInfoId){//绑定船，进预约页面
+            //                 //保存token
+            //                 if(boatIndex.isXYWL && XYNativeClient){
+            //                     try{
+            //                         XYNativeClient.setUserId(token);
+            //                     }
+            //                     catch(e){
+            //                         alert(e);
+            //                     }
+            //                 }
+            //                 boatIndex.setCookie('token',token,30);
+            //                 setTimeout(function(){
+            //                     //window.location.href = 'index.html';
+            //                 },300);
+            //             }
+            //             else{
+            //                 //没绑定船，进船舶信息填写页面
+            //                 //window.location.href = 'shipInfoSuBmit.html?rnd=' + token;
+            //             }
+            //         }
+            //         else if(data.msg){
+            //             boatIndex.toast(data.msg);
+            //         }
+            //     },
+            //     error:function(){
+            //         $.hidePreloader();
+            //         boatIndex.toast('登录失败，请重新登录');
+            //     }
+            // });
         //}
     });
     </script>

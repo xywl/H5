@@ -12,7 +12,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
         commonAjax: function(options){
             var _this = this;
             var token = this.getUserTag("token");
-            //var token = 'MTo1MmZhYjE5ZmY5YzA2NzFiYjBhZmQyZjc5YTdiNjBjNToxNTMyODczNjQyOTIw'
+            //var token = 'NDQ6MTQ4NWVhZTQ1MWNiOWFmMmYwMGYxMWY1OGZlMDYzMWY6MTUzNzQ0NTQyNTkxMA=='
             if(token){
                 $.ajax({
                     url: options.url,
@@ -20,6 +20,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                     type: options.type || "GET", 
                     data: options.data || {},
                     async: options.async || true,//请求是否异步，默认为异步
+                    headers :{'Content-Type': 'application/json'},
                     beforeSend: function(request) {          
                         request.setRequestHeader("token",token);
                     },
