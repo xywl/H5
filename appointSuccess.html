@@ -26,7 +26,7 @@
         <div class="content">
             <div class="wrapper info-wrapper">
                 预约下单完成，审核中，预计1-2个工作日完成审核<br>
-                联系电话：<a class="tel" href="tel:18551618419">025-1111111<a>
+                联系电话：<a class="tel" href="tel:0572—6307766">0572—6307766<a>
             </div>
             <div class="btn-line">
                 <div class="btn btn-red" id="confirmBtn">确定</div>
@@ -63,11 +63,11 @@
         //电话
         $('.tel').bind('click',function(){
             if(boatIndex.isXYWL && boatIndex.isAndroid && XYNativeClient){
-                XYNativeClient.doCallPhone("18551618419");
+                XYNativeClient.doCallPhone("0572—6307766");
             }
         });
         
-        var reserveId = boatIndex.getQueryString('id') || '';
+        var reserveId = boatIndex.getQueryString('id');
         //取消
         $('#cancelBtn').bind('click',function(){
             $.confirm('是否取消预约？', function(){

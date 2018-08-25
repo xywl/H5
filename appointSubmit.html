@@ -98,7 +98,7 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){  
-        var leftId = boatIndex.getQueryString('id') || '11';
+        var leftId = boatIndex.getQueryString('id');
         var token = boatIndex.getUserTag('token');
 
         $('.bar-nav a').bind('click',function(){
@@ -338,7 +338,7 @@
             });
                     
             function transFormTime(time){
-                var date = new Date(time);
+                var date = new Date(time.replace(/-/g,'/'));
                 return (date.getTime())/1000;
             }
 
