@@ -72,6 +72,7 @@
                 }
             }
         }
+        var id = '';
         boatIndex.commonAjax({
             url: userInfoUrl,
             async: false,//同步
@@ -79,6 +80,7 @@
             success:function(data){
                 if(data.success &&  data.data && data.data.name){
                     $('.bar .title').text(data.data.name);
+                    id = data.data.id;
                 }
                 else if(data.msg){
                     boatIndex.toast(data.msg);
@@ -94,7 +96,7 @@
                 window.location.href = 'editUserInfo.html';
             }
             else if(index == 1){
-                window.location.href = 'myNewsList.html';
+                window.location.href = 'myNewsList.html?id=' + id;
             }
             else if(index == 2){
                 window.location.href = 'aboutUs.html';

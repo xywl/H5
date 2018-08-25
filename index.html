@@ -140,9 +140,6 @@
                         var leftId = $(this).attr('leftId');
                         boatIndex.commonAjax({
                             url:checkAppointUrl,
-                            // data:{
-                            //     id: leftId
-                            // },
                             success:function(data){
                                 if(data.success){
                                     window.location.href = 'appointSubmit.html?id=' + leftId;
@@ -183,13 +180,13 @@
         //获取时间
         function getLongDate(str){
             var oDate = new Date(str),  
-            oYear = oDate.getFullYear(),  
-            oMonth = oDate.getMonth()+1,  
-            oDay = oDate.getDate(),  
-            oHour = oDate.getHours(),  
-            oMin = oDate.getMinutes(),  
-            oSen = oDate.getSeconds(),
-            oTime;
+                oYear = oDate.getFullYear(),  
+                oMonth = oDate.getMonth()+1,  
+                oDay = oDate.getDate(),  
+                oHour = oDate.getHours(),  
+                oMin = oDate.getMinutes(),  
+                oSen = oDate.getSeconds(),
+                oTime;
             if(tommorrow(str*1000,1)){
                 oTime = '明天 '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//
             }
@@ -215,11 +212,11 @@
                 nData = new Date(),
                 nTime = nData.getTime(),
                 tDate = new Date(nTime + num*24*60*60*1000),
-            tYear = tDate.getFullYear(),  
-            tMonth = tDate.getMonth(),
-            tDay = tDate.getDate(),
-            sDate = new Date(tYear,tMonth,tDay,0,0,0),
-            eDate = new Date(tYear,tMonth,tDay,23,59,59);
+                tYear = tDate.getFullYear(),  
+                tMonth = tDate.getMonth(),
+                tDay = tDate.getDate(),
+                sDate = new Date(tYear,tMonth,tDay,0,0,0),
+                eDate = new Date(tYear,tMonth,tDay,23,59,59);
             sTime = sDate.getTime(),
             eTime = eDate.getTime();
             if(sTime <= oTime && oTime <= eTime ){

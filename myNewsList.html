@@ -29,7 +29,7 @@
                 <div class="pull-to-refresh-arrow"></div>
             </div>
             <ul class="news-list">
-                <div class="zero-box"><div class="icon"><i></i></div><div class="msg">即将上线，敬请期待</div></div>
+                
             </ul>
             <!-- 加载提示符 -->
             <div class="infinite-scroll-preloader">
@@ -57,15 +57,15 @@
         {{each data as list i}}
             <li>
                <div class="info-box">
-                    <div class="i-title">{{list.title}}</div>
-                    <div class="time">{{list.time}}</div>
-                    <p class="order">{{list.content}}</p>
+                    <div class="i-title">{{list.msgTitle}}</div>
+                    <div class="time">{{list.updated}}</div>
+                    <p class="order">{{list.msgContent}}</p>
                 </div>
             </li>
         {{/each}}
     </script>
     <script>
-        var messageListUrl = 'temp/data/newsList.json';
+        var messageListUrl = $.config.appUrl + '/xyl/PushAppMsg/getPage';
     </script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
@@ -75,12 +75,19 @@
         window.doBack = function(){
             history.go(-1);
         }
+        var id = boatIndex.getQueryString('id')
         var params = {
             url: messageListUrl,
-            data:{},
+            data:{
+                id: id,
+                queryParamFlag: 1
+            },
             parent:$('.news-list'),
             templateId:'listTempl',
-            zero:function(parent){
+            handleData: function(data){
+                data.updated = getLongDate(data.updated*1000);
+            },
+            zero: function(parent){
                 var html = '<div class="zero-box"><div class="icon"><i></i></div><div class="msg">暂无消息</div></div>';
                 parent.html(html);
             },
@@ -104,6 +111,27 @@
             }, 1000);
         });
         $.init();
+
+        //获取时间
+        function getLongDate(str){
+            var oDate = new Date(str),  
+                oYear = oDate.getFullYear(),  
+                oMonth = oDate.getMonth()+1,  
+                oDay = oDate.getDate(),  
+                oHour = oDate.getHours(),  
+                oMin = oDate.getMinutes(),  
+                oSen = oDate.getSeconds(),
+                oTime;
+            oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间 
+            return oTime;  
+        };  
+        //补0操作  
+        function getzf(num){  
+            if(parseInt(num) < 10){  
+                num = '0'+num;  
+            }  
+            return num;  
+        }
     });
     </script>
 </body>
