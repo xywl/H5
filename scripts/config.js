@@ -12,6 +12,6 @@ $.config = {
         }
         return true;
     },
-    //appUrl: 'http://xingyi.nandasoft-its.com'
-    appUrl: 'http://192.168.0.103:16722'
+    appUrl: 'http://xingyi.nandasoft-its.com'
+    //appUrl: 'http://192.168.0.103:16722'
 };
