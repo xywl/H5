@@ -106,7 +106,7 @@
         $('#submitBtn').on('click',function(){
             $.confirm('您确定要退出登录？', function(){
                 //OK
-                if(boatIndex.isXYWL){
+                if(boatIndex.isXYWL && XYNativeClient.setUserId && XYNativeClient.savePushAlias){
                     XYNativeClient.setUserId('');
                     XYNativeClient.savePushAlias('');
                 }

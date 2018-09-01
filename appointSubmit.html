@@ -22,8 +22,12 @@
             <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
             <h1 class="title">预约信息上传</h1>
         </header>
-        <input type="hidden" class="userId">
+        
+        <input type="hidden" class="userId" style="height:30px">
         <div class="content">
+            <br>
+            <input type="file">
+            <br>
             <div class="hide" id="allmap"></div>
             <div class="wrapper">
                 <ul class="edit-wrapper">
@@ -61,7 +65,7 @@
                                 <p>点击上传</p>
                             </div>
                             <label class="choose" for="file2" msg="参照物照片"></label>
-                            <input id="file2" accept="image/png,image/jpeg" capture="camera" type="file" name="images" class="file-input hide">
+                            <input id="file2"  type="file" name="images" class="file-input hide">
                         </div>
                     </li>
                 </ul>
