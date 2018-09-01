@@ -75,63 +75,63 @@
         window.doBack = function(){
             history.go(-1);
         }
-        var id = boatIndex.getQueryString('id')
-        var params = {
-            url: messageListUrl,
-            data:{
-                id: id,
-                queryParamFlag: 1
-            },
-            parent:$('.news-list'),
-            templateId:'listTempl',
-            handleData: function(data){
-                data.updated = getLongDate(data.updated*1000);
-            },
-            zero: function(parent){
-                var html = '<div class="zero-box"><div class="icon"><i></i></div><div class="msg">暂无消息</div></div>';
-                parent.html(html);
-            },
-            endCallback:function(parent){
-                if(parent.find('li').length>0){
-                    var html = '<p class="no-more">没有更多了~</p>';
-                    parent.append(html);
-                }
-            }
-        };
-        $('.news-list').html('');
-        boatIndex.infinitScroll(params);
-        $(document).on('refresh', '.pull-to-refresh-content',function(e) {
-            $(document).off('infinite');
-            // 模拟2s的加载过程
-            setTimeout(function() {
-                $('.news-list').empty();
-                boatIndex.infinitScroll(params);
-                // 加载完毕需要重置
-                $.pullToRefreshDone('.pull-to-refresh-content');
-            }, 1000);
-        });
-        $.init();
+        // var id = boatIndex.getQueryString('id')
+        // var params = {
+        //     url: messageListUrl,
+        //     data:{
+        //         id: id,
+        //         queryParamFlag: 1
+        //     },
+        //     parent:$('.news-list'),
+        //     templateId:'listTempl',
+        //     handleData: function(data){
+        //         data.updated = getLongDate(data.updated*1000);
+        //     },
+        //     zero: function(parent){
+        //         var html = '<div class="zero-box"><div class="icon"><i></i></div><div class="msg">暂无消息</div></div>';
+        //         parent.html(html);
+        //     },
+        //     endCallback:function(parent){
+        //         if(parent.find('li').length>0){
+        //             var html = '<p class="no-more">没有更多了~</p>';
+        //             parent.append(html);
+        //         }
+        //     }
+        // };
+        // $('.news-list').html('');
+        // boatIndex.infinitScroll(params);
+        // $(document).on('refresh', '.pull-to-refresh-content',function(e) {
+        //     $(document).off('infinite');
+        //     // 模拟2s的加载过程
+        //     setTimeout(function() {
+        //         $('.news-list').empty();
+        //         boatIndex.infinitScroll(params);
+        //         // 加载完毕需要重置
+        //         $.pullToRefreshDone('.pull-to-refresh-content');
+        //     }, 1000);
+        // });
+        // $.init();
 
-        //获取时间
-        function getLongDate(str){
-            var oDate = new Date(str),  
-                oYear = oDate.getFullYear(),  
-                oMonth = oDate.getMonth()+1,  
-                oDay = oDate.getDate(),  
-                oHour = oDate.getHours(),  
-                oMin = oDate.getMinutes(),  
-                oSen = oDate.getSeconds(),
-                oTime;
-            oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间 
-            return oTime;  
-        };  
-        //补0操作  
-        function getzf(num){  
-            if(parseInt(num) < 10){  
-                num = '0'+num;  
-            }  
-            return num;  
-        }
+        // //获取时间
+        // function getLongDate(str){
+        //     var oDate = new Date(str),  
+        //         oYear = oDate.getFullYear(),  
+        //         oMonth = oDate.getMonth()+1,  
+        //         oDay = oDate.getDate(),  
+        //         oHour = oDate.getHours(),  
+        //         oMin = oDate.getMinutes(),  
+        //         oSen = oDate.getSeconds(),
+        //         oTime;
+        //     oTime = oYear +'-'+ getzf(oMonth) +'-'+ getzf(oDay) +' '+ getzf(oHour) +':'+ getzf(oMin) +':'+getzf(oSen);//最后拼接时间 
+        //     return oTime;  
+        // };  
+        // //补0操作  
+        // function getzf(num){  
+        //     if(parseInt(num) < 10){  
+        //         num = '0'+num;  
+        //     }  
+        //     return num;  
+        // }
     });
     </script>
 </body>

@@ -856,3 +856,7 @@ input {
   line-height: 1rem;
   margin-top: 1rem;
 }
+.bar .button-nav.pull-left{
+  width: 50px;
+  margin-left: -.6rem;
+}
