@@ -24,7 +24,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                         request.setRequestHeader("token",token);
                     },
                     success: function(data){
-                        if(data.errCode == 90003){
+                        if(data.errCode == 90003 || data.errCode == 90002){
                             _this.toast('登录失效，请重新登录');
                             setTimeout(function(){
                                 window.location.href = 'login.html'
