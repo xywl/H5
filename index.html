@@ -100,6 +100,7 @@
         window.showH5Location = function(lat,lng,address,city){
             $('#lat').val(lat);
             $('#lng').val(lng);
+            getList();
         }
         function getAddress(){
             //以下是获取当前的地理位置
@@ -111,6 +112,7 @@
                         //表示获取成功那么 r 这个参数就包含有当前的地理位置经纬度
                         $('#lat').val(r.latitude);
                         $('#lng').val(r.longitude);
+                        getList();
                     }else {
                         boatIndex.toast('定位失败：'+this.getStatus());
                     }
@@ -121,65 +123,67 @@
             }
         }
 
-        var params = {
-            url: goodListUrl,
-            data:{
-                lng: $('#lng').val(),
-                lat: $('#lat').val(),
-                queryParamFlag: 1
-            },
-            parent:$('.order-list'),
-            templateId:'listTempl',
-            handleData: function(data){
-                data.loadingTime = getLongDate(data.loadingTime*1000);
-            },
-            success:function(json, elements){
-                $(elements).each(function(index,element){
-                    $(element).find('.btn').bind('click',function(){
-                        //点击确认预约
-                        var leftId = $(this).attr('leftId');
-                        boatIndex.commonAjax({
-                            url:checkAppointUrl,
-                            data: {
-                                leftDispatchId: leftId
-                            },
-                            success:function(data){
-                                if(data.success){
-                                    window.location.href = 'appointSubmit.html?id=' + leftId;
+        function getList(){
+            var params = {
+                url: goodListUrl,
+                data:{
+                    lng: $('#lng').val(),
+                    lat: $('#lat').val(),
+                    queryParamFlag: 1
+                },
+                parent:$('.order-list'),
+                templateId:'listTempl',
+                handleData: function(data){
+                    data.loadingTime = getLongDate(data.loadingTime*1000);
+                },
+                success:function(json, elements){
+                    $(elements).each(function(index,element){
+                        $(element).find('.btn').bind('click',function(){
+                            //点击确认预约
+                            var leftId = $(this).attr('leftId');
+                            boatIndex.commonAjax({
+                                url:checkAppointUrl,
+                                data: {
+                                    leftDispatchId: leftId
+                                },
+                                success:function(data){
+                                    if(data.success){
+                                        window.location.href = 'appointSubmit.html?id=' + leftId;
+                                    }
+                                    else if(data.msg){
+                                        boatIndex.toast(data.msg);
+                                    }
+                                },
+                                error: function(){
+                                    boatIndex.toast('网络连接失败，请稍后重试...');
                                 }
-                                else if(data.msg){
-                                    boatIndex.toast(data.msg);
-                                }
-                            },
-                            error: function(){
-                                boatIndex.toast('网络连接失败，请稍后重试...');
-                            }
-                        })
+                            })
+                        });
                     });
-                });
-            },
-            zero:function(parent){
-                var html = '<div class="zero-box"><div class="icon"><i></i></div><div class="msg">暂无附近货物，持续寻找中</div></div>';
-                parent.html(html);
-            },
-            endCallback:function(parent){
-                if(parent.find('li').length>0){
-                    var html = '<p class="no-more">没有更多了~</p>';
-                    parent.append(html);
+                },
+                zero:function(parent){
+                    var html = '<div class="zero-box"><div class="icon"><i></i></div><div class="msg">暂无附近货物，持续寻找中</div></div>';
+                    parent.html(html);
+                },
+                endCallback:function(parent){
+                    if(parent.find('li').length>0){
+                        var html = '<p class="no-more">没有更多了~</p>';
+                        parent.append(html);
+                    }
                 }
             }
+            boatIndex.infinitScroll(params);
+            $(document).on('refresh', '.pull-to-refresh-content',function(e) {
+                // 模拟2s的加载过程
+                setTimeout(function() {
+                    $('.order-list').empty();
+                    boatIndex.infinitScroll(params);
+                    // 加载完毕需要重置
+                    $.pullToRefreshDone('.pull-to-refresh-content');
+                }, 1000);
+            });
+            $.init();
         }
-        boatIndex.infinitScroll(params);
-        $(document).on('refresh', '.pull-to-refresh-content',function(e) {
-            // 模拟2s的加载过程
-            setTimeout(function() {
-                $('.order-list').empty();
-                boatIndex.infinitScroll(params);
-                // 加载完毕需要重置
-                $.pullToRefreshDone('.pull-to-refresh-content');
-            }, 1000);
-        });
-        $.init();
         //获取时间
         function getLongDate(str){
             var oDate = new Date(str),  
