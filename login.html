@@ -114,6 +114,7 @@
                 error:function(){
                     $.hidePreloader();
                     boatIndex.toast('登录失败，请重新登录');
+                    $('#loginBtn').removeClass('hide');
                 }
             });
         }

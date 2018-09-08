@@ -21,7 +21,7 @@
         <header class="bar bar-nav">
             <h1 class="title"></h1>
         </header>
-        <input type="hidden" class="userId">
+        <input type="hidden" id="userId">
         <div class="content">
             <div class="wrapper">
                 <ul class="user-list">
@@ -73,23 +73,26 @@
             }
         }
         var id = '';
-        boatIndex.commonAjax({
-            url: userInfoUrl,
-            async: false,//同步
-            data: {},
-            success:function(data){
-                if(data.success &&  data.data && data.data.name){
-                    $('.bar .title').text(data.data.name);
-                    id = data.data.id;
+        setTimeout(function(){
+            boatIndex.commonAjax({
+                url: userInfoUrl,
+                async: false,//同步
+                data: {},
+                success:function(data){
+                    if(data.success &&  data.data && data.data.name){
+                        $('.bar .title').text(data.data.name);
+                        id = data.data.id;
+                    }
+                    else if(data.msg){
+                        boatIndex.toast(data.msg);
+                    }
+                },
+                error:function(data){
+                    boatIndex.toast('网络连接失败，请稍后重试...');
                 }
-                else if(data.msg){
-                    boatIndex.toast(data.msg);
-                }
-            },
-            error:function(data){
-                boatIndex.toast('网络连接失败，请稍后重试...');
-            }
-        });
+            });
+        },100)
+        
         $('.user-list li').bind('click',function(){
             var index = $(this).index();
             if(index == 0){

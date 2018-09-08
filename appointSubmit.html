@@ -23,7 +23,7 @@
             <h1 class="title">预约信息上传</h1>
         </header>
         
-        <input type="hidden" class="userId">
+        <input type="hidden" id="userId">
         <div class="content">
             <div class="hide" id="allmap"></div>
             <div class="wrapper">
@@ -108,22 +108,25 @@
         window.doBack = function(){
             history.go(-1);
         }
-        boatIndex.commonAjax({
-            url: preLoadUrl,
-            data: {},
-            async: false,
-            success:function(data){
-                if(data.success && data.data && data.data.preLoad){
-                    $('#preLoad').val(data.data.preLoad);
+        setTimeout(function(){
+            boatIndex.commonAjax({
+                url: preLoadUrl,
+                data: {},
+                async: false,
+                success:function(data){
+                    if(data.success && data.data && data.data.preLoad){
+                        $('#preLoad').val(data.data.preLoad);
+                    }
+                    else if(data.msg){
+                        boatIndex.toast(data.msg);
+                    } 
+                },
+                error:function(data){
+                    boatIndex.toast('网络连接失败，请稍后重试...');
                 }
-                else if(data.msg){
-                    boatIndex.toast(data.msg);
-                } 
-            },
-            error:function(data){
-                boatIndex.toast('网络连接失败，请稍后重试...');
-            }
-        });
+            });
+        },100)
+        
         $("#arriveTime").datetimePicker({});
         //返回
         $('.goback').bind('click',function(){

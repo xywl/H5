@@ -22,7 +22,7 @@
             <a class="button button-link button-nav pull-left back" href="javascript:void(0)"><span class="icon icon-left"></span></a>
             <h1 class="title">我的消息</h1>
         </header>
-        <input type="hidden" class="userId">
+        <input type="hidden" id="userId">
         <div class="content infinite-scroll infinite-scroll-bottom pull-to-refresh-content" data-distance="100" data-ptr-distance="55">
             <div class="pull-to-refresh-layer">
                 <div class="preloader"></div>
@@ -99,7 +99,9 @@
             }
         };
         $('.news-list').html('');
-        boatIndex.infinitScroll(params);
+        setTimeout(function(){
+            boatIndex.infinitScroll(params);
+        },100);
         $(document).on('refresh', '.pull-to-refresh-content',function(e) {
             $(document).off('infinite');
             // 模拟2s的加载过程

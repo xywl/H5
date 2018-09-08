@@ -22,7 +22,7 @@
         <a class="button button-link button-nav pull-left" href="javascript:void(0)"><span class="icon icon-left"></span></a>
         <h1 class="title">编辑资料</h1>
     </header>
-    <input type="hidden" class="userId">
+    <input type="hidden" id="userId">
     <div class="content">
         <div class="wrapper">
             <ul class="edit-wrapper">
@@ -124,39 +124,42 @@
         window.doBack = function(){
             history.go(-1);
         }
-        boatIndex.commonAjax({
-            url: userInfoUrl,
-            async: false,//同步
-            data: {},
-            success:function(data){
-                if(data.success && data.data){
-                    var info = data.data;
-                    $('#shipNo').val(info.shipNo);
-                    $('#name').val(info.name);
-                    $('#mobile').val(info.mobile);
-                    $('#appointNum').val(info.preLoad);
-                    renderImg('file1',info.idPhoto);
-                    renderImg('file2',info.idPhotoF);
-                    renderImg('file3',info.bankCardPhoto);
-                    renderImg('file4',info.shipPhoto);
-                    function renderImg(id,imgUrl){
-                        if(imgUrl){
-                            var src = imgUrl + '?token=' + token;
-                            box = $('#'+id).prev('label');
-                            box.html('<img src=' + src + '>');
-                            box.attr('img-url',imgUrl);
-                        }
+        setTimeout(function(){
+            boatIndex.commonAjax({
+                url: userInfoUrl,
+                async: false,//同步
+                data: {},
+                success:function(data){
+                    if(data.success && data.data){
+                        var info = data.data;
+                        $('#shipNo').val(info.shipNo);
+                        $('#name').val(info.name);
+                        $('#mobile').val(info.mobile);
+                        $('#appointNum').val(info.preLoad);
+                        renderImg('file1',info.idPhoto);
+                        renderImg('file2',info.idPhotoF);
+                        renderImg('file3',info.bankCardPhoto);
+                        renderImg('file4',info.shipPhoto);
+                        function renderImg(id,imgUrl){
+                            if(imgUrl){
+                                var src = imgUrl + '?token=' + token;
+                                box = $('#'+id).prev('label');
+                                box.html('<img src=' + src + '>');
+                                box.attr('img-url',imgUrl);
+                            }
 
+                        }
                     }
+                    else if(data.msg){
+                        boatIndex.toast(data.msg);
+                    }
+                },
+                error:function(data){
+                    boatIndex.toast('网络连接失败，请稍后重试...');
                 }
-                else if(data.msg){
-                    boatIndex.toast(data.msg);
-                }
-            },
-            error:function(data){
-                boatIndex.toast('网络连接失败，请稍后重试...');
-            }
-        });
+            });
+        },100)
+        
         var $file = $('.file-input'),
             choose = $('.choose');
         if(boatIndex.isAndroid && XYNativeClient) {
