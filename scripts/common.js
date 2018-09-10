@@ -12,6 +12,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
         commonAjax: function(options){
             var _this = this;
             var token = this.getUserTag("token");
+            alert(token)
             //var token = 'Mzk6MjUzNDNkY2NmOTUyMTQzNDJjZmU4YmE0MGMyMTMzNTI6MTUzODM5Njc3MzAxMQ=='
             if(token){
                 $.ajax({
@@ -24,6 +25,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                         request.setRequestHeader("token",token);
                     },
                     success: function(data){
+                        alert(data.errCode)
                         if(data.errCode == 90003 || data.errCode == 90002){
                             _this.toast('登录失效，请重新登录');
                             setTimeout(function(){
