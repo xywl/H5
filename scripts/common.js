@@ -76,7 +76,6 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
                     if(endIndex >= total){
                         // 删除加载提示符
                         $('.infinite-scroll-preloader').remove();
-
                         if(options.endCallback)options.endCallback(options.parent);
                     };
                 },
@@ -111,7 +110,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
             // 注册'infinite'事件处理函数
             $(document).on('infinite', '.infinite-scroll-bottom', function() {
                 // 如果正在加载，则退出
-
+                if(endIndex >= total)return;
                 if (loading) return;
                 // 设置flag
                 loading = true;
