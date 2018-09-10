@@ -208,9 +208,7 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
         addEvent:function(){
             var _this = this;
             if(_this.isXYWL && XYNativeClient && XYNativeClient.getUserId && $('#userId').length > 0 && _this.isIos){
-                try{
-                    XYNativeClient.getUserId('getNativeId');
-                }catch(){}
+                XYNativeClient.getUserId('getNativeId');
             }
             window.getNativeId = function(id){
                 $('#userId').val(id);
