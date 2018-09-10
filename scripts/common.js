@@ -207,9 +207,10 @@ lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js'],function(){
         },
         addEvent:function(){
             var _this = this;
-            
-            if(_this.isXYWL && XYNativeClient && $('#userId').length > 0 && XYNativeClient.getUserId && _this.isIos){
-                XYNativeClient.getUserId('getNativeId');
+            if(_this.isXYWL && XYNativeClient && XYNativeClient.getUserId && $('#userId').length > 0){
+                try{
+                    XYNativeClient.getUserId('getNativeId');
+                }catch(){}
             }
             window.getNativeId = function(id){
                 $('#userId').val(id);
