@@ -860,3 +860,28 @@ input {
   width: 50px;
   margin-left: -.6rem;
 }
+
+.login-page{
+  background: #fff;
+}
+.input-list{
+  margin: -60px 20px 70px;
+}
+.input-list li{
+  border-bottom: 1px solid #ccc;
+  height: 50px;
+  line-height: 50px;
+  display: -webkit-box;
+  overflow: hidden;
+}
+.input-list li .left{
+  width: 70px;
+}
+.input-list li .right{
+  -webkit-box-flex: 1;
+}
+.input-list li input{
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+}

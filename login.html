@@ -17,13 +17,24 @@
 </head>
 <body>
     <div class="nav-plcaceholder"></div>
-    <div id="page-ptr" class="page">
+    <div id="page-ptr" class="page login-page">
         <header class="bar bar-nav">
             <h1 class="title">登录</h1>
         </header>
+        
         <div class="content">
             <div class="login-wrapper">
-                <div class="login-btn" id="loginBtn"><i></i><span>微信登录</span></div>
+                <ul class="input-list">
+                    <li>
+                        <div class="left">用户名</div>
+                        <div class="right"><input type="text" id="userName"></div>
+                    </li>
+                    <li>
+                        <div class="left">密码</div>
+                        <div class="right"><input type="password" id="password"></div>
+                    </li>
+                </ul>
+                <div class="login-btn" id="loginBtn"><!-- <i></i> --><span>登录</span></div>
             </div>
             <!-- <br>
             <input style="height: 40px;width: 100%" class="ipt" type="text" name="" placeholder="token复制" id="XXX" /> -->
@@ -45,18 +56,42 @@
             }
         }
         $('#loginBtn').on('click',function(){
+            if(!$('#userName').val()){
+                boatIndex.toast('请输入用户名');
+                return;
+            }
+            if(!$('#password').val()){
+                boatIndex.toast('请输入密码');
+                return;
+            }
             $.showPreloader('登录中');
+            // setTimeout(function(){
+            //     if(boatIndex.isXYWL && XYNativeClient){
+            //         try{
+            //             XYNativeClient.doWXLogin("doWXLoginComplete");
+            //         }
+            //         catch(e){
+            //             //alert(e);
+            //         }
+            //     }   
+            // },1000)
             setTimeout(function(){
+                $.hidePreloader();
+                var token = 'MzU6OWE5YTMyYjFmODRkM2Y3OTZlZGYxOGM5M2MzMTNjMjU6MTUzOTU2OTMzMTU3NQ==';
+                //保存token
                 if(boatIndex.isXYWL && XYNativeClient){
                     try{
-                        XYNativeClient.doWXLogin("doWXLoginComplete");
+                        XYNativeClient.setUserId(token);
                     }
                     catch(e){
                         //alert(e);
                     }
-                }   
-            },1000)
-                    
+                }
+                boatIndex.setCookie('token',token,30);
+                setTimeout(function(){
+                    window.location.href = 'index.html';
+                },300);  
+            },2000);
         });
         //处理微信登录
         window.doWXLoginComplete = function(code){
