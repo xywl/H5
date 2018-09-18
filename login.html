@@ -23,7 +23,7 @@
         </header>
         
         <div class="content">
-            <div class="login-wrapper">
+            <div class="login-wrapper" id="login1">
                 <ul class="input-list">
                     <li>
                         <div class="left">用户名</div>
@@ -34,8 +34,12 @@
                         <div class="right"><input type="password" id="password"></div>
                     </li>
                 </ul>
-                <div class="login-btn" id="loginBtn"><!-- <i></i> --><span>登录</span></div>
+                <div class="login-btn" id="loginBtn1"><!-- <i></i> --><span>登录</span></div>
             </div>
+            <div class="login-wrapper hide" id="login2">
+                <div class="login-btn" id="loginBtn2"><i></i><span>微信登录</span></div>
+            </div>
+            <div id="btnTrans" class="btn-trans" style="text-align: center;font-size: 15px; bottom: 30px;color: #39f;position: absolute;left:0;width:100%;">切换></div>
             <!-- <br>
             <input style="height: 40px;width: 100%" class="ipt" type="text" name="" placeholder="token复制" id="XXX" /> -->
         </div>
@@ -55,7 +59,17 @@
                 }
             }
         }
-        $('#loginBtn').on('click',function(){
+        $('#btnTrans').on('click',function(){
+            if($('#login2').hasClass('hide')){
+                $('#login1').addClass('hide')
+                $('#login2').removeClass('hide')
+            }
+            else{
+                $('#login1').removeClass('hide')
+                $('#login2').addClass('hide')
+            }
+        })
+        $('#loginBtn1').on('click',function(){
             if(!$('#userName').val()){
                 boatIndex.toast('请输入用户名');
                 return;
@@ -65,18 +79,9 @@
                 return;
             }
             $.showPreloader('登录中');
-            // setTimeout(function(){
-            //     if(boatIndex.isXYWL && XYNativeClient){
-            //         try{
-            //             XYNativeClient.doWXLogin("doWXLoginComplete");
-            //         }
-            //         catch(e){
-            //             //alert(e);
-            //         }
-            //     }   
-            // },1000)
             setTimeout(function(){
                 $.hidePreloader();
+                //token赋值
                 var token = 'MzU6OWE5YTMyYjFmODRkM2Y3OTZlZGYxOGM5M2MzMTNjMjU6MTUzOTU2OTMzMTU3NQ==';
                 //保存token
                 if(boatIndex.isXYWL && XYNativeClient){
@@ -92,6 +97,19 @@
                     window.location.href = 'index.html';
                 },300);  
             },1500);
+        })
+        $('#loginBtn2').on('click',function(){
+            $.showPreloader('登录中');
+            setTimeout(function(){
+                if(boatIndex.isXYWL && XYNativeClient){
+                    try{
+                        XYNativeClient.doWXLogin("doWXLoginComplete");
+                    }
+                    catch(e){
+                        //alert(e);
+                    }
+                }   
+            },1000)
         });
         //处理微信登录
         window.doWXLoginComplete = function(code){
