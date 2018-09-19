@@ -117,7 +117,7 @@
 </script>
 <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
-        var token = boatIndex.getUserTag('token');
+        var token = '';
         $('.bar-nav a').bind('click',function(){
             history.go(-1);
         });
@@ -125,6 +125,7 @@
             history.go(-1);
         }
         setTimeout(function(){
+            token = boatIndex.getUserTag('token');
             boatIndex.commonAjax({
                 url: userInfoUrl,
                 async: false,//同步
