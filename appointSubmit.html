@@ -96,11 +96,10 @@
             getTimeUrl = $.config.appUrl +'/xyl/time/getTime';
 
     </script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
     <script type="text/javascript">
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){  
         var leftId = boatIndex.getQueryString('id');
-        var token = boatIndex.getUserTag('token');
+        var token = '';
 
         $('.bar-nav a').bind('click',function(){
             history.go(-1);
@@ -109,6 +108,7 @@
             history.go(-1);
         }
         setTimeout(function(){
+            token = boatIndex.getUserTag('token');
             boatIndex.commonAjax({
                 url: preLoadUrl,
                 data: {},
@@ -224,7 +224,10 @@
             XYNativeClient.getLocation();
         }
         else{
-            getAddress();
+            var ts = new Date().getTime();
+            addAnchorJs('http://api.map.baidu.com/getscript?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA&services=&t=' + ts,function(){
+                getAddress();
+            });
         }
         //获取地址经纬度
         window.showH5Location = function(lat,lng,address,city){
@@ -263,6 +266,13 @@
             else{
                 boatIndex.toast("您当前不支持地理定位");//不支持
             }
+        }
+        function addAnchorJs(url, onload, onerror) {
+            var script = document.createElement("script");
+            script.onload = onload;
+            script.onerror = onerror;
+            script.src = url;
+            document.head.appendChild(script);
         }
         $('#preLoad').on('input',function(){
             this.value=this.value.replace(/[^0-9-]+/,'');

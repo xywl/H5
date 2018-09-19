@@ -74,8 +74,8 @@
     <script>
         var goodListUrl = $.config.appUrl + '/xyl/leftDispatchInfo/getAppList',
             checkAppointUrl = $.config.appUrl + '/xyl/reservation/getAppById';
-    </script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA"></script>
+    </script><!-- 
+    <script type="text/javascript" src=""></script> -->
     <script>
     lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient){
@@ -88,13 +88,19 @@
                 }
             }
         }
+        
         //获取经纬度
         if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient) {
             XYNativeClient.getLocation();
         }
-        else{
-            getAddress();
+        else{ 
+            var ts = new Date().getTime();
+            addAnchorJs('http://api.map.baidu.com/getscript?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA&services=&t=' + ts,function(){
+                getAddress();
+                
+            });
         }
+
         //获取地址经纬度
         window.showH5Location = function(lat,lng,address,city){
             $('#lat').val(lat);
@@ -228,6 +234,13 @@
             if(sTime <= oTime && oTime <= eTime ){
                 return true;
             }
+        }
+        function addAnchorJs(url, onload, onerror) {
+            var script = document.createElement("script");
+            script.onload = onload;
+            script.onerror = onerror;
+            script.src = url;
+            document.head.appendChild(script);
         }
     });   
     </script>
