@@ -21,8 +21,8 @@
         <header class="bar bar-nav">
             <h1 class="title">附近货物</h1>
         </header>
-        <input type="hidden" id="lat">
-        <input type="hidden" id="lng">
+        <input type="hidden" id="lat" value="32.048249">
+        <input type="hidden" id="lng" value="118.790924">
         <input type="hidden" id="userId">
         
         <div class="content infinite-scroll infinite-scroll-bottom pull-to-refresh-content" data-distance="100" data-ptr-distance="55">
@@ -95,9 +95,10 @@
         }
         else{ 
             var ts = new Date().getTime();
-            addAnchorJs('http://api.map.baidu.com/getscript?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA&services=&t=' + ts,function(){
+            addAnchorJs('//api.map.baidu.com/getscript?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA&services=&t=' + ts,function(){
                 getAddress();
-                
+            },function(){
+                getList();
             });
         }
 
@@ -107,6 +108,7 @@
             $('#lng').val(lng);
             getList();
         }
+
         function getAddress(){
             //以下是获取当前的地理位置
             if (navigator.geolocation) {  //调用导航器geolocation函数
@@ -120,11 +122,13 @@
                         getList();
                     }else {
                         boatIndex.toast('定位失败：'+this.getStatus());
+                        getList();
                     }
                 },{enableHighAccuracy: true});
             }
             else{
                 boatIndex.toast("您当前不支持地理定位");//不支持
+                getList();
             }
         }
 

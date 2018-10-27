@@ -30,7 +30,7 @@
                 <ul class="edit-wrapper">
                     <li class="border-thin">
                         <div class="left left1">船舶位置上传</div>
-                        <div class="right"><input class="ipt" type="text" name="船舶位置" placeholder="请输入船舶位置" id="boatLocation" readonly /></div>
+                        <div class="right"><input class="ipt" type="text" name="船舶位置" placeholder="请输入船舶位置" id="boatLocation" /></div>
                     </li>
                     <li class="border-thin">
                         <div class="left left1">预报吨位</div>
@@ -216,16 +216,16 @@
             }
         }
         //点击地址
-        $('#boatLocation').bind('click',function(){
-            window.location.href = 'map.html';
-        }); 
+        // $('#boatLocation').bind('click',function(){
+        //     window.location.href = 'map.html';
+        // }); 
         //获取经纬度
         if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient) {
             XYNativeClient.getLocation();
         }
         else{
             var ts = new Date().getTime();
-            addAnchorJs('http://api.map.baidu.com/getscript?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA&services=&t=' + ts,function(){
+            addAnchorJs('//api.map.baidu.com/getscript?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA&services=&t=' + ts,function(){
                 getAddress();
             });
         }
