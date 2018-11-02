@@ -74,10 +74,10 @@
     <script>
         var goodListUrl = $.config.appUrl + '/xyl/leftDispatchInfo/getAppList',
             checkAppointUrl = $.config.appUrl + '/xyl/reservation/getAppById';
-    </script><!-- 
-    <script type="text/javascript" src=""></script> -->
+    </script>
+
     <script>
-    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+    lazyLoad.require(['//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient){
             window.doBack = function(){
                 try{
@@ -88,49 +88,49 @@
                 }
             }
         }
-        
+        getList();
         //获取经纬度
-        if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient) {
-            XYNativeClient.getLocation();
-        }
-        else{ 
-            var ts = new Date().getTime();
-            addAnchorJs('//api.map.baidu.com/getscript?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA&services=&t=' + ts,function(){
-                getAddress();
-            },function(){
-                getList();
-            });
-        }
+        // if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient) {
+        //     XYNativeClient.getLocation();
+        // }
+        // else{ 
+        //     var ts = new Date().getTime();
+        //     addAnchorJs('//api.map.baidu.com/getscript?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA&services=&t=' + ts,function(){
+        //         getAddress();
+        //     },function(){
+        //         getList();
+        //     });
+        // }
 
         //获取地址经纬度
-        window.showH5Location = function(lat,lng,address,city){
-            $('#lat').val(lat);
-            $('#lng').val(lng);
-            getList();
-        }
+        // window.showH5Location = function(lat,lng,address,city){
+        //     $('#lat').val(lat);
+        //     $('#lng').val(lng);
+        //     getList();
+        // }
 
-        function getAddress(){
-            //以下是获取当前的地理位置
-            if (navigator.geolocation) {  //调用导航器geolocation函数
-                var map = new BMap.Map("allmap");
-                var geolocation = new BMap.Geolocation();
-                geolocation.getCurrentPosition(function(r){
-                    if(this.getStatus() == BMAP_STATUS_SUCCESS){
-                        //表示获取成功那么 r 这个参数就包含有当前的地理位置经纬度
-                        $('#lat').val(r.latitude);
-                        $('#lng').val(r.longitude);
-                        getList();
-                    }else {
-                        boatIndex.toast('定位失败：'+this.getStatus());
-                        getList();
-                    }
-                },{enableHighAccuracy: true});
-            }
-            else{
-                boatIndex.toast("您当前不支持地理定位");//不支持
-                getList();
-            }
-        }
+        // function getAddress(){
+        //     //以下是获取当前的地理位置
+        //     if (navigator.geolocation) {  //调用导航器geolocation函数
+        //         var map = new BMap.Map("allmap");
+        //         var geolocation = new BMap.Geolocation();
+        //         geolocation.getCurrentPosition(function(r){
+        //             if(this.getStatus() == BMAP_STATUS_SUCCESS){
+        //                 //表示获取成功那么 r 这个参数就包含有当前的地理位置经纬度
+        //                 $('#lat').val(r.latitude);
+        //                 $('#lng').val(r.longitude);
+        //                 getList();
+        //             }else {
+        //                 boatIndex.toast('定位失败：'+this.getStatus());
+        //                 getList();
+        //             }
+        //         },{enableHighAccuracy: true});
+        //     }
+        //     else{
+        //         boatIndex.toast("您当前不支持地理定位");//不支持
+        //         getList();
+        //     }
+        // }
 
         function getList(){
             var params = {

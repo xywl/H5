@@ -97,7 +97,7 @@
 
     </script>
     <script type="text/javascript">
-    lazyLoad.require(['https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){  
+    lazyLoad.require(['//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){  
         var leftId = boatIndex.getQueryString('id');
         var token = '';
 
@@ -220,53 +220,53 @@
         //     window.location.href = 'map.html';
         // }); 
         //获取经纬度
-        if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient) {
-            XYNativeClient.getLocation();
-        }
-        else{
-            var ts = new Date().getTime();
-            addAnchorJs('//api.map.baidu.com/getscript?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA&services=&t=' + ts,function(){
-                getAddress();
-            });
-        }
+        // if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient) {
+        //     XYNativeClient.getLocation();
+        // }
+        // else{
+        //     var ts = new Date().getTime();
+        //     addAnchorJs('//api.map.baidu.com/getscript?v=2.0&ak=AQ4UUTRDLLx1CEdk06eXag1EHkUjHVoA&services=&t=' + ts,function(){
+        //         getAddress();
+        //     });
+        // }
         //获取地址经纬度
-        window.showH5Location = function(lat,lng,address,city){
-            $('#boatLocation').val(address);
-            $('#lat').val(lat);
-            $('#lng').val(lng);
-        }
-        function getAddress(){
-            //以下是获取当前的地理位置
-            if (navigator.geolocation) {  //调用导航器geolocation函数
-                var map = new BMap.Map("allmap");
-                var geolocation = new BMap.Geolocation();
-                geolocation.getCurrentPosition(function(r){
-                    if(this.getStatus() == BMAP_STATUS_SUCCESS){
-                        //表示获取成功那么 r 这个参数就包含有当前的地理位置经纬度
-                        var p_x = r.latitude;
-                        var p_y = r.longitude;
-                        $('#lat').val(p_x);
-                        $('#lng').val(p_y);
-                　　　　 var geoc = new BMap.Geocoder();
-             　　　　　　var pt = new BMap.Point(p_y, p_x);//实例化这两个点
-                        // 创建信息窗口对象，把信息在初始化 地图信息窗口类的同时写进去
-            　　　　　 　showAddress(pt);
-                        function showAddress(point){
-                            geoc.getLocation(point,function(rs){ 
-                                var addComp = rs.addressComponents;
-                                $('#boatLocation').val(addComp.city + addComp.district + addComp.street + addComp.streetNumber);
-                            });
-                        }
+        // window.showH5Location = function(lat,lng,address,city){
+        //     $('#boatLocation').val(address);
+        //     $('#lat').val(lat);
+        //     $('#lng').val(lng);
+        // }
+        // function getAddress(){
+        //     //以下是获取当前的地理位置
+        //     if (navigator.geolocation) {  //调用导航器geolocation函数
+        //         var map = new BMap.Map("allmap");
+        //         var geolocation = new BMap.Geolocation();
+        //         geolocation.getCurrentPosition(function(r){
+        //             if(this.getStatus() == BMAP_STATUS_SUCCESS){
+        //                 //表示获取成功那么 r 这个参数就包含有当前的地理位置经纬度
+        //                 var p_x = r.latitude;
+        //                 var p_y = r.longitude;
+        //                 $('#lat').val(p_x);
+        //                 $('#lng').val(p_y);
+        //         　　　　 var geoc = new BMap.Geocoder();
+        //      　　　　　　var pt = new BMap.Point(p_y, p_x);//实例化这两个点
+        //                 // 创建信息窗口对象，把信息在初始化 地图信息窗口类的同时写进去
+        //     　　　　　 　showAddress(pt);
+        //                 function showAddress(point){
+        //                     geoc.getLocation(point,function(rs){ 
+        //                         var addComp = rs.addressComponents;
+        //                         $('#boatLocation').val(addComp.city + addComp.district + addComp.street + addComp.streetNumber);
+        //                     });
+        //                 }
 
-                    }else {
-                        boatIndex.toast('定位失败：'+this.getStatus());
-                    }
-                },{enableHighAccuracy: true});
-            }
-            else{
-                boatIndex.toast("您当前不支持地理定位");//不支持
-            }
-        }
+        //             }else {
+        //                 boatIndex.toast('定位失败：'+this.getStatus());
+        //             }
+        //         },{enableHighAccuracy: true});
+        //     }
+        //     else{
+        //         boatIndex.toast("您当前不支持地理定位");//不支持
+        //     }
+        // }
         function addAnchorJs(url, onload, onerror) {
             var script = document.createElement("script");
             script.onload = onload;
