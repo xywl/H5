@@ -265,6 +265,9 @@
                             window.location.href = 'binding.html'
                         }
                     }
+                    else{
+                        $('#box1').text('false: error'+ data.errCode);
+                    }
                 },
                 error: function(data) {
                     console.log(data);
