@@ -245,7 +245,7 @@
             var r = window.location.search.substr(1).match(reg);
             if (r!=null) return unescape(r[2]); return null;
         },
-        getUser : function(code) {
+        getUser: function(code) {
             $.ajax({
                 url: checkMPBind,
                 dataType: "json",
@@ -266,7 +266,7 @@
                         }
                     }
                     else{
-                        $('#box1').text('false: error'+ data.errCode);
+                        $('#box1').text('false:'+ data.msg);
                     }
                 },
                 error: function(data) {
@@ -284,7 +284,8 @@
             }
         }
     }
-    weixin.getUserInfo();
+    //weixin.getUserInfo();
+    weixin.getUser('081cvdw51a6kKL1oNsv51md4w51cvdw3')
 </script>
 </body>
 </html>
