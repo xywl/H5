@@ -40,7 +40,7 @@
     </script>
     <script>
         
-    lazyLoad.require(['//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+    lazyLoad.require(['./scripts/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         var weixin = {
             config: {
                 url:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65b6b370eb08f5fa&redirect_uri='+encodeURIComponent(window.location.href)+'&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'

@@ -81,7 +81,7 @@
             cancelUrl = $.config.appUrl + '/xyl/reservation/modify';//取消预约接口
     </script>
     <script type="text/javascript">
-    lazyLoad.require(['//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+    lazyLoad.require(['./scripts/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
         if(boatIndex.isAndroid && boatIndex.isXYWL && XYNativeClient){
             window.doBack = function(){
                 try{
