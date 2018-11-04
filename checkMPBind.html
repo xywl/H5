@@ -223,6 +223,7 @@
 <body>
     <div>初始化</div>
     <div id="box"></div>
+    <div id="box1"></div>
 <script>
     var checkMPBind = $.config.appUrl +'/xyl/wechat/checkMPBind';
 </script>
@@ -255,13 +256,14 @@
                 },
                 success: function(data){
                     //localStorage.setItem('MY_USER_INFO',JSON.stringify(json));
-                    if(data.success && data.data){
-                        alert(1)
-                        //window.location.href = ''
-                    }
-                    else{
-                        alert(2)
-                        //window.location.href = 'binding.html'
+                    if(data.success){
+                        if(data.data){
+                            $('#box1').text('已授权');
+                            window.location.href = '';
+                        }
+                        else{
+                            window.location.href = 'binding.html'
+                        }
                     }
                 },
                 error: function(data) {
@@ -273,13 +275,14 @@
             if(weixin.getQueryString('code') != null){
                 $('#box').text('code='+weixin.getQueryString('code'));
                 weixin.getUser(weixin.getQueryString('code'));
-                return JSON.parse(localStorage.getItem('MY_USER_INFO'));
+                //return JSON.parse(localStorage.getItem('MY_USER_INFO'));
             }else{
                 window.location.href = weixin.config.url;
             }
         }
     }
     weixin.getUserInfo();
+    //weixin.getUser('021knyxN0OBEI32IkkAN0iIExN0knyxL')
 </script>
 </body>
 </html>
