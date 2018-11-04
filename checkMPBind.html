@@ -221,6 +221,7 @@
     </style>
 </head>
 <body>
+    <div>初始化</div>
     <div id="box"></div>
 <script>
     var checkMPBind = $.config.appUrl +'/xyl/wechat/checkMPBind';
@@ -270,7 +271,7 @@
         },
         getUserInfo:function(){
             if(weixin.getQueryString('code') != null){
-                $('#box').text(weixin.getQueryString('code'));
+                $('#box').text('code='+weixin.getQueryString('code'));
                 weixin.getUser(weixin.getQueryString('code'));
                 return JSON.parse(localStorage.getItem('MY_USER_INFO'));
             }else{
@@ -278,7 +279,7 @@
             }
         }
     }
-    //weixin.getUserInfo();
+    weixin.getUserInfo();
 </script>
 </body>
 </html>
