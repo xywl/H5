@@ -247,7 +247,6 @@
         },
         getUser : function(code) {
             $.ajax({
-                type: 'get',
                 url: checkMPBind,
                 dataType: "json",
                 type: "GET",
@@ -271,7 +270,7 @@
                     }
                 },
                 error: function(data) {
-                    $('#box1').text('error');
+                    $('#box1').text('error:' + data);
                 }
             })
         },
