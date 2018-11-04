@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv= "Cache-Control" content= "no-cache" /> 
+    <meta http-equiv= "Expires" content= "0" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/style.css?v=1"/>
+    <script src="./scripts/zepto.min.js"></script>
+    <script src="./scripts/config.js"></script>
+    <title>绑定</title>
+    <style>
+        body{
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper" id="login1">
+        <ul class="input-list">
+            <li>
+                <div class="left">用户名</div>
+                <div class="right"><input type="text" id="userName"></div>
+            </li>
+            <li>
+                <div class="left">密码</div>
+                <div class="right"><input type="password" id="password"></div>
+            </li>
+        </ul>
+        <div class="login-btn" id="binding"><!-- <i></i> --><span>绑定</span></div>
+    </div>
+    <script>
+        var bindFromWP = $.config.appUrl +'/xyl/wechat/bindFromWP';
+
+    </script>
+    <script>
+        
+    lazyLoad.require(['//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        var weixin = {
+            config: {
+                url:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65b6b370eb08f5fa&redirect_uri='+encodeURIComponent(window.location.href)+'&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'
+            },
+            isweixin: function() {
+                var ua = window.navigator.userAgent.toLowerCase();
+                if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            getQueryString: function(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r!=null) return unescape(r[2]); return null;
+            },
+            getUser : function(code) {
+                $.ajax({
+                    type: 'get',
+                    url: bindFromWP,
+                    dataType: "json",
+                    type: "GET",
+                    data:{
+                        code: code,
+                        userName: $('#userName').val(),
+                        userPass: $('#password').val()
+                    },
+                    success: function(data){
+                        //localStorage.setItem('MY_USER_INFO',JSON.stringify(json));
+                        if(data.success && data.data){
+                            //成功
+                            window.location.href = ''
+                        }
+                        else{
+                            alert('绑定失败')
+                        }
+                    },
+                    error: function(json) {
+                        console.log(json);
+                    }
+                })
+            },
+            getUserInfo:function(){
+                if(weixin.getQueryString('code') != null){
+                    weixin.getUser(weixin.getQueryString('code'));
+                    return JSON.parse(localStorage.getItem('MY_USER_INFO'));
+                }else{
+                    window.location.href = weixin.config.url;
+                }
+            }
+        }
+        //
+        $('#binding').on('click',function(){
+            if(!$('#userName').val()){
+                boatIndex.toast('请输入用户名');
+                return;
+            }
+            if(!$('#password').val()){
+                boatIndex.toast('请输入密码');
+                return;
+            }
+            weixin.getUserInfo();
+        })
+    });
+    </script>
+</body>
+</html>
