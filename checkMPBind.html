@@ -255,6 +255,7 @@
                     code: code
                 },
                 success: function(data){
+                    $('#box1').text(data);
                     //localStorage.setItem('MY_USER_INFO',JSON.stringify(json));
                     if(data.success){
                         if(data.data){
@@ -270,7 +271,7 @@
                     }
                 },
                 error: function(data) {
-                    console.log(data);
+                    $('#box1').text('error');
                 }
             })
         },
