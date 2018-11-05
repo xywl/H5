@@ -225,7 +225,7 @@
     <div id="box"></div>
     <div id="box1" style="background: #0f0;height: 30px;"></div>
 <script>
-    var checkMPBind = 'https://xingyi.nandasoft-its.com/xyl/wechat/checkMPBind';
+    var checkBind = 'https://xingyi.nandasoft-its.com/xyl/wechat/checkBind';
 </script>
 <script>
     var weixin = {
@@ -247,11 +247,12 @@
         },
         getUser: function(code) {
             $.ajax({
-                url: checkMPBind,
+                url: checkBind,
                 dataType: "json",
-                type: "GET",
+                type: "POST",
                 data:{
-                    code: code
+                    code: code,
+                    appType: 1
                 },
                 success: function(data){
                     $('#box1').text(data);

@@ -60,10 +60,9 @@
             },
             getUser : function(code) {
                 $.ajax({
-                    type: 'get',
+                    type: 'POST',
                     url: bindFromWP,
                     dataType: "json",
-                    type: "GET",
                     data:{
                         code: code,
                         userName: $('#userName').val(),
