@@ -89,14 +89,14 @@
             getUserInfo: function(){
                 if(weixin.getQueryString('code') != null){
                     boatIndex.toast(weixin.getQueryString('code'))
-                    weixin.getUser(weixin.getQueryString('code'));
+                    
                     //return JSON.parse(localStorage.getItem('MY_USER_INFO'));
                 }else{
                     window.location.href = weixin.config.url;
                 }
             }
         }
-        //
+        weixin.getUserInfo();
         $('#binding').on('click',function(){
             if(!$('#userName').val()){
                 boatIndex.toast('请输入用户名');
@@ -106,7 +106,8 @@
                 boatIndex.toast('请输入密码');
                 return;
             }
-            weixin.getUserInfo();
+            weixin.getUser(weixin.getQueryString('code'));
+            
         });
     });
     </script>
