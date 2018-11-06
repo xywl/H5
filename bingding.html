@@ -39,7 +39,7 @@
         <div class="login-btn" id="binding"><!-- <i></i> --><span>绑定</span></div>
     </div>
     <script>
-        var bindFromWP = 'https://xingyi.nandasoft-its.com/xyl/wechat/bindFromWP';
+        var bindFromMP = 'https://xingyi.nandasoft-its.com/xyl/wechat/bindFromMP';
 
     </script>
     <script>
@@ -65,7 +65,7 @@
             getUser : function(code) {
                 $.ajax({
                     type: 'POST',
-                    url: bindFromWP,
+                    url: bindFromMP,
                     dataType: "json",
                     data:{
                         code: code,
@@ -76,10 +76,11 @@
                         //localStorage.setItem('MY_USER_INFO',JSON.stringify(json));
                         if(data.success && data.data){
                             //成功
-                            window.location.href = ''
+                            //window.location.href = ''
+                            $.toast('绑定成功');
                         }
                         else{
-                            alert('绑定失败')
+                            $.toast('绑定失败')
                         }
                     },
                     error: function(json) {
