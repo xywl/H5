@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
     <link rel="stylesheet" href="styles/css/sm.min.css">
-    <link rel="stylesheet" type="text/css" href="styles/css/style.css?v=1"/>
+    <link rel="stylesheet" type="text/css" href="styles/css/style.css"/>
     <script src="./scripts/zepto.min.js"></script>
     <script src="./scripts/config.js"></script>
     <script src="https://respay.suning.com/epwm/scripts/loginsms/lib/eruda.min.js"></script>
@@ -36,11 +36,11 @@
                 <div class="right"><input type="password" id="password"></div>
             </li>
         </ul>
-        <div class="login-btn" id="binding"><!-- <i></i> --><span>绑定</span></div>
+        <div class="login-btn" id="binding"><span>绑定</span></div>
     </div>
+    
     <script>
         var bindFromMP = 'https://xingyi.nandasoft-its.com/xyl/wechat/bindFromMP';
-
     </script>
     <script>
     lazyLoad.require(['./scripts/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
@@ -63,33 +63,32 @@
             },
             getUser: function(code)
                 $.ajax({
-                    type: 'POST',
                     url: bindFromMP,
+                    type: "POST",
                     dataType: "json",
-                    data:{
+                    data: {
                         code: code,
                         userName: $('#userName').val(),
                         userPass: $('#password').val()
                     },
                     success: function(data){
-                        //localStorage.setItem('MY_USER_INFO',JSON.stringify(json));
                         if(data.success && data.data){
                             //成功
                             //window.location.href = ''
-                            $.toast('绑定成功');
+                            boatIndex.toast('绑定成功');
                         }
                         else{
-                            $.toast('绑定失败')
+                            boatIndex.toast('绑定失败')
                         }
                     },
                     error: function(json) {
                         console.log(json);
                     }
-                })
+                });
             },
-            getUserInfo:function(){
+            getUserInfo: function(){
                 if(weixin.getQueryString('code') != null){
-                    $.toast(code)
+                    boatIndex.toast(code)
                     weixin.getUser(weixin.getQueryString('code'));
                     //return JSON.parse(localStorage.getItem('MY_USER_INFO'));
                 }else{
@@ -108,7 +107,7 @@
                 return;
             }
             weixin.getUserInfo();
-        })
+        });
     });
     </script>
 </body>
