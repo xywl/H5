@@ -9,6 +9,7 @@
     <meta http-equiv= "Expires" content= "0" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta content="telephone=no" name="format-detection" />
+    <link rel="stylesheet" href="styles/css/sm.min.css">
     <script src="./scripts/zepto.min.js"></script>
     <script src="./scripts/config.js"></script>
     <script src="https://respay.suning.com/epwm/scripts/loginsms/lib/eruda.min.js"></script>
@@ -232,65 +233,62 @@
     var checkBind = 'https://xingyi.nandasoft-its.com/xyl/wechat/checkBind';
 </script>
 <script>
-    var weixin = {
-        config: {
-            url:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65b6b370eb08f5fa&redirect_uri='+encodeURIComponent(window.location.href)+'&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'
-        },
-        isweixin: function() {
-            var ua = window.navigator.userAgent.toLowerCase();
-            if(ua.match(/MicroMessenger/i) == 'micromessenger'){
-                return true;
-            } else {
-                return false;
-            }
-        },
-        getQueryString: function(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
-            var r = window.location.search.substr(1).match(reg);
-            if (r!=null) return unescape(r[2]); return null;
-        },
-        getUser: function(code) {
-            $.ajax({
-                url: checkBind,
-                dataType: "json",
-                type: "POST",
-                data:{
-                    code: code,
-                    appType: 1
-                },
-                success: function(data){
-                    $('#box1').text(data);
-                    //localStorage.setItem('MY_USER_INFO',JSON.stringify(json));
-                    if(data.success){
-                        if(data.data){
-                            $('#box1').text('已授权');
-                            window.location.href = '';
+    lazyLoad.require(['./scripts/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
+        var weixin = {
+            config: {
+                url:'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx65b6b370eb08f5fa&redirect_uri='+encodeURIComponent(window.location.href)+'&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'
+            },
+            isweixin: function() {
+                var ua = window.navigator.userAgent.toLowerCase();
+                if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+                    return true;
+                } else {
+                    return false;
+                }
+            },
+            getQueryString: function(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)","i");
+                var r = window.location.search.substr(1).match(reg);
+                if (r!=null) return unescape(r[2]); return null;
+            },
+            getUser: function(code) {
+                $.ajax({
+                    url: checkBind,
+                    dataType: "json",
+                    type: "POST",
+                    data:{
+                        code: code,
+                        appType: 1
+                    },
+                    success: function(data){
+                        if(!data.success && data.errCode == '40000'){
+                            window.location.href = 'binding.html';
+                        }
+                        else if(!data.success){
+                            $('#box1').text('false:'+ data.msg);
                         }
                         else{
-                            window.location.href = 'binding.html'
+                            $('#box1').text('success:已绑定');
                         }
+                    },
+                    error: function(data) {
+                        $('#box1').text('error:' + data);
                     }
-                    else{
-                        $('#box1').text('false:'+ data.msg);
-                    }
-                },
-                error: function(data) {
-                    $('#box1').text('error:' + data);
+                })
+            },
+            getUserInfo:function(){
+                if(weixin.getQueryString('code') != null){
+                    $('#box').text('code='+weixin.getQueryString('code'));
+                    weixin.getUser(weixin.getQueryString('code'));
+                    //return JSON.parse(localStorage.getItem('MY_USER_INFO'));
+                }else{
+                    window.location.href = weixin.config.url;
                 }
-            })
-        },
-        getUserInfo:function(){
-            if(weixin.getQueryString('code') != null){
-                $('#box').text('code='+weixin.getQueryString('code'));
-                weixin.getUser(weixin.getQueryString('code'));
-                //return JSON.parse(localStorage.getItem('MY_USER_INFO'));
-            }else{
-                window.location.href = weixin.config.url;
             }
         }
-    }
-    weixin.getUserInfo();
-    //weixin.getUser('081cvdw51a6kKL1oNsv51md4w51cvdw3')
+        weixin.getUserInfo();
+        //weixin.getUser('081cvdw51a6kKL1oNsv51md4w51cvdw3')
+    });
 </script>
 </body>
 </html>
