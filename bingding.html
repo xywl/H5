@@ -63,6 +63,7 @@
                 if (r!=null) return unescape(r[2]); return null;
             },
             getUser : function(code) {
+                $.toast(code)
                 $.ajax({
                     type: 'POST',
                     url: bindFromMP,
