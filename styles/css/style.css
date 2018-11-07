@@ -885,6 +885,7 @@ input {
   height: 30px;
   line-height: 50px;
   width: 100%;
+  font-size: 15px;
   display: block;
 }
 .bind-msg{
