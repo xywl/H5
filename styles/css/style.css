@@ -885,3 +885,8 @@ input {
   line-height: 50px;
   width: 100%;
 }
+.bind-msg{
+  padding: 15% 0;
+  font-size: 20px;
+  text-align: center;
+}

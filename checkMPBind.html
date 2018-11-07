@@ -220,15 +220,10 @@
     body {
         font-size: 12px;
     }
-
-
-    
     </style>
+
 </head>
 <body>
-    <div>初始化</div>
-    <div id="box"></div>
-    <div id="box1" style="background: #0f0;height: 30px;"></div>
 <script>
     var checkBind = 'https://xingyi.nandasoft-its.com/xyl/wechat/checkBind';
 </script>
@@ -261,33 +256,30 @@
                         appType: 1
                     },
                     success: function(data){
-                        if(!data.success && data.errCode == 40000){
+                        if(data.success){
+                            window.location.href = 'unbingding.html';
+                        }
+                        else if(data.errCode == 40000){
                             window.location.href = 'bingding.html';
                         }
-                        else if(!data.success){
-                            $('#box1').text('false:'+ data.msg);
-                        }
-                        else{
-                            $('#box1').text('success:已绑定');
+                        else if(data.msg){
+                            $.alert(data.msg);
                         }
                     },
                     error: function(data) {
-                        $('#box1').text('error:' + data);
+                        $.toast('网络连接失败，请稍后重试');
                     }
                 })
             },
             getUserInfo:function(){
                 if(weixin.getQueryString('code') != null){
-                    $('#box').text('code='+weixin.getQueryString('code'));
                     weixin.getUser(weixin.getQueryString('code'));
-                    //return JSON.parse(localStorage.getItem('MY_USER_INFO'));
                 }else{
                     window.location.href = weixin.config.url;
                 }
             }
         }
         weixin.getUserInfo();
-        //weixin.getUser('081cvdw51a6kKL1oNsv51md4w51cvdw3')
     });
 </script>
 </body>

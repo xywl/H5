@@ -17,7 +17,7 @@
     <script>
         eruda.init();
     </script>
-    <title>绑定</title>
+    <title>解绑</title>
     <style>
         body{
             background: #fff;
@@ -25,22 +25,13 @@
     </style>
 </head>
 <body>
-    <div class="login-wrapper" id="login1">
-        <ul class="input-list">
-            <li>
-                <div class="left">用户名</div>
-                <div class="right"><input type="text" id="userName"></div>
-            </li>
-            <li>
-                <div class="left">密码</div>
-                <div class="right"><input type="password" id="password"></div>
-            </li>
-        </ul>
-        <div class="login-btn" id="binding"><span>绑定</span></div>
+    <div class="bind-wrapper" id="login1">
+        <div class="bind-msg">已绑定</div>
+        <div class="login-btn" id="unbinding"><span>解绑</span></div>
     </div>
     
     <script>
-        var bindFromMP = 'https://xingyi.nandasoft-its.com/xyl/wechat/bindFromMP';
+        var unbindFromMP = 'https://xingyi.nandasoft-its.com/xyl/wechat/unbindFromMP';
     </script>
     <script>
     lazyLoad.require(['./scripts/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
@@ -63,20 +54,18 @@
             },
             getUser: function(code){
                 $.ajax({
-                    url: bindFromMP,
+                    url: unbindFromMP,
                     type: "POST",
                     dataType: "json",
                     data: {
-                        code: code,
-                        userName: $('#userName').val(),
-                        userPass: $('#password').val()
+                        code: code
                     },Í
                     success: function(data){
                         if(data.success && data.data){
-                            boatIndex.toast('绑定成功');
+                            $.alert('解绑成功');
                         }
-                        else if(data.msg){
-                            boatIndex.toast(data.msg)
+                        else{
+                            $.alert('解绑失败');
                         }
                     },
                     error: function(json) {
@@ -86,21 +75,14 @@
             },
             getUserInfo: function(){
                 if(weixin.getQueryString('code') != null){
+                    //$.toast(weixin.getQueryString('code'));
                 }else{
                     window.location.href = weixin.config.url;
                 }
             }
         }
         weixin.getUserInfo();
-        $('#binding').on('click',function(){
-            if(!$('#userName').val()){
-                boatIndex.toast('请输入用户名');
-                return;
-            }
-            if(!$('#password').val()){
-                boatIndex.toast('请输入密码');
-                return;
-            }
+        $('#unbinding').on('click',function(){
             weixin.getUser(weixin.getQueryString('code'));
         });
     });
