@@ -73,10 +73,13 @@
                     },
                     success: function(data){
                         if(data.success && data.data){
-                            boatIndex.toast('绑定成功');
+                            $.toast('绑定成功');
+                            setTimeout(function(){
+                                window.location.href = 'unbingding.html';
+                            },1000);
                         }
                         else if(data.msg){
-                            boatIndex.toast(data.msg)
+                            $.alert(data.msg)
                         }
                     },
                     error: function(json) {
