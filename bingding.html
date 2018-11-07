@@ -73,12 +73,10 @@
                     },
                     success: function(data){
                         if(data.success && data.data){
-                            //成功
-                            //window.location.href = ''
                             boatIndex.toast('绑定成功');
                         }
-                        else{
-                            boatIndex.toast('绑定失败')
+                        else if(data.msg){
+                            boatIndex.toast(data.msg)
                         }
                     },
                     error: function(json) {
@@ -88,9 +86,7 @@
             },
             getUserInfo: function(){
                 if(weixin.getQueryString('code') != null){
-                    boatIndex.toast(weixin.getQueryString('code'))
-                    
-                    //return JSON.parse(localStorage.getItem('MY_USER_INFO'));
+                    boatIndex.toast(weixin.getQueryString('code'));
                 }else{
                     window.location.href = weixin.config.url;
                 }
