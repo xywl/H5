@@ -879,11 +879,13 @@ input {
 }
 .input-list li .right{
   -webkit-box-flex: 1;
+  padding: 10px 0;
 }
 .input-list li input{
-  height: 50px;
+  height: 30px;
   line-height: 50px;
   width: 100%;
+  display: block;
 }
 .bind-msg{
   padding: 15% 0;
