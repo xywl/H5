@@ -53,6 +53,8 @@
                 if (r!=null) return unescape(r[2]); return null;
             },
             getUser: function(code){
+                if($('#unbinding').hasClass('gray'))return;
+                $('#unbinding').addClass('gray');
                 $.ajax({
                     url: unbindFromMP,
                     type: "POST",
@@ -61,6 +63,7 @@
                         code: code
                     },
                     success: function(data){
+                        $('#unbinding').removeClass('gray');
                         if(data.success && data.data){
                             $.alert('解绑成功');
                         }
@@ -69,6 +72,7 @@
                         }
                     },
                     error: function(json) {
+                        $('#unbinding').removeClass('gray');
                         $.toast('网络连接失败，请稍后重试');
                     }
                 });
