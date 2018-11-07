@@ -65,10 +65,14 @@
                     success: function(data){
                         $('#unbinding').removeClass('gray');
                         if(data.success && data.data){
-                            $.alert('解绑成功');
+                            $.alert('解绑成功',function(){
+                                window.location.href = 'bingding.html';
+                            });
                         }
                         else{
-                            $.alert('解绑失败');
+                            $.alert('解绑失败',function(){
+                                window.location.href = 'unbingding.html';
+                            });
                         }
                     },
                     error: function(json) {
