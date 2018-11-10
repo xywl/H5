@@ -256,8 +256,8 @@
                         appType: 1
                     },
                     success: function(data){
-                        if(data.success){
-                            window.location.href = 'unbingding.html';
+                        if(data.success && data.data){
+                            window.location.href = 'unbingding.html?name=' + data.data;
                         }
                         else if(data.errCode == 40000){
                             window.location.href = 'bingding.html';
