@@ -89,6 +89,9 @@
                 }
             }
         }
+        if(weixin.getQueryString('name')){
+            $('.bind-msg').text(weixin.getQueryString('name') + '已绑定')
+        }
         weixin.getUserInfo();
         $('#unbinding').on('click',function(){
             weixin.getUser(weixin.getQueryString('code'));
