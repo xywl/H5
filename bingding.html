@@ -78,7 +78,7 @@
                         if(data.success && data.data){
                             $.toast('绑定成功');
                             setTimeout(function(){
-                                //window.location.href = 'unbingding.html?userName=' + data.data;
+                                window.location.href = 'unbingding.html?userName=' + data.data;
                             },1000);
                         }
                         else if(data.msg){
