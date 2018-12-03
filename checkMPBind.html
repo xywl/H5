@@ -269,7 +269,7 @@
             },
             getUserInfo:function(){
                 if(weixin.getQueryString('code') != null){
-                    $('#code').text(weixin.getQueryString('code'))e
+                    $('#code').text(weixin.getQueryString('code'))
                     weixin.getUser(weixin.getQueryString('code'));
                 }else{
                     window.location.href = weixin.config.url;
