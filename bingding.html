@@ -33,8 +33,6 @@
             </li>
         </ul>
         <div class="login-btn" id="binding"><span>绑定</span></div>
-
-        <div id="code" style="margin-top: 10px;"></div>
     </div>
     
     <script>
@@ -93,7 +91,6 @@
             },
             getUserInfo: function(){
                 if(weixin.getQueryString('code') != null){
-                    $('#code').text(weixin.getQueryString('code'))
                 }else{
                     window.location.href = weixin.config.url;
                 }
