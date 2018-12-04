@@ -219,7 +219,6 @@
 
 </head>
 <body>
-<div id="code" style="margin-top: 10px;"></div>
 <script>
     var checkBind = 'https://xingyi.nandasoft-its.com/xyl/wechat/checkBind';
 </script>
@@ -269,7 +268,6 @@
             },
             getUserInfo:function(){
                 if(weixin.getQueryString('code') != null){
-                    $('#code').text(weixin.getQueryString('code'))
                     weixin.getUser(weixin.getQueryString('code'));
                 }else{
                     window.location.href = weixin.config.url;
