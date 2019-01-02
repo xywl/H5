@@ -59,7 +59,7 @@
             <li reserveId="{{list.id}}" status="{{list.status}}" checkStatus="{{list.checkStatus}}" class="{{if list.status == 1 && list.checkStatus == 0}}J_link{{/if}}">
                 <div class="o-title o-title2">
                     <div class="name">{{list.goodsName}}{{list.dispatchWeight}}吨</div>
-                    <div class="state"><span>{{if list.status == 1 && list.checkStatusName}}{{list.checkStatusName}}{{else}}{{list.statusName}}{{/if}}</span><i class="arrow"></i></div>
+                    <div class="state"><span class="state-info">{{if list.signPic}}已签收{{else if list.status == 1 && list.checkStatusName}}{{list.checkStatusName}}{{else}}{{list.statusName}}{{/if}}</span><i class="arrow"></i></div>
                 </div>
                 <div class="info-box">
                     <div class="time"><i class="icon-time"></i><span>装货时间：{{list.dischargeTime}}</span></div>
@@ -69,8 +69,12 @@
                 {{if list.status == 1 && list.checkStatus == 0}}
                 <div class="btn-box border-thin">
                     <p class="tip">{{if list.specialTip}}注：{{list.specialTip}{{/if}}</p>
-                    
                     <div class="btn border-thin J_cancel">取消预约</div>
+                </div>
+                {{/if}}
+                {{if list.status == 5 && !list.signPic}}
+                <div class="btn-box border-thin">
+                    <div class="btn border-thin J_receive"><span>签收</span><label class="choose" for="list.id" msg="签收照片"></label><input id="list.id" accept="image/png,image/jpeg" capture="camera" type="file" name="images" class="file-input hide"></div>
                 </div>
                 {{/if}}
             </li>
@@ -78,7 +82,9 @@
     </script>
     <script>
         var myOrderUrl = $.config.appUrl + '/xyl/reservation/getMyOrder',//我的订单接口
-            cancelUrl = $.config.appUrl + '/xyl/reservation/modify';//取消预约接口
+            cancelUrl = $.config.appUrl + '/xyl/reservation/modify',//取消预约接口
+            uploadFileUrl = $.config.appUrl +'/xyl/file/upfile'//图片上传
+            infoSubmitUrl = $.config.appUrl + '/xyl/reservation/add';//提交
     </script>
     <script type="text/javascript">
     lazyLoad.require(['./scripts/sm.min.js','./scripts/common.js'],function(sm,boatIndex){
@@ -92,6 +98,10 @@
                 }
             }
         }
+        var token = '';
+        setTimeout(function(){
+            token = boatIndex.getUserTag('token');
+        },100)
         var params = {
             url: myOrderUrl,
             data:{queryParamFlag:1},
@@ -106,7 +116,8 @@
                     if($(element).attr('status') == 1 && $(element).attr('checkStatus') == 0){
                         var reserveId = $(element).attr('reserveId'),
                             J_link = $(element),
-                            J_cancel = $(element).find('.J_cancel');
+                            J_cancel = $(element).find('.J_cancel'),
+                            J_receive = $(element).find('.J_receive');
                         J_link.on('click',function(){
                              window.location.href = 'appointSuccess.html?id=' + reserveId;
                         });
@@ -137,7 +148,85 @@
                             });
                             
                         });
-
+                        var $file = $('.file-input'),
+                            choose = $('.choose');
+                        if(boatIndex.isXYWL) {
+                            choose.bind('click',function(){
+                                e.stopPropagation();
+                                var id = $(this).next('input').attr('id');
+                                XYNativeClient.showImgSelectDialog(2,id,token,uploadFileUrl);
+                            });
+                        }
+                        window.showH5Img = function(id,url){
+                            if(!url){
+                                $.hidePreloader();
+                                boatIndex.toast('图片上传失败，请重新尝试')
+                                return;
+                            }
+                            var imgTag = $('#'+id).prev('label'),
+                                src = url + '?token=' + token;
+                            boatIndex.commonAjax({
+                                url: infoSubmitUrl,
+                                type: "POST",
+                                data: {
+                                    signPic: url
+                                },
+                                success:function(data){
+                                    $.hidePreloader();
+                                    if(data.success && data.data){
+                                        $(elements).find('.state-info').text('已签收');
+                                        $(elements).find('.btn-box').hide();
+                                    }
+                                    else if(data.msg){
+                                        boatIndex.toast(data.msg);
+                                    } 
+                                },
+                                error:function(data){
+                                    $.hidePreloader();
+                                    boatIndex.toast('网络连接失败，请稍后重试...');
+                                }
+                            });
+                            
+                        }
+                        $file.on("change", function(e) {
+                            var $this = $(this);
+                            formUploadFile(e.target.files[0], function(data) {
+                                
+                                //返回图片地址
+                                if(data.success && data.data.filePath){
+                                    var url = data.data.filePath;
+                                    
+                                    boatIndex.commonAjax({
+                                        url: infoSubmitUrl,
+                                        type: "POST",
+                                        data: {
+                                            signPic: url
+                                        },
+                                        success:function(data){
+                                            $.hidePreloader();
+                                            if(data.success && data.data){
+                                                $(elements).find('.state-info').text('已签收');
+                                                $(elements).find('.btn-box').hide();
+                                            }
+                                            else if(data.msg){
+                                                boatIndex.toast(data.msg);
+                                            } 
+                                        },
+                                        error:function(data){
+                                            $.hidePreloader();
+                                            boatIndex.toast('网络连接失败，请稍后重试...');
+                                        }
+                                    });
+                                }
+                                else{
+                                    boatIndex.toast(data.msg);
+                                }
+                                
+                            }, function(json) {
+                                $.hidePreloader();
+                                boatIndex.toast('图片上传失败，请重新尝试...');
+                            });
+                        }, false);
                     };
                     
                 });
@@ -204,6 +293,42 @@
             eTime = eDate.getTime();
             if(sTime <= oTime && oTime <= eTime ){
                 return true;
+            }
+        }
+        window.showLoading = function(msg){
+            var msg = msg || '加载中';
+            $.showPreloader(msg);
+            setTimeout(function(){
+                $.hidePreloader();
+            },5000);
+        }
+        //文件上传方法
+        function formUploadFile(file, success, error) {
+            if (file.size > 1024 * 1024 * 10) {
+                boatIndex.toast("图片不能超过10M");
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            if (xhr.upload) {
+                xhr.onreadystatechange = function(e) {
+                    if (xhr.readyState == 4) {
+                        if (xhr.status == 200) {
+                            if (success != undefined) {
+                                success(JSON.parse(xhr.responseText));
+                            }
+                        } else {
+                            if (error != undefined) {
+                                error(JSON.parse(xhr.responseText));
+                            }
+                        }
+                    }
+                };
+                // 开始上传
+                xhr.open("POST", uploadFileUrl, true);
+                var formData = new FormData();
+                formData.append("fileName", file);
+                formData.append("token", token);
+                xhr.send(formData);
             }
         }
     });

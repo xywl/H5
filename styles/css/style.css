@@ -557,6 +557,14 @@ input {
     font-size: .8rem;
     color: #e4393c;
     text-align: center;
+    position: relative;
+}
+.order-list li .btn .choose{
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 1.8rem;
+  width: 5rem;
 }
 .order-list li .btn:before{
     border: 1px solid #e4393c;
