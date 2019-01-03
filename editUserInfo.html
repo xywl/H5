@@ -186,15 +186,21 @@
         $file.on("change", function(e) {
             var $this = $(this);
             formUploadFile(e.target.files[0], function(data) {
-                //返回图片地址
-                var url = data.data.filePath;
-                //生成缩略图
-                var imgTag = $this.prev('label'),
-                    src = url + '?token=' + token;
-                imgTag.prev('.info').addClass('hide');
-                imgTag.html('<img src='+src+'>');
-                imgTag.attr("img-url",url);
                 $.hidePreloader();
+                //返回图片地址
+                if(data.success && data.data.filePath){
+                    var url = data.data.filePath;
+                    //生成缩略图
+                    var imgTag = $this.prev('label'),
+                        src = url + '?token=' + token;
+                    imgTag.prev('.info').addClass('hide');
+                    imgTag.html('<img src='+src+'>');
+                    imgTag.attr("img-url",url);
+                    $.hidePreloader();
+                }
+                else{
+                    boatIndex.toast(data.msg);
+                }
             }, function(json) {
                 $.hidePreloader();
                 boatIndex.toast('图片上传失败，请重新尝试');

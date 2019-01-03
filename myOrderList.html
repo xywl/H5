@@ -72,16 +72,18 @@
                     <div class="btn border-thin J_cancel">取消预约</div>
                 </div>
                 {{/if}}
-                {{if list.status == 5 && !list.signPic}}
+                {{if list.checkStatus == 1 && !list.signPic}}
                 <div class="btn-box border-thin">
-                    <div class="btn border-thin J_receive"><span>签收</span><label class="choose" for="list.id" msg="签收照片"></label><input id="list.id" accept="image/png,image/jpeg" capture="camera" type="file" name="images" class="file-input hide"></div>
+                    <p class="tip"></p>
+                    <div class="btn border-thin J_receive"><span>签收</span><label class="choose" for="{{list.id}}" msg="签收照片"></label><input id="{{list.id}}" accept="image/png,image/jpeg" capture="camera" type="file" name="images" class="file-input hide"></div>
                 </div>
                 {{/if}}
             </li>
         {{/each}}
     </script>
     <script>
-        var myOrderUrl = $.config.appUrl + '/xyl/reservation/getMyOrder',//我的订单接口
+        var //myOrderUrl = $.config.appUrl + '/xyl/reservation/getMyOrder',//我的订单接口
+            myOrderUrl = 'temp/data/orderList.json',
             cancelUrl = $.config.appUrl + '/xyl/reservation/modify',//取消预约接口
             uploadFileUrl = $.config.appUrl +'/xyl/file/upfile'//图片上传
             infoSubmitUrl = $.config.appUrl + '/xyl/reservation/add';//提交
@@ -113,11 +115,12 @@
             success:function(json, elements){
                 console.log(elements)
                 $(elements).each(function(index,element){
+                    var reserveId = $(element).attr('reserveId'),
+                        J_link = $(element),
+                        J_cancel = $(element).find('.J_cancel'),
+                        J_receive = $(element).find('.J_receive');
                     if($(element).attr('status') == 1 && $(element).attr('checkStatus') == 0){
-                        var reserveId = $(element).attr('reserveId'),
-                            J_link = $(element),
-                            J_cancel = $(element).find('.J_cancel'),
-                            J_receive = $(element).find('.J_receive');
+                        
                         J_link.on('click',function(){
                              window.location.href = 'appointSuccess.html?id=' + reserveId;
                         });
@@ -148,86 +151,57 @@
                             });
                             
                         });
-                        var $file = $('.file-input'),
-                            choose = $('.choose');
-                        if(boatIndex.isXYWL) {
-                            choose.bind('click',function(){
-                                e.stopPropagation();
-                                var id = $(this).next('input').attr('id');
-                                XYNativeClient.showImgSelectDialog(2,id,token,uploadFileUrl);
-                            });
-                        }
-                        window.showH5Img = function(id,url){
-                            if(!url){
-                                $.hidePreloader();
-                                boatIndex.toast('图片上传失败，请重新尝试')
-                                return;
-                            }
-                            var imgTag = $('#'+id).prev('label'),
-                                src = url + '?token=' + token;
-                            boatIndex.commonAjax({
-                                url: infoSubmitUrl,
-                                type: "POST",
-                                data: {
-                                    signPic: url
-                                },
-                                success:function(data){
-                                    $.hidePreloader();
-                                    if(data.success && data.data){
-                                        $(elements).find('.state-info').text('已签收');
-                                        $(elements).find('.btn-box').hide();
-                                    }
-                                    else if(data.msg){
-                                        boatIndex.toast(data.msg);
-                                    } 
-                                },
-                                error:function(data){
-                                    $.hidePreloader();
-                                    boatIndex.toast('网络连接失败，请稍后重试...');
-                                }
-                            });
-                            
-                        }
-                        $file.on("change", function(e) {
-                            var $this = $(this);
-                            formUploadFile(e.target.files[0], function(data) {
-                                
-                                //返回图片地址
-                                if(data.success && data.data.filePath){
-                                    var url = data.data.filePath;
-                                    
-                                    boatIndex.commonAjax({
-                                        url: infoSubmitUrl,
-                                        type: "POST",
-                                        data: {
-                                            signPic: url
-                                        },
-                                        success:function(data){
-                                            $.hidePreloader();
-                                            if(data.success && data.data){
-                                                $(elements).find('.state-info').text('已签收');
-                                                $(elements).find('.btn-box').hide();
-                                            }
-                                            else if(data.msg){
-                                                boatIndex.toast(data.msg);
-                                            } 
-                                        },
-                                        error:function(data){
-                                            $.hidePreloader();
-                                            boatIndex.toast('网络连接失败，请稍后重试...');
-                                        }
-                                    });
-                                }
-                                else{
-                                    boatIndex.toast(data.msg);
-                                }
-                                
-                            }, function(json) {
-                                $.hidePreloader();
-                                boatIndex.toast('图片上传失败，请重新尝试...');
-                            });
-                        }, false);
+                        
                     };
+                    var $file = $(element).find('.file-input'),
+                        choose = $(element).find('.choose');
+                    if(boatIndex.isXYWL) {
+                        choose.bind('click',function(){
+                            e.stopPropagation();
+                            var id = $(this).next('input').attr('id');
+                            XYNativeClient.showImgSelectDialog(2,id,token,uploadFileUrl);
+                        });
+                    }
+                    
+                    $file.on("change", function(e) {
+                        var $this = $(this);
+                        formUploadFile(e.target.files[0], function(data) {
+                            //返回图片地址
+                            if(data.success && data.data.filePath){
+                                var url = data.data.filePath;
+                                boatIndex.commonAjax({
+                                    url: infoSubmitUrl,
+                                    type: "POST",
+                                    data: {
+                                        signPic: url,
+                                        id: reserveId
+                                    },
+                                    success:function(data){
+                                        $.hidePreloader();
+                                        if(data.success && data.data){
+                                            $(elements).find('.state-info').text('已签收');
+                                            $(elements).find('.btn-box').hide();
+                                        }
+                                        else if(data.msg){
+                                            boatIndex.toast(data.msg);
+                                        } 
+                                    },
+                                    error:function(data){
+                                        $.hidePreloader();
+                                        boatIndex.toast('网络连接失败，请稍后重试...');
+                                    }
+                                });
+                            }
+                            else{
+                                $.hidePreloader();
+                                boatIndex.toast(data.msg);
+                            }
+                            
+                        }, function(json) {
+                            $.hidePreloader();
+                            boatIndex.toast('图片上传失败，请重新尝试...');
+                        });
+                    }, false);
                     
                 });
             },
@@ -330,6 +304,37 @@
                 formData.append("token", token);
                 xhr.send(formData);
             }
+        }
+        window.showH5Img = function(id,url){
+            if(!url){
+                $.hidePreloader();
+                boatIndex.toast('图片上传失败，请重新尝试')
+                return;
+            }
+            var imgTag = $('#'+id).prev('label'),
+                src = url + '?token=' + token;
+            boatIndex.commonAjax({
+                url: infoSubmitUrl,
+                type: "POST",
+                data: {
+                    signPic: url
+                },
+                success:function(data){
+                    $.hidePreloader();
+                    if(data.success && data.data){
+                        $(elements).find('.state-info').text('已签收');
+                        $(elements).find('.btn-box').hide();
+                    }
+                    else if(data.msg){
+                        boatIndex.toast(data.msg);
+                    } 
+                },
+                error:function(data){
+                    $.hidePreloader();
+                    boatIndex.toast('网络连接失败，请稍后重试...');
+                }
+            });
+            
         }
     });
     </script>
